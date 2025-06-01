@@ -1,0 +1,125 @@
+import React from 'react';
+
+const AllGameMobile = () => {
+    return (
+        <div className="relative w-full min-h-screen bg-gray-50">
+            {/* All Games Heading */}
+            <div className="absolute flex items-center font-bold text-lg text-[#1D3D68] w-[89px] h-[28px] left-[4px] top-[123.17px] font-['Inter'] text-[18px] leading-[28px]">
+                All Games
+            </div>
+
+            {/* View All Button */}
+            <div className="absolute bg-[#DFE6EE] rounded-bl-lg w-[80.09px] h-[26px] right-0 top-[123.17px]">
+                {/* View All Text */}
+                <div className="absolute flex items-center text-center font-medium text-xs text-[#1D3D68] w-[46.43px] h-[16px] left-[calc(50%-46.43px/2-8.83px)] top-[5px] font-['Inter'] text-[12px] leading-[16px]">
+                    View All
+                </div>
+                
+                {/* Arrow Vector */}
+                <div className="absolute bg-[#1D3D68] left-[31.24%] right-[31.25%] top-[17.21%] bottom-[17.19%]">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="#1D3D68" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            {/* Background Container */}
+            <div className="absolute bg-white rounded h-[228px] left-[4px] right-[4px] top-[151.17px]">
+                {/* Hot Games Container */}
+                <div className="absolute overflow-scroll h-[42px] left-[10px] right-[10px] top-[22px]">
+                    {/* Hot Games Background */}
+                    <div className="absolute bg-[#F2F3F5] w-[138.56px] h-[42px] left-0 top-[calc(50%-42px/2)] rounded-full">
+                        {/* Fire Icon with Blur Effect */}
+                        <div className="absolute w-[30px] h-[30px] left-[-4px] top-[calc(50%-30px/2)] blur-[1px]" />
+                        
+                        {/* Fire Icon */}
+                        <div className="absolute bg-gradient-to-tr from-orange-400 to-red-500 rounded-full flex items-center justify-center w-[30px] h-[30px] left-[calc(50%-30px/2-44.28px)] top-[calc(50%-30px/2)]">
+                            <span className="text-white text-sm">🔥</span>
+                        </div>
+
+                        {/* Hot Games Text */}
+                        <div className="absolute flex items-center capitalize font-medium text-[#1D3D68] w-[85.02px] h-[24px] left-[44px] top-[9px] font-['Inter'] text-[16px] leading-[24px]">
+                            hot games
+                        </div>
+                    </div>
+
+                    {/* Category Icon 1 */}
+                    <div className="absolute bg-[#F2F3F5] rounded-full flex items-center justify-center w-[42px] h-[42px] left-[146.56px] top-[calc(50%-42px/2)]">
+                        <div className="bg-blue-600 rounded-full flex items-center justify-center w-[30px] h-[30px]">
+                            <span className="text-white text-sm">🏆</span>
+                        </div>
+                    </div>
+
+                    {/* Category Icon 2 */}
+                    <div className="absolute bg-[#F2F3F5] rounded-full flex items-center justify-center w-[42px] h-[42px] left-[196.56px] top-[calc(50%-42px/2)]">
+                        <div className="bg-blue-600 rounded-full flex items-center justify-center w-[30px] h-[30px]">
+                            <span className="text-white text-sm">🎲</span>
+                        </div>
+                    </div>
+
+                    {/* Category Icon 3 */}
+                    <div className="absolute bg-[#F2F3F5] rounded-full flex items-center justify-center w-[42px] h-[42px] left-[246.56px] top-[calc(50%-42px/2)]">
+                        <div className="bg-blue-600 rounded-full flex items-center justify-center w-[30px] h-[30px]">
+                            <span className="text-white text-sm">🎰</span>
+                        </div>
+                    </div>
+
+                    {/* Category Icon 4 */}
+                    <div className="absolute bg-[#F2F3F5] rounded-full flex items-center justify-center w-[42px] h-[42px] left-[296.56px] top-[calc(50%-42px/2)]">
+                        <div className="bg-blue-600 rounded-full flex items-center justify-center w-[30px] h-[30px]">
+                            <span className="text-white text-sm">⚙️</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Games Container */}
+                <div className="absolute left-[10px] right-[10px] top-[80px] bottom-[18px]">
+                    {/* Game Card 1 - Aviator */}
+                    <div className="absolute rounded-lg overflow-hidden h-[130px] left-0 right-[277.5px] top-0">
+                        <div className="absolute inset-0 bg-gradient-to-br from-red-600 via-red-700 to-red-800 flex flex-col justify-between p-3">
+                            <div className="text-white font-bold text-sm">Aviator</div>
+                            <div className="flex items-center justify-between">
+                                <div className="bg-black/20 backdrop-blur-sm rounded px-2 py-1">
+                                    <span className="text-white text-xs font-medium">57.89</span>
+                                </div>
+                                <div className="text-white text-xs font-medium">77Gaming</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Game Card 2 - Crazy Time */}
+                    <div className="absolute rounded-lg overflow-hidden h-[130px] left-[92.5px] right-[185px] top-0">
+                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 flex flex-col justify-between p-3">
+                            <div className="text-white font-bold text-sm">Crazy Time</div>
+                            <div className="flex items-center justify-end">
+                                <div className="text-white text-xs font-medium">Evolution</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Game Card 3 - Starburst */}
+                    <div className="absolute rounded-lg overflow-hidden h-[130px] left-[185px] right-[92.5px] top-0">
+                        <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 flex flex-col justify-between p-3">
+                            <div className="text-white font-bold text-sm">STARBURST</div>
+                            <div className="flex items-center justify-end">
+                                <div className="text-white text-xs font-medium">NetEnt</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Game Card 4 - Gonzo's Quest */}
+                    <div className="absolute rounded-lg overflow-hidden h-[130px] left-[277.5px] right-0 top-0">
+                        <div className="absolute inset-0 bg-gradient-to-br from-green-700 via-green-800 to-green-900 flex flex-col justify-between p-3">
+                            <div className="text-white font-bold text-sm">Gonzo's Quest</div>
+                            <div className="flex items-center justify-end">
+                                <div className="text-white text-xs font-medium">NetEnt</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default AllGameMobile;
