@@ -116,6 +116,69 @@ const AllGameMobile = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Providers Section */}
+            {/* Providers Heading */}
+            <div className="absolute flex items-center font-bold text-lg text-[#1D3D68] w-[84.75px] h-[28px] left-[4px] top-[395.17px] font-['Inter'] text-[18px] leading-[28px]">
+                Providers
+            </div>
+
+            {/* View All Button */}
+            <div className="absolute w-[56.09px] h-[20px] left-[329.91px] top-[calc(50%-20px/2-323.41px)] bg-[rgba(237,240,243,0.75)] border border-[#E7EBF2] shadow-lg rounded">
+                {/* View All Text */}
+                <div className="absolute flex items-center text-center capitalize font-medium text-xs text-[#276AA5] w-[46.43px] h-[15px] left-[calc(50%-46.43px/2+0.17px)] top-[calc(50%-15px/2-0.5px)] font-['Inter'] text-[12px] leading-[16px]">
+                    View All
+                </div>
+            </div>
+
+            {/* Provider Items Container */}
+            <div className="absolute left-[4px] right-[4px] top-[431.17px]">
+                {/* First Row */}
+                <div className="flex gap-2 mb-2">
+                    {/* Provider 1 */}
+                    <div className="flex-1 h-[36px] bg-white rounded-full flex items-center justify-center">
+                        <span className="text-xs text-gray-600 font-medium">Provider 1</span>
+                    </div>
+
+                    {/* Provider 2 */}
+                    <div className="flex-1 h-[36px] bg-white rounded-full flex items-center justify-center">
+                        <span className="text-xs text-gray-600 font-medium">Provider 2</span>
+                    </div>
+
+                    {/* Provider 3 */}
+                    <div className="flex-1 h-[36px] bg-white rounded-full flex items-center justify-center">
+                        <span className="text-xs text-gray-600 font-medium">Provider 3</span>
+                    </div>
+
+                    {/* Provider 4 */}
+                    <div className="flex-1 h-[36px] bg-white rounded-full flex items-center justify-center">
+                        <span className="text-xs text-gray-600 font-medium">Provider 4</span>
+                    </div>
+                </div>
+
+                {/* Second Row */}
+                <div className="flex gap-2">
+                    {/* Provider 5 */}
+                    <div className="flex-1 h-[36px] bg-white rounded-full flex items-center justify-center">
+                        <span className="text-xs text-gray-600 font-medium">Provider 5</span>
+                    </div>
+
+                    {/* Provider 6 */}
+                    <div className="flex-1 h-[36px] bg-white rounded-full flex items-center justify-center">
+                        <span className="text-xs text-gray-600 font-medium">Provider 6</span>
+                    </div>
+
+                    {/* Provider 7 */}
+                    <div className="flex-1 h-[36px] bg-white rounded-full flex items-center justify-center">
+                        <span className="text-xs text-gray-600 font-medium">Provider 7</span>
+                    </div>
+
+                    {/* Provider 8 */}
+                    <div className="flex-1 h-[36px] bg-white rounded-full flex items-center justify-center">
+                        <span className="text-xs text-gray-600 font-medium">Provider 8</span>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
