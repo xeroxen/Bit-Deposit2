@@ -1,5 +1,6 @@
 "use client"
 import AllGameMobile from '@/components/all-game-mobile/all-game-mobile';
+import SuggestedCarousel from '@/components/suggested-carrousel/suggested-carousel';
 import React from 'react';
 
 const Home = () => {
@@ -81,6 +82,7 @@ const Home = () => {
                 </div>
             </div>
             <AllGameMobile />
+            <SuggestedCarousel />
         </div>
     );
 };
