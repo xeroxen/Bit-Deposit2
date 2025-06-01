@@ -1,40 +1,9 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { Play } from "lucide-react"
-import Image from "next/image"
 
 export default function EvolutionBanner() {
-  const latestGames = [
-    {
-      id: 1,
-      title: "Marble Race",
-      image: "/placeholder.svg?height=120&width=160",
-    },
-    {
-      id: 2,
-      title: "Super Color Game",
-      image: "/placeholder.svg?height=120&width=160",
-    },
-    {
-      id: 3,
-      title: "Fireball Roulette",
-      image: "/placeholder.svg?height=120&width=160",
-    },
-  ]
-
-  const featuredGames = [
-    {
-      id: 1,
-      image: "/placeholder.svg?height=200&width=280",
-    },
-    {
-      id: 2,
-      image: "/placeholder.svg?height=200&width=280",
-    },
-  ]
-
   return (
     <div className="relative w-full max-w-[382px] h-[168px] mx-auto overflow-hidden rounded-2xl bg-gradient-to-r from-purple-900 via-purple-800 to-pink-700">
       {/* Background decorative elements */}

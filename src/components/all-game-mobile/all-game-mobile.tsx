@@ -107,7 +107,7 @@ const AllGameMobile = () => {
                         {/* Game Card 4 - Gonzo's Quest */}
                         <div className="flex-shrink-0 w-[85px] rounded-lg overflow-hidden h-[130px]">
                             <div className="w-full h-full bg-gradient-to-br from-green-700 via-green-800 to-green-900 flex flex-col justify-between p-3">
-                                <div className="text-white font-bold text-sm">Gonzo's Quest</div>
+                                <div className="text-white font-bold text-sm">Gonzo&apos;s Quest</div>
                                 {/* <div className="flex items-center justify-end">
                                     <div className="text-white text-xs font-medium">NetEnt</div>
                                 </div> */}
