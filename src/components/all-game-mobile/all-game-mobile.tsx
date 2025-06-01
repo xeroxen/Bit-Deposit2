@@ -2,7 +2,7 @@ import React from 'react';
 
 const AllGameMobile = () => {
     return (
-        <div className="relative w-full min-h-screen bg-gray-50">
+        <div className="relative w-full h-[520px] bg-gray-50">
             {/* All Games Heading */}
             <div className="absolute flex items-center font-bold text-lg text-[#1D3D68] w-[89px] h-[28px] left-[4px] top-[123.17px] font-['Inter'] text-[18px] leading-[28px]">
                 All Games

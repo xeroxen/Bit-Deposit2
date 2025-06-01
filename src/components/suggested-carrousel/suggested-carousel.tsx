@@ -43,7 +43,7 @@ const suggestedItems = [
 
 export default function SuggestedCarousel() {
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-8">
+    <div className="w-full max-w-7xl mx-auto px-4 py-4">
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Selected For You</h2>
