@@ -24,8 +24,6 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    watch,
   } = useForm({
     defaultValues: {
       name: "",
