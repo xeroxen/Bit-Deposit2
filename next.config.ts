@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'mybet24.online',
+        hostname: 'fnd777.online',
       },
     ],
   },
