@@ -6,7 +6,7 @@ const suggestedItems = [
   {
     id: 1,
     title: "Gonzo's Quest Megaways",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/backend/public/2025/06/02/images/67045/3-d2e271a839bc6fb8928ca6f65f452b0b.png?w=640&q=85",
     category: "Adventure",
   },
   {
@@ -62,7 +62,7 @@ export default function SuggestedCarousel() {
             <CarouselItem key={item.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
               <Card className="group cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                 <CardContent className="p-0 relative">
-                  <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
+                  <div className="relative h-[150px] overflow-hidden rounded-lg">
                     <Image
                       src={item.image || "/placeholder.svg"}
                       alt={item.title}

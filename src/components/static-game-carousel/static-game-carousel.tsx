@@ -25,19 +25,19 @@ interface GameCardProps {
 
 const GameCard: React.FC<GameCardProps> = ({ name, winAmount }) => {
   return (
-    <div className="relative w-[92px] h-[96px] bg-white rounded-[8px] shadow-md flex flex-col items-center justify-between p-2">
+    <div className="relative w-[92px] h-[110px] bg-white rounded-[8px]  flex flex-col items-center p-2">
       {/* Game title */}
-      <div className="font-inter font-semibold text-[12px] leading-[16px] text-[#1D3D68] capitalize text-center mt-3">
+      <div className="font-inter font-semibold text-[12px] leading-[16px] text-[#1D3D68] capitalize text-center mt-3 mb-1">
         {name}
       </div>
       
       {/* Win amount */}
-      <div className="font-inter font-medium text-[9px] leading-[14px] text-[#F17910] text-center -mt-1">
+      <div className="font-inter font-medium text-[9px] leading-[14px] text-[#F17910] text-center mb-2">
         win {winAmount}
       </div>
       
       {/* Play now button */}
-      <div className="w-[74px] h-[24px] mb-1 bg-gradient-to-b from-[#97EB0E] to-[#19B90B] shadow-[0px_4px_8px_-2px_rgba(118,188,4,0.32)] rounded-[8px] flex items-center justify-center">
+      <div className="w-[74px] h-[24px] mt-auto bg-gradient-to-b from-[#97EB0E] to-[#19B90B] shadow-[0px_4px_8px_-2px_rgba(118,188,4,0.32)] rounded-[8px] flex items-center justify-center">
         <span className="font-inter font-semibold text-[12px] leading-[14px] text-white">
           Play Now
         </span>
@@ -65,8 +65,8 @@ const StaticGameCarousel = () => {
         setApi={setApi}
         opts={{
           align: "start",
-          loop: true,
-          dragFree: true,
+          loop: false,
+          dragFree: false,
           containScroll: "trimSnaps",
           slidesToScroll: 1
         }}
