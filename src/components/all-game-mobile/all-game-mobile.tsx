@@ -1,5 +1,5 @@
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
-// Type for individual category-game relationships in the 'data' array
 // Type for individual category-game relationships in the 'data' array
 interface CategoryGameRelationship {
     category_id: number;
@@ -28,14 +28,15 @@ interface CategoryGameRelationship {
   interface GameProvider {
     id: number;
     cover: string | null;
-    code: "PGSOFT" | "PRAGMATIC" | "EVOPLAY" | "HABANERO";
-    name: "PGSoft" | "Pragmatic Play" | "EvoPlay" | "Habanero";
+    code: string;
+    name: string;
     status: number;
     rtp: number;
     views: number;
     distribution: "worldslot" | "play_fiver";
     created_at: string; // ISO 8601 date string
     updated_at: string; // ISO 8601 date string
+    games?: Game[]; // Optional games array
   }
   
   interface Game {
@@ -45,11 +46,11 @@ interface CategoryGameRelationship {
     game_id: string;
     game_name: string;
     game_code: string;
-    game_type: "slots";
+    game_type: string;
     description: string | null;
     cover: string;
-    status: "1";
-    technology: "html5";
+    status: string;
+    technology: string;
     has_lobby: 0 | 1;
     is_mobile: 0 | 1;
     has_freespins: 0 | 1;
@@ -72,55 +73,70 @@ interface CategoryGameRelationship {
   }
   
   // Response Type
-  type GameResponse = Game[];
-
-
+  interface GameResponse {
+    providers: GameProvider[];
+  }
 
 const AllGameMobile = () => {
+    const [games, setGames] = useState<GameResponse>({ providers: [] });
+    const [gameProviders, setGameProviders] = useState<ApiResponse>({ status: false, message: '', data: [], cat: [] });
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    const [filteredGames, setFilteredGames] = useState<Game[]>([]);
 
+    async function getGames() {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/games/all`);
+            const data: GameResponse = await response.json();
+            setGames(data);
+        } catch (error) {
+            console.error("Error fetching games:", error);
+        }
+    }
 
+    async function getGameProviders() {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/game-cat`);
+            const data: ApiResponse = await response.json();
+            setGameProviders(data);
+            // Set first category as default selected
+            if (data.cat && data.cat.length > 0) {
+                setSelectedCategory(data.cat[0].id);
+            }
+        } catch (error) {
+            console.error("Error fetching game categories:", error);
+        }
+    }
 
-const [games, setGames] = useState<GameResponse>({} as GameResponse);
-const [gameProviders, setGameProviders] = useState<ApiResponse>({} as ApiResponse);
+    useEffect(() => {
+        getGames();
+        getGameProviders();
+    }, []);
 
-async function getGames() {
-    const response  = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/games/all`);
-    const data: GameResponse = await response.json();
-    setGames(data);
-}
-async function getGameProviders() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/game-cat`);
-    const data: ApiResponse = await response.json();
-    setGameProviders(data);
-}
+    // Filter games by selected category
+    useEffect(() => {
+        if (!selectedCategory || !games.providers || !gameProviders.data) return;
 
+        // Get all game IDs for the selected category
+        const categoryGameIds = gameProviders.data
+            .filter(relation => relation.category_id === selectedCategory)
+            .map(relation => relation.game_id);
 
+        // Flatten all games from all providers
+        const allGames = games.providers.flatMap(provider => 
+            provider.games ? provider.games : []
+        );
 
-useEffect(() => {
-    getGames();
-    getGameProviders();
-}, []);
+        // Filter games that belong to selected category
+        const gamesInCategory = allGames.filter(game => 
+            categoryGameIds.includes(game.id)
+        );
 
+        setFilteredGames(gamesInCategory);
+    }, [selectedCategory, games, gameProviders]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    const handleCategoryClick = (categoryId: number) => {
+        setSelectedCategory(categoryId);
+    };
 
     return (
         <div className="w-full bg-gray-100 p-4">
@@ -134,75 +150,63 @@ useEffect(() => {
 
             {/* Category Pills */}
             <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-                {/* Hot Games Pill */}
-                {gameProviders.cat && gameProviders.cat.map((provider: CategoryInfo) => (
-                    <div key={provider.id} className="flex items-center bg-gray-200 rounded-full px-3 py-2 whitespace-nowrap">
+                {gameProviders.cat && gameProviders.cat.map((category: CategoryInfo) => (
+                    <div 
+                        key={category.id} 
+                        className={`flex items-center ${selectedCategory === category.id ? 'bg-blue-200' : 'bg-gray-200'} rounded-full px-3 py-2 whitespace-nowrap cursor-pointer`}
+                        onClick={() => handleCategoryClick(category.id)}
+                    >
                         <div className="w-6 h-6 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center mr-2">
                             <span className="text-white text-xs">🔥</span>
                         </div>
-                        <span className="text-gray-700 text-sm font-medium">{provider.name}</span>
+                        <span className="text-gray-700 text-sm font-medium">{category.name}</span>
                     </div>
                 ))}
             </div>
 
             {/* Game Cards Grid */}
             <div className="grid grid-cols-4 gap-2 mb-6">
-                {/* Game Card 1 - Crazy Time */}
-                <div className="aspect-[3/4] rounded-lg overflow-hidden relative">
-                    <div className="w-full h-full bg-gradient-to-br from-red-500 via-red-600 to-red-800 flex flex-col">
-                        {/* Game character/image area */}
-                        <div className="flex-1 relative overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30"></div>
-                            {/* Simulated character silhouette */}
-                            <div className="absolute bottom-2 left-2 right-2">
-                                <div className="w-8 h-8 bg-white/20 rounded-full mb-1"></div>
-                                <div className="w-full h-2 bg-white/10 rounded"></div>
+                {filteredGames.length > 0 ? (
+                    filteredGames.map(game => (
+                        <div key={game.id} className="aspect-[3/4] rounded-lg overflow-hidden relative">
+                            <div className="w-full h-full bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-800 flex flex-col">
+                                {/* Game image */}
+                                <div className="flex-1 relative overflow-hidden">
+                                    {game.cover && (
+                                        <Image 
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${game.cover}`} 
+                                            alt={game.game_name}
+                                            className="absolute inset-0 w-full h-full object-cover"
+                                            width={100}
+                                            height={100}
+                                        />
+                                    )}
+                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30"></div>
+                                </div>
+                                {/* Game title */}
+                                {/* <div className="p-2 text-center">
+                                    <div className="text-white text-xs font-bold">{game.game_name}</div>
+                                </div> */}
                             </div>
                         </div>
-                        {/* Game title */}
-                        <div className="p-2 text-center">
-                            <div className="text-white text-xs font-bold">Crazy Time</div>
-                        </div>
+                    ))
+                ) : (
+                    <div className="col-span-4 text-center py-4 text-gray-500">
+                        No games found in this category
                     </div>
-                </div>
-
-               
+                )}
             </div>
 
             {/* Providers Section */}
             <div className="mb-4">
                 <h3 className="text-lg font-bold text-gray-800 mb-3">Providers</h3>
                 
-                {/* Provider Pills - First Row */}
-                <div className="flex gap-2 mb-2">
-                    <div className="flex-1 h-9 bg-white rounded-full flex items-center justify-center border border-gray-200">
-                        <span className="text-xs text-gray-600 font-medium">Provider 1</span>
-                    </div>
-                    <div className="flex-1 h-9 bg-white rounded-full flex items-center justify-center border border-gray-200">
-                        <span className="text-xs text-gray-600 font-medium">Provider 2</span>
-                    </div>
-                    <div className="flex-1 h-9 bg-white rounded-full flex items-center justify-center border border-gray-200">
-                        <span className="text-xs text-gray-600 font-medium">Provider 3</span>
-                    </div>
-                    <div className="flex-1 h-9 bg-white rounded-full flex items-center justify-center border border-gray-200">
-                        <span className="text-xs text-gray-600 font-medium">Provider 4</span>
-                    </div>
-                </div>
-
-                {/* Provider Pills - Second Row */}
-                <div className="flex gap-2">
-                    <div className="flex-1 h-9 bg-white rounded-full flex items-center justify-center border border-gray-200">
-                        <span className="text-xs text-gray-600 font-medium">Provider 5</span>
-                    </div>
-                    <div className="flex-1 h-9 bg-white rounded-full flex items-center justify-center border border-gray-200">
-                        <span className="text-xs text-gray-600 font-medium">Provider 6</span>
-                    </div>
-                    <div className="flex-1 h-9 bg-white rounded-full flex items-center justify-center border border-gray-200">
-                        <span className="text-xs text-gray-600 font-medium">Provider 7</span>
-                    </div>
-                    <div className="flex-1 h-9 bg-white rounded-full flex items-center justify-center border border-gray-200">
-                        <span className="text-xs text-gray-600 font-medium">Provider 8</span>
-                    </div>
+                <div className="grid grid-cols-4 gap-2">
+                    {games.providers && games.providers.map((provider) => (
+                        <div key={provider.id} className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200">
+                            <span className="text-xs text-gray-600 font-medium truncate px-2">{provider.name}</span>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
