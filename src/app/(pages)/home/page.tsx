@@ -1,6 +1,7 @@
 "use client"
 import AllGameMobile from '@/components/all-game-mobile/all-game-mobile';
 import EvolutionBanner from '@/components/Banners/evolutionBanner';
+import StaticGameCarousel from '@/components/static-game-carousel/static-game-carousel';
 import SuggestedCarousel from '@/components/suggested-carrousel/suggested-carousel';
 import React from 'react';
 
@@ -85,6 +86,7 @@ const Home = () => {
             <AllGameMobile />
             <SuggestedCarousel />
             <EvolutionBanner />
+            <StaticGameCarousel />
         </div>
     );
 };
