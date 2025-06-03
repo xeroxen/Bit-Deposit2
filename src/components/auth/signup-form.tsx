@@ -6,12 +6,11 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { Eye, EyeOff, Phone, Mail, X } from "lucide-react"
+import { Eye, EyeOff, X } from "lucide-react"
 import Cookies from "js-cookie"
 import { storeUserData, type LoginResponse } from "@/lib/authentication"
 
@@ -183,34 +182,12 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
           <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
             Phone Number<span className="text-red-500 ml-0.5">*</span>
           </Label>
-          <div className="grid grid-cols-[90px_1fr]">
-            <Select defaultValue="880" >
-              <SelectTrigger className="rounded-r-none border-r-0 h-96- w-full">
-                <div className="flex items-center gap-1">
-                  <div className="w-5 h-3 bg-green-600 rounded-sm flex items-center justify-center">
-                    <div className="w-3 h-2 bg-red-500 rounded-full"></div>
-                  </div>
-                  <SelectValue />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="880">
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-3 bg-green-600 rounded-sm flex items-center justify-center">
-                      <div className="w-3 h-2 bg-red-500 rounded-full"></div>
-                    </div>
-                    <span>880</span>
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
-            <Input
-              id="phone"
-              placeholder="Your number"
-              className="rounded-l-none h-12"
-              {...register("phone", { required: "Phone number is required" })}
-            />
-          </div>
+          <Input
+            id="phone"
+            placeholder="Your phone number"
+            className="h-12"
+            {...register("phone", { required: "Phone number is required" })}
+          />
           {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
         </div>
 
@@ -225,6 +202,51 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
               placeholder="Enter password"
               className="pl-10 pr-10 h-12"
               {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters",
+                },
+              })}
+            />
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <Button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+            </Button>
+          </div>
+          {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="password_confirmation" className="text-sm font-medium text-gray-700">
+            Confirm Password<span className="text-red-500 ml-0.5">*</span>
+          </Label>
+          <div className="relative">
+            <Input
+              id="password_confirmation"
+              type={showPassword ? "text" : "password"}
+              placeholder="Confirm password"
+              className="pl-10 pr-10 h-12"
+              {...register("password_confirmation", {
                 required: "Password is required",
                 minLength: {
                   value: 8,
