@@ -4,6 +4,8 @@ import Image from 'next/image';
 import React, { useState, useEffect, Suspense } from 'react';
 import { Skeleton } from "@/components/ui/skeleton";
 import { apiRequest } from '@/lib/authentication';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 
 export interface SingleGameResponse {
@@ -99,12 +101,14 @@ const GameGrid = ({
   filteredGames, 
   visibleGames, 
   handleShowMore, 
-  gamesPerRow 
+  gamesPerRow,
+  onGameClick
 }: { 
   filteredGames: Game[], 
   visibleGames: number, 
   handleShowMore: () => void, 
-  gamesPerRow: number 
+  gamesPerRow: number,
+  onGameClick: (game: Game) => void
 }) => {
   // Divide games into rows for rendering
   const gameRows = [];
@@ -125,7 +129,11 @@ const GameGrid = ({
       {gameRows.map((row, rowIndex) => (
         <div key={rowIndex} className="grid grid-cols-4 gap-2 mb-3">
           {row.map(game => (
-            <div key={game.id} className="aspect-[3/4] rounded-lg overflow-hidden relative">
+            <div 
+              key={game.id} 
+              className="aspect-[3/4] rounded-lg overflow-hidden relative cursor-pointer"
+              onClick={() => onGameClick(game)}
+            >
               <div className="w-full h-full bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-800 flex flex-col">
                 {/* Game image */}
                 <div className="flex-1 relative overflow-hidden">
@@ -267,14 +275,16 @@ const GamesData = ({
   handleShowMore, 
   gamesPerRow,
   loading,
-  filteredGames
+  filteredGames,
+  onGameClick
 }: {
   selectedCategory: number | null,
   visibleGames: number,
   handleShowMore: () => void,
   gamesPerRow: number,
   loading: boolean,
-  filteredGames: Game[]
+  filteredGames: Game[],
+  onGameClick: (game: Game) => void
 }) => {
   if (loading) {
     return <GameGridSkeleton rows={3} gamesPerRow={gamesPerRow} />;
@@ -286,6 +296,7 @@ const GamesData = ({
       visibleGames={visibleGames} 
       handleShowMore={handleShowMore} 
       gamesPerRow={gamesPerRow}
+      onGameClick={onGameClick}
     />
   );
 };
@@ -339,15 +350,41 @@ const AllGameMobile = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const gamesPerRow = 4;
     const initialRows = 3;
+    const router = useRouter();
+    
+    async function getSingleGameData(game: Game) {
+        // Show loading toast
+        const toastId = toast.loading(`Loading ${game.game_name}...`);
+        try {
+            const response = await apiRequest<SingleGameResponse | ErrorResponse>(`/games/single/${game.id}`);
 
-async function getSingleGame(gameId: number) {
-    try {
-        const response = await apiRequest<SingleGameResponse | ErrorResponse>(`/games/single/${gameId}`);
-        return response;
-    } catch (error) {
-        console.error("Error fetching game categories:", error);
+            // Check if response indicates authentication failure
+            if ('status' in response && response.status === false && 'action' in response && response.action === "login") {
+                toast.error("Please login to play");
+                router.push("/login");
+                return;
+            }
+            if ('status' in response && response.status === false && 'action' in response && response.action === "deposit") {
+                toast.error(`Please deposit to play ${game.game_name}`);
+                router.push("/deposit");
+                return;
+            }
+            // Open game URL in a new tab
+            if ('gameUrl' in response && response.gameUrl) {
+                toast.success(`${game.game_name} ready to play!`);
+                window.location.href = response.gameUrl;
+            } else {
+                toast.error("Game URL not found in response");
+                console.error("Game URL not found in response");
+            }
+        } catch (error) {
+            toast.error(`Failed to load ${game.game_name}, Please try again later`);
+            console.error("Error fetching game data:", error);
+        } finally {
+            toast.dismiss(toastId);
+        }
     }
-}
+    
     async function getGames() {
         try {
             setLoading(true);
@@ -421,6 +458,10 @@ async function getSingleGame(gameId: number) {
         setVisibleGames(prevVisible => prevVisible + (3 * gamesPerRow)); // Show 3 more rows
     };
 
+    const handleGameClick = (game: Game) => {
+        getSingleGameData(game);
+    };
+
     return (
         <div className="w-full bg-gray-100 p-4">
             {/* Header Section */}
@@ -453,6 +494,7 @@ async function getSingleGame(gameId: number) {
                         gamesPerRow={gamesPerRow}
                         loading={loading}
                         filteredGames={filteredGames}
+                        onGameClick={handleGameClick}
                     />
                 </Suspense>
             </div>

@@ -1,6 +1,43 @@
 import Cookies from 'js-cookie';
 const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`
 
+export interface User {
+    id: number;
+    name: string;
+    user_name: string;
+    email: string;
+    email_verified_at: string | null;
+    created_at: string;
+    updated_at: string;
+    oauth_id: string | null;
+    oauth_type: string | null;
+    avatar: string | null;
+    last_name: string | null;
+    cpf: string | null;
+    phone: string;
+    logged_in: number;
+    banned: number;
+    inviter: string | null;
+    inviter_code: string | null;
+    affiliate_revenue_share: number;
+    affiliate_revenue_share_fake: string | null;
+    affiliate_cpa: string;
+    affiliate_baseline: string;
+    is_demo_agent: number;
+    status: string;
+    language: string;
+    role_id: number;
+    dateHumanReadable: string;
+    createdAt: string;
+    totalLikes: number;
+}
+
+export interface LoginResponse {
+    access_token: string;
+    token_type: string;
+    user: User;
+    expires_in: number;
+}
 
 /**
  * Get the authentication token from cookies
@@ -9,7 +46,29 @@ export const getAuthToken = (): string | undefined => {
     return Cookies.get('access_token');
 };
 
-
+/**
+ * Store user data after successful login
+ */
+export const storeUserData = (loginResponse: LoginResponse): void => {
+    // Store access token in cookies with 2-hour expiry
+    Cookies.set('access_token', loginResponse.access_token, { expires: 1 / 12 });
+    
+    // Store user data in localStorage (only in browser environment)
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('user_data', JSON.stringify(loginResponse.user));
+        
+        // Set a flag in local storage to notify other tabs
+        localStorage.setItem('auth_status_changed', Date.now().toString());
+        
+        // Dispatch custom event for same-tab components
+        window.dispatchEvent(new CustomEvent('auth_status_changed', { 
+            detail: { authenticated: true, timestamp: Date.now() } 
+        }));
+    }
+    
+    // Store user ID in cookies as backup
+    Cookies.set('user_id', loginResponse.user.id.toString(), { expires: 1 / 12 });
+};
 
 export const apiRequest = async <T>(
     endpoint: string,
