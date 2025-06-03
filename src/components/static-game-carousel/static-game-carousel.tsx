@@ -7,7 +7,6 @@ import {
   CarouselItem,
   type CarouselApi
 } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
 
 // Game data for the carousel
 const games = [
@@ -49,25 +48,16 @@ const GameCard: React.FC<GameCardProps> = ({ name, winAmount }) => {
 
 const StaticGameCarousel = () => {
   const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (!api) {
       return;
     }
 
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-
+    // No need to track current and count if they're not being used
+    
     return () => {
-      api.off("select", () => {
-        setCurrent(api.selectedScrollSnap() + 1);
-      });
+      // Clean up event listeners if needed
     };
   }, [api]);
 
@@ -78,8 +68,9 @@ const StaticGameCarousel = () => {
         opts={{
           align: "start",
           loop: false,
-          dragFree: true,
-          containScroll: "trimSnaps"
+          dragFree: false,
+          containScroll: "trimSnaps",
+          slidesToScroll: 1
         }}
         className="w-full"
       >
