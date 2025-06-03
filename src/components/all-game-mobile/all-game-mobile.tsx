@@ -3,6 +3,20 @@
 import Image from 'next/image';
 import React, { useState, useEffect, Suspense } from 'react';
 import { Skeleton } from "@/components/ui/skeleton";
+import { apiRequest } from '@/lib/authentication';
+
+
+export interface SingleGameResponse {
+    gameUrl: string;
+    // Add other fields as needed
+} 
+
+// Add interface for error response
+interface ErrorResponse {
+    error: string;
+    status: boolean;
+}
+
 // Type for individual category-game relationships in the 'data' array
 interface CategoryGameRelationship {
     category_id: number;
@@ -326,6 +340,14 @@ const AllGameMobile = () => {
     const gamesPerRow = 4;
     const initialRows = 3;
 
+async function getSingleGame(gameId: number) {
+    try {
+        const response = await apiRequest<SingleGameResponse | ErrorResponse>(`/games/single/${gameId}`);
+        return response;
+    } catch (error) {
+        console.error("Error fetching game categories:", error);
+    }
+}
     async function getGames() {
         try {
             setLoading(true);
