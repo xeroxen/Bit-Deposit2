@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 const Navbar = () => {
@@ -28,24 +29,7 @@ const Navbar = () => {
 
                 {/* Logo/Brand - Center */}
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <div className="w-32 h-6 relative flex items-center">
-                        {/* Logo icon with gradient */}
-                        <div className="w-6 h-6 bg-gradient-to-br from-[#FFE900] via-[#EB8700] to-[#C26100] rounded-sm mr-2 flex-shrink-0 relative overflow-hidden">
-                            {/* Inner gradient overlay */}
-                            <div className="absolute inset-1 bg-gradient-to-br from-[#F0FF00] to-[#EB8700] rounded-sm"></div>
-                        </div>
-                        
-                        {/* Brand text representation */}
-                        <div className="flex space-x-0.5">
-                            <div className="w-1.5 h-4 bg-[#2B415D] rounded-sm"></div>
-                            <div className="w-1.5 h-4 bg-[#0C5CC5] rounded-sm"></div>
-                            <div className="w-1.5 h-4 bg-[#2B415D] rounded-sm"></div>
-                            <div className="w-1.5 h-4 bg-[#2B415D] rounded-sm"></div>
-                            <div className="w-1.5 h-4 bg-[#2B415D] rounded-sm"></div>
-                            <div className="w-1.5 h-4 bg-[#2B415D] rounded-sm"></div>
-                            <div className="w-1.5 h-4 bg-[#2B415D] rounded-sm"></div>
-                        </div>
-                    </div>
+                  <Image src="/logo/logo.png" alt="logo" width={128} height={24} />
                 </div>
 
                 {/* Search Icon - Center Right */}

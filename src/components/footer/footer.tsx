@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Facebook, Youtube, MessageCircle } from "lucide-react"
+import Image from "next/image"
 
 export default function BottomFooter() {
   return (
@@ -9,10 +10,7 @@ export default function BottomFooter() {
         {/* Header Section */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
-            <div className="text-2xl font-bold">
-              <span className="text-orange-400">Bit</span>
-              <span className="text-blue-400">Deposit</span>
-            </div>
+            <Image src="/logo/logo.png" alt="logo" width={200} height={40} />
           </div>
           <p className="text-gray-300 mb-4">Contact with us</p>
 
