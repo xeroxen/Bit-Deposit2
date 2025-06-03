@@ -135,7 +135,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
   }
 
   return (
-    <div className={cn("w-full max-w-md mx-auto bg-white rounded-lg p-6 relative", className)} {...props}>
+    <div className={cn("w-full max-w-md mx-auto bg-white rounded-lg p-6 relative mt-10", className)} {...props}>
       {/* Close button */}
       <Button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
         <X className="h-5 w-5" />

@@ -1,8 +1,35 @@
+"use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { getAuthToken } from '@/lib/authentication';
 
 const Navbar = () => {
+    const pathname = usePathname();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    
+    // Check authentication status
+    useEffect(() => {
+        const token = getAuthToken();
+        setIsAuthenticated(!!token);
+        
+        // Listen for auth status changes
+        const handleAuthChange = () => {
+            const updatedToken = getAuthToken();
+            setIsAuthenticated(!!updatedToken);
+        };
+        
+        window.addEventListener('auth_status_changed', handleAuthChange);
+        
+        return () => {
+            window.removeEventListener('auth_status_changed', handleAuthChange);
+        };
+    }, []);
+    
+    // Check if we should hide login/signup buttons
+    const shouldHideAuthButtons = isAuthenticated || pathname === '/login' || pathname === '/signup';
+    
     return (
         <>
         <div className="fixed top-0 left-0 right-0 z-50 w-full h-[50px] bg-[#001529]">
@@ -55,28 +82,30 @@ const Navbar = () => {
             </div>
         </div>
         
-        {/* Login and Registration Buttons - Below Navbar */}
-        <div className="fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white">
-            <div className="flex items-center justify-center h-full px-2 gap-2">
-                {/* Login Button */}
-                <button className="flex-1 h-[40px] bg-[#4094FF] rounded-[12px] flex items-center justify-center max-w-[calc(50%-4px)]">
-                    <Link href="/login">
-                        <span className="font-inter font-bold text-[12.8px] leading-[19px] text-white text-center">
-                            Log In
-                        </span>
-                    </Link>
-                </button>
-                
-                {/* Registration Button */}
-                <button className="flex-1 h-[40px] bg-[#22C55E] rounded-[12px] flex items-center justify-center max-w-[calc(50%-4px)]">
-                    <Link href="/signup">
-                        <span className="font-inter font-bold text-[12.8px] leading-[19px] text-white text-center">
-                            Registration
-                        </span>
-                    </Link>
-                </button>
+        {/* Login and Registration Buttons - Below Navbar (conditionally rendered) */}
+        {!shouldHideAuthButtons && (
+            <div className="fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white">
+                <div className="flex items-center justify-center h-full px-2 gap-2">
+                    {/* Login Button */}
+                    <button className="flex-1 h-[40px] bg-[#4094FF] rounded-[12px] flex items-center justify-center max-w-[calc(50%-4px)]">
+                        <Link href="/login">
+                            <span className="font-inter font-bold text-[12.8px] leading-[19px] text-white text-center">
+                                Log In
+                            </span>
+                        </Link>
+                    </button>
+                    
+                    {/* Registration Button */}
+                    <button className="flex-1 h-[40px] bg-[#22C55E] rounded-[12px] flex items-center justify-center max-w-[calc(50%-4px)]">
+                        <Link href="/signup">
+                            <span className="font-inter font-bold text-[12.8px] leading-[19px] text-white text-center">
+                                Registration
+                            </span>
+                        </Link>
+                    </button>
+                </div>
             </div>
-        </div>
+        )}
         </>
     );
 };
