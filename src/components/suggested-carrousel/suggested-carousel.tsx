@@ -1,47 +1,35 @@
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
+import { useEffect, useRef } from "react"
 
 const suggestedItems = [
   {
     id: 1,
+    title: "Duck Hunter",
+    image: "https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/backend/public/2025/06/01/images/66768/112-9111a433973ea9976d2e5c4fac5d0eb5.png?w=640&q=85",
+    category: "Action",
+  },
+  {
+    id: 2,
     title: "Gonzo's Quest Megaways",
     image: "https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/backend/public/2025/06/02/images/67045/3-d2e271a839bc6fb8928ca6f65f452b0b.png?w=640&q=85",
     category: "Adventure",
   },
   {
-    id: 2,
-    title: "Duck Hunter",
-    image: "/placeholder.svg?height=200&width=300",
-    category: "Action",
-  },
-  {
     id: 3,
     title: "Provider Of The Month",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/backend/public/2025/06/02/images/67116/112-c0843f87152e237d723e76792ab7fd5b.png?w=640&q=85",
     category: "Featured",
-  },
-  {
-    id: 4,
-    title: "Mystic Fortune",
-    image: "/placeholder.svg?height=200&width=300",
-    category: "Fantasy",
-  },
-  {
-    id: 5,
-    title: "Ocean Treasures",
-    image: "/placeholder.svg?height=200&width=300",
-    category: "Adventure",
-  },
-  {
-    id: 6,
-    title: "Space Explorer",
-    image: "/placeholder.svg?height=200&width=300",
-    category: "Sci-Fi",
-  },
+  }
 ]
 
 export default function SuggestedCarousel() {
+  const autoplayRef = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: false })
+  )
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-4">
       {/* Header */}
@@ -54,14 +42,16 @@ export default function SuggestedCarousel() {
         opts={{
           align: "start",
           loop: true,
+          dragFree: false,
         }}
+        plugins={[autoplayRef.current]}
         className="w-full"
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {suggestedItems.map((item) => (
             <CarouselItem key={item.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-              <Card className="group cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                <CardContent className="p-0 relative">
+              {/* <Card className="group cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"> */}
+                <div className="p-0 relative">
                   <div className="relative h-[150px] overflow-hidden rounded-lg">
                     <Image
                       src={item.image || "/placeholder.svg"}
@@ -85,8 +75,8 @@ export default function SuggestedCarousel() {
                     {/* Hover effect */}
                     <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              {/* </Card> */}
             </CarouselItem>
           ))}
         </CarouselContent>
