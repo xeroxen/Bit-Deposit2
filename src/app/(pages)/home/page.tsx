@@ -9,7 +9,7 @@ const Home = () => {
     return (
         <div className=" bg-gray-50 mt-10">
             {/* Game Section */}
-            <div className="pt-20"> {/* Add top padding to avoid navbar overlap */}
+            <div className="pt-20"> {/* Reduced from pt-20 to pt-8 */}
                 <div className="relative w-[382px] h-[105px] mx-auto mt-1 flex justify-between items-start gap-2">
                     {/* Game Card 1 - Up To 100% (Deposit Bonus) */}
                     <div className="relative w-[92px] h-[105px] flex flex-col items-center">
@@ -83,7 +83,10 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <AllGameMobile />
+            {/* Reduced margin between sections */}
+            <div className="mt-6"> {/* Added wrapper with smaller margin */}
+                <AllGameMobile />
+            </div>
             <SuggestedCarousel />
             <EvolutionBanner />
             <StaticGameCarousel />
