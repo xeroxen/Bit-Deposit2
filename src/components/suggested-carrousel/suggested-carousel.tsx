@@ -1,8 +1,7 @@
 import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 
 const suggestedItems = [
   {
