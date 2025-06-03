@@ -25,20 +25,20 @@ interface GameCardProps {
 
 const GameCard: React.FC<GameCardProps> = ({ name, winAmount }) => {
   return (
-    <div className="relative w-[92px] h-[96px] bg-white rounded-[8px] shadow-md">
+    <div className="relative w-[92px] h-[96px] bg-white rounded-[8px] shadow-md flex flex-col items-center justify-between p-2">
       {/* Game title */}
-      <div className="absolute w-[29.35px] h-[16px] left-[31.5px] top-[22.86px] font-inter font-semibold text-[12px] leading-[16px] flex items-center text-[#1D3D68] capitalize">
+      <div className="font-inter font-semibold text-[12px] leading-[16px] text-[#1D3D68] capitalize text-center mt-3">
         {name}
       </div>
       
       {/* Win amount */}
-      <div className="absolute w-[45.12px] h-[14.14px] left-[23.61px] top-[38.86px] font-inter font-medium text-[9px] leading-[14px] flex items-center text-[#F17910]">
+      <div className="font-inter font-medium text-[9px] leading-[14px] text-[#F17910] text-center -mt-1">
         win {winAmount}
       </div>
       
       {/* Play now button */}
-      <div className="absolute w-[74px] h-[24px] left-[calc(50%-74px/2)] bottom-[11px] bg-gradient-to-b from-[#97EB0E] to-[#19B90B] shadow-[0px_18px_8px_-8px_rgba(118,188,4,0.32)] rounded-[8px] flex items-center justify-center">
-        <span className="absolute w-[57.94px] h-[15px] left-[calc(50%-57.94px/2+0.19px)] top-[2px] font-inter font-semibold text-[12.8px] leading-[19px] flex items-center justify-center text-white">
+      <div className="w-[74px] h-[24px] mb-1 bg-gradient-to-b from-[#97EB0E] to-[#19B90B] shadow-[0px_4px_8px_-2px_rgba(118,188,4,0.32)] rounded-[8px] flex items-center justify-center">
+        <span className="font-inter font-semibold text-[12px] leading-[14px] text-white">
           Play Now
         </span>
       </div>
@@ -53,8 +53,6 @@ const StaticGameCarousel = () => {
     if (!api) {
       return;
     }
-
-    // No need to track current and count if they're not being used
     
     return () => {
       // Clean up event listeners if needed
@@ -62,13 +60,13 @@ const StaticGameCarousel = () => {
   }, [api]);
 
   return (
-    <div className="w-full py-8">
+    <div className="w-full py-4">
       <Carousel
         setApi={setApi}
         opts={{
           align: "start",
-          loop: false,
-          dragFree: false,
+          loop: true,
+          dragFree: true,
           containScroll: "trimSnaps",
           slidesToScroll: 1
         }}
