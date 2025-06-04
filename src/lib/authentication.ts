@@ -96,3 +96,20 @@ export const apiRequest = async <T>(
 
     return response.json();
 };
+
+
+
+/**
+ * Trigger balance update event to notify components
+ */
+export const triggerBalanceUpdate = (): void => {
+    if (typeof window !== 'undefined') {
+        // Dispatch a custom event to notify components about balance change
+        window.dispatchEvent(new CustomEvent('balanceUpdated', { 
+            detail: { timestamp: Date.now() } 
+        }));
+        
+        // Also set a flag in localStorage for cross-tab synchronization
+        localStorage.setItem('balance_updated', Date.now().toString());
+    }
+};

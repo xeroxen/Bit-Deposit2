@@ -359,16 +359,8 @@ const AllGameMobile = () => {
             const response = await apiRequest<SingleGameResponse | ErrorResponse>(`/games/single/${game.id}`);
 
             // Check if response indicates authentication failure
-            if ('status' in response && response.status === false && 'action' in response && response.action === "login") {
-                toast.error("Please login to play");
-                router.push("/login");
-                return;
-            }
-            if ('status' in response && response.status === false && 'action' in response && response.action === "deposit") {
-                toast.error(`Please deposit to play ${game.game_name}`);
-                router.push("/deposit");
-                return;
-            }
+            
+           
             // Open game URL in a new tab
             if ('gameUrl' in response && response.gameUrl) {
                 toast.success(`${game.game_name} ready to play!`);
@@ -377,9 +369,16 @@ const AllGameMobile = () => {
                 toast.error("Game URL not found in response");
                 console.error("Game URL not found in response");
             }
-        } catch (error) {
-            toast.error(`Failed to load ${game.game_name}, Please try again later`);
-            console.error("Error fetching game data:", error);
+        } catch (error: unknown) {
+            if (error && typeof error === 'object' && 'status' in error && error.status === false && 'action' in error && error.action === "login") {
+                toast.error("Please login to play");
+                router.push("/login");
+                return;
+            }
+            if (error && typeof error === 'object' && 'status' in error && error.status === false && 'action' in error && error.action === "deposit") {
+              toast.error(`Please deposit to play ${game.game_name}`);
+              return;
+          }
         } finally {
             toast.dismiss(toastId);
         }
