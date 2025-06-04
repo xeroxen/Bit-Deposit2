@@ -41,7 +41,7 @@ export default function DepositPage() {
   return (
     <div className="bg-gradient-to-br from-blue-100 via-white to-indigo-100 py-10 mt-10">
       <div className="container mx-auto flex flex-col items-center justify-center min-h-[80vh]">
-        <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-sky-500 to-indigo-600 bg-clip-text text-transparent">
           Deposit Funds
         </h1>
         

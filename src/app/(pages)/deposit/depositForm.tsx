@@ -23,7 +23,7 @@ interface PaymentMethod {
 const paymentMethods: PaymentMethod[] = [
   {
     id: "bkash-personal",
-    name: "bKash Personal",
+    name: "bKash Personald",
     type: "mobile",
     discount: "-5%",
     logo: "/images/bkash-logo.png",
@@ -73,9 +73,9 @@ export default function DepositForm() {
     try {
       const payload = {
         amount: Number(formData.depositAmount),
-        payment_id: formData.transactionId,
+        payment_id: formData.transactionId ,
         sender_number: formData.accountNumber,
-        type: selectedMethod?.id
+        type: selectedMethod?.id?.split('-')[0] 
       }
       await apiRequest('/games/deposite', {
         method: 'POST',
