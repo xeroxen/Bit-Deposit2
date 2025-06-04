@@ -22,26 +22,26 @@ interface PaymentMethod {
 
 const paymentMethods: PaymentMethod[] = [
   {
-    id: "bkash-personal",
-    name: "bKash Personald",
+    id: "bkash-personal", // bkash-personal type as payload
+    name: "bKash Personal",
     type: "mobile",
-    discount: "-5%",
+    discount: "+ 5%",
     logo: "/images/bkash-logo.png",
     color: "bg-gradient-to-br from-pink-500 to-pink-600",
   },
   {
-    id: "nagad-personal",
+    id: "nagad-personal", // nagad-personal type as payload
     name: "Nagad Personal",
     type: "mobile",
-    discount: "-3%",
+    discount: "+ 3%",
     logo: "/images/nagad-logo.png",
     color: "bg-gradient-to-br from-orange-500 to-red-500",
   },
   {
-    id: "rocket-personal",
+    id: "rocket-personal", // rocket-personal type as payload
     name: "Rocket Personal",
     type: "mobile",
-    discount: "-4%",
+    discount: "+ 4%",
     logo: "/images/rocket-logo.png",
     color: "bg-gradient-to-br from-purple-500 to-purple-600",
   },
