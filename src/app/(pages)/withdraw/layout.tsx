@@ -1,11 +1,11 @@
 import React from 'react';
 
 export const metadata = {
-  title: "Deposit",
-  description: "Make a deposit to your Fnd777 account",
+  title: "Withdraw ",
+  description: "Make a withdraw from your Fnd777 account",
 }
 
-export default function DepositLayout({
+export default function WithdrawLayout({
   children,
 }: {
   children: React.ReactNode

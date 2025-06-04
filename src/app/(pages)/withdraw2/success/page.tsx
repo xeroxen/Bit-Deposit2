@@ -26,9 +26,9 @@ export default function DepositSuccessPage() {
                 </div>
             </div>
 
-            <h1 className="text-2xl font-bold mb-2">Deposit Successful!</h1>
+            <h1 className="text-2xl font-bold mb-2">Withdraw Successful!</h1>
             <p className="text-muted-foreground mb-6">
-                Your deposit has been submitted successfully and is being processed.
+                Your withdraw has been submitted successfully and is being processed.
                 You will receive a confirmation shortly.
             </p>
 
@@ -37,7 +37,7 @@ export default function DepositSuccessPage() {
                     <Link href="/dashboard">Go to Dashboard</Link>
                 </Button>
                 <Button variant="outline" asChild>
-                    <Link href="/deposit">Make Another Deposit</Link>
+                    <Link href="/deposit">Make Another Withdraw</Link>
                 </Button>
             </div>
         </div>
