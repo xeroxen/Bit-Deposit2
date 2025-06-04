@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2, ArrowLeft, Copy, ArrowRight } from "lucide-react"
+import { Loader2, ArrowLeft, ArrowRight } from "lucide-react"
 import Image from "next/image"
-import { triggerBalanceUpdate } from "@/lib/authentication"
-import { apiRequest } from "@/lib/authentication"
+import { apiRequest , triggerBalanceUpdate } from "@/lib/authentication"
+import Link from "next/link"
 
 interface PaymentMethod {
   id: string
@@ -53,7 +53,6 @@ export default function WithdrawForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     accountNumber: "",
-    transactionId: "",
     withdrawAmount: "",
   })
 
@@ -71,13 +70,13 @@ export default function WithdrawForm() {
     e.preventDefault()
     setIsSubmitting(true)
     try {
+      // Use the fixed payload as requested
       const payload = {
         amount: Number(formData.withdrawAmount),
-        payment_id: formData.transactionId ,
-        sender_number: formData.accountNumber,
+        recever_number: formData.accountNumber,
         type: selectedMethod?.id?.split('-')[0] 
       }
-      await apiRequest('/games/deposite', {
+      await apiRequest('/games/withdrawal', {
         method: 'POST',
         body: JSON.stringify(payload)
       });
@@ -87,7 +86,6 @@ export default function WithdrawForm() {
       triggerBalanceUpdate();
       setFormData({
         accountNumber: "",
-        transactionId: "",
         withdrawAmount: "",
       });
     } catch (error) {
@@ -96,9 +94,7 @@ export default function WithdrawForm() {
       setIsSubmitting(false)
     }
   }
-  const copyAccountNumber = () => {
-    navigator.clipboard.writeText(process.env.NEXT_PUBLIC_BKASH_NUMBER?.toString() || '')
-  }
+
 
   if (step === 3) {
     return (
@@ -124,7 +120,7 @@ export default function WithdrawForm() {
 
         <div className="flex flex-col gap-3">
           <Button asChild>
-            <a href="/">Go to Home Page</a>
+            <Link href="/">Go to Home Page</Link>
           </Button>
           <Button
             variant="outline"
@@ -259,21 +255,6 @@ export default function WithdrawForm() {
                   name="accountNumber"
                   placeholder="Enter Mobile Number"
                   value={formData.accountNumber}
-                  onChange={handleInputChange}
-                  className="border-2 focus:border-blue-400 rounded-lg"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="transactionId" className="font-semibold text-gray-800">
-                  Transaction ID <span className="text-red-500">*</span>
-                </Label>
-                <Input
-                  id="transactionId"
-                  name="transactionId"
-                  placeholder="Enter Transaction ID"
-                  value={formData.transactionId}
                   onChange={handleInputChange}
                   className="border-2 focus:border-blue-400 rounded-lg"
                   required

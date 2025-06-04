@@ -10,6 +10,7 @@ import { Loader2, ArrowLeft, Copy, ArrowRight } from "lucide-react"
 import Image from "next/image"
 import { triggerBalanceUpdate } from "@/lib/authentication"
 import { apiRequest } from "@/lib/authentication"
+import Link from "next/link"
 
 interface PaymentMethod {
   id: string
@@ -124,7 +125,7 @@ export default function DepositForm() {
 
         <div className="flex flex-col gap-3">
           <Button asChild>
-            <a href="/">Go to Home Page</a>
+            <Link href="/">Go to Home Page</Link>
           </Button>
           <Button
             variant="outline"
