@@ -284,7 +284,7 @@ export default function DepositForm() {
 
               <div className="space-y-2">
                 <Label htmlFor="transactionId" className="font-semibold text-gray-800">
-                  Transaction ID
+                  Transaction ID <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="transactionId"
@@ -293,6 +293,7 @@ export default function DepositForm() {
                   value={formData.transactionId}
                   onChange={handleInputChange}
                   className="border-2 focus:border-blue-400 rounded-lg"
+                  required
                 />
               </div>
 
@@ -310,7 +311,6 @@ export default function DepositForm() {
                   className="border-2 focus:border-blue-400 rounded-lg"
                   required
                 />
-                <p className="text-xs text-orange-600 font-medium">Min deposit amount ৳100, and max ৳50000</p>
               </div>
             </div>
 
