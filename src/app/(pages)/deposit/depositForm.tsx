@@ -124,7 +124,7 @@ export default function DepositForm() {
 
         <div className="flex flex-col gap-3">
           <Button asChild>
-            <a href="/dashboard">Go to Dashboard</a>
+            <a href="/">Go to Home Page</a>
           </Button>
           <Button
             variant="outline"
@@ -232,7 +232,7 @@ export default function DepositForm() {
               </div>
 
               <div className="flex flex-col items-center gap-2">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-sm">
+                <div className="w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center shadow-sm">
                   <span className="text-white font-bold text-sm">Wallet</span>
                 </div>
                 <p className="text-sm text-gray-600">Wallet</p>
