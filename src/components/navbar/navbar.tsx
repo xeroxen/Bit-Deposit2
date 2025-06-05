@@ -18,8 +18,8 @@ const Navbar = () => {
     
     // Navigation items with Lucide icons
     const navItems = useMemo(() => [
-        { name: 'Top', icon: Home, href: '/' },
-        { name: 'Cricket', icon: BarChart2, href: '/cricket' },
+        { name: 'Home', icon: Home, href: '/' },
+        { name: 'Sports', icon: BarChart2, href: '/sports' },
         { name: 'Casino', icon: Gamepad2, href: '/casino' },
     ], []);
     
