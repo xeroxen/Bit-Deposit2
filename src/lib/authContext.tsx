@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
-import { getAuthToken } from './authentication';
+import { getAuthToken, logout as logoutUser } from './authentication';
 import { useRouter } from 'next/navigation';
 
 // Create authentication context
@@ -9,6 +9,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   loading: boolean;
   redirectToLogin: () => void;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -28,6 +29,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Redirect to login page function using Next.js router
   const redirectToLogin = () => {
+    router.push('/login');
+  };
+
+  // Logout function
+  const logout = () => {
+    logoutUser();
+    setAuthenticated(false);
     router.push('/login');
   };
 
@@ -64,7 +72,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = { 
     isAuthenticated: authenticated, 
     loading,
-    redirectToLogin 
+    redirectToLogin,
+    logout
   };
 
   return (

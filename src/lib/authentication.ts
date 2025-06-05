@@ -121,6 +121,28 @@ export const isAuthenticated = (): boolean => {
 };
 
 /**
+ * Logout user by removing auth token and user data
+ */
+export const logout = (): void => {
+    // Remove auth token from cookies
+    Cookies.remove('access_token');
+    Cookies.remove('user_id');
+    
+    // Remove user data from localStorage
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('user_data');
+        
+        // Set a flag in local storage to notify other tabs
+        localStorage.setItem('auth_status_changed', Date.now().toString());
+        
+        // Dispatch custom event for same-tab components
+        window.dispatchEvent(new CustomEvent('auth_status_changed', { 
+            detail: { authenticated: false, timestamp: Date.now() } 
+        }));
+    }
+};
+
+/**
  * Redirect to login page if user is not authenticated
  */
 export const redirectToLogin = (): void => {

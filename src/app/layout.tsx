@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import NextTopLoader from 'nextjs-toploader';
 import { AuthProvider } from "@/lib/authContext";
 import { WalletProvider } from "@/lib/walletContext";
-
+import { SpeedInsights } from '@vercel/speed-insights/next';
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -46,6 +46,7 @@ export default function RootLayout({
             {children}
             <BottomFooter />
             <Toaster />
+            <SpeedInsights />
           </WalletProvider>
         </AuthProvider>
       </body>

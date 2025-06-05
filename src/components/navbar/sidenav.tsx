@@ -21,6 +21,7 @@ import {
   Gamepad2,
   Crown,
   Tag,
+  LogOut
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -114,6 +115,12 @@ const navItems: NavItem[] = [
   },
 ]
 
+// Add a logout item that will call the logout function when clicked
+const logoutItem: NavItem = {
+  title: "Logout",
+  icon: <LogOut className="h-5 w-5" />,
+};
+
 interface QuickActionProps {
   icon: React.ReactNode
   label: string
@@ -128,7 +135,7 @@ const QuickAction = ({ icon, label, href = "#" }: QuickActionProps) => (
 )
 
 export function MobileNav() {
-  const { isAuthenticated, redirectToLogin } = useAuth()
+  const { isAuthenticated, redirectToLogin, logout } = useAuth()
   const [sheetOpen, setSheetOpen] = useState(false)
   
   // Function to check authentication when the sheet is opened
@@ -141,6 +148,12 @@ export function MobileNav() {
       redirectToLogin();
     }
   }
+
+  // Handler for logout
+  const handleLogout = () => {
+    setSheetOpen(false);
+    logout();
+  };
 
   return (
     <div className="flex items-center">
@@ -198,6 +211,14 @@ export function MobileNav() {
                     <span>{item.title}</span>
                   </Link>
                 ))}
+                {/* Logout button */}
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent text-left"
+                >
+                  {logoutItem.icon}
+                  <span>{logoutItem.title}</span>
+                </button>
               </nav>
             </div>
 
