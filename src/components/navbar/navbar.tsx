@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { getAuthToken } from '@/lib/authentication';
+import { MobileNav } from './sidenav';
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -71,14 +72,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Menu Button - Right side */}
-                <button className="w-[26px] h-[26px] bg-[#ECF4FF] rounded flex items-center justify-center hover:bg-blue-100 transition-colors">
-                    <div className="grid grid-cols-2 gap-0.5">
-                        <div className="w-1.5 h-1.5 bg-[#276AA5] rounded-sm"></div>
-                        <div className="w-1.5 h-1.5 bg-[#276AA5] rounded-sm"></div>
-                        <div className="w-1.5 h-1.5 bg-[#276AA5] rounded-sm"></div>
-                        <div className="w-1.5 h-1.5 bg-[#276AA5] rounded-sm"></div>
-                    </div>
-                </button>
+                <MobileNav />
             </div>
         </div>
         

@@ -85,7 +85,7 @@ const Home = () => {
             </div>
             {/* Reduced margin between sections */}
             <div className="mt-6"> {/* Added wrapper with smaller margin */}
-                <AllGameMobile />
+            <AllGameMobile />
             </div>
             <SuggestedCarousel />
             <EvolutionBanner />
