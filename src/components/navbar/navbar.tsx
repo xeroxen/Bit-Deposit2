@@ -1,19 +1,27 @@
 "use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { MobileNav } from './sidenav';
 import { useAuth } from '@/lib/authContext';
 import { WalletBalance } from '@/components/ui/wallet-balance';
-import { Plus } from 'lucide-react';
+import { Home, BarChart2, Gamepad2, Plus } from 'lucide-react';
 
 const Navbar = () => {
     const pathname = usePathname();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, loading } = useAuth();
     
-    // Check if we should hide login/signup buttons
-    const shouldHideAuthButtons = isAuthenticated || pathname === '/login' || pathname === '/signup';
+    // Only hide auth buttons when explicitly on login/signup pages
+    // Don't use isAuthenticated here to prevent flashing
+    const hideAuthButtonsOnRoutes = pathname === '/login' || pathname === '/signup';
+    
+    // Navigation items with Lucide icons
+    const navItems = useMemo(() => [
+        { name: 'Top', icon: Home, href: '/' },
+        { name: 'Cricket', icon: BarChart2, href: '/cricket' },
+        { name: 'Casino', icon: Gamepad2, href: '/casino' },
+    ], []);
     
     return (
         <>
@@ -25,7 +33,7 @@ const Navbar = () => {
             <div className="relative h-full flex items-center justify-between px-2">
                 
                 {/* Language Selector or Wallet Balance - Left side */}
-                {isAuthenticated ? (
+                {!loading && isAuthenticated ? (
                     <div className="flex items-center bg-[#F3F6FA] rounded-[20px] px-3 py-1 h-8">
                         <WalletBalance showArrow={false} size="sm" className="whitespace-nowrap" />
                         <Link href="/deposit" className="ml-1">
@@ -54,8 +62,8 @@ const Navbar = () => {
                 {/* Logo/Brand - Center */}
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
                     <Link href="/">
-                  <Image src="/logo/logo.png" alt="logo" width={128} height={24} className="cursor-pointer" />
-                  </Link>
+                        <Image src="/logo/logo.png" alt="logo" width={128} height={24} className="cursor-pointer" />
+                    </Link>
                 </div>
 
                 {/* Search Icon - Center Right */}
@@ -73,8 +81,9 @@ const Navbar = () => {
             </div>
         </div>
         
-        {/* Login and Registration Buttons - Below Navbar (conditionally rendered) */}
-        {!shouldHideAuthButtons && (
+        {/* Login and Registration Buttons - Below Navbar */}
+        {/* Only show when not loading AND not authenticated AND not on auth pages */}
+        {!loading && !isAuthenticated && !hideAuthButtonsOnRoutes && (
             <div className="fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white">
                 <div className="flex items-center justify-center h-full px-4 gap-4">
                     {/* Login Button */}
@@ -94,6 +103,33 @@ const Navbar = () => {
                             </span>
                         </div>
                     </Link>
+                </div>
+            </div>
+        )}
+
+        {/* Navigation Tabs - Only show when not loading AND authenticated */}
+        {!loading && isAuthenticated && (
+            <div className="fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white border-b border-gray-200">
+                <div className="flex items-center justify-between h-full px-2">
+                    {navItems.map((item, index) => {
+                        const isActive = pathname === item.href;
+                        const IconComponent = item.icon;
+                        return (
+                            <Link href={item.href} key={index} className="flex-1">
+                                <div className={`flex flex-col items-center justify-center h-full ${isActive ? 'border-b-2 border-blue-500' : ''}`}>
+                                    <div className="w-6 h-6 mb-1 flex items-center justify-center">
+                                        <IconComponent 
+                                            size={20} 
+                                            className={`${isActive ? 'text-blue-500' : 'text-gray-500'}`} 
+                                        />
+                                    </div>
+                                    <span className={`text-xs font-medium ${isActive ? 'text-blue-500' : 'text-gray-500'}`}>
+                                        {item.name}
+                                    </span>
+                                </div>
+                            </Link>
+                        );
+                    })}
                 </div>
             </div>
         )}
