@@ -229,6 +229,7 @@ export default function DepositForm() {
                   width={128}
                   height={96}
                   className="object-contain"
+                  unoptimized
                 />
               </div>
 

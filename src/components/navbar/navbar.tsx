@@ -40,7 +40,9 @@ const Navbar = () => {
 
                 {/* Logo/Brand - Center */}
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <Image src="/logo/logo.png" alt="logo" width={128} height={24} />
+                    <Link href="/">
+                  <Image src="/logo/logo.png" alt="logo" width={128} height={24} className="cursor-pointer" />
+                  </Link>
                 </div>
 
                 {/* Search Icon - Center Right */}

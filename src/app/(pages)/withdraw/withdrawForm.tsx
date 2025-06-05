@@ -217,6 +217,7 @@ export default function WithdrawForm() {
                   width={128}
                   height={96}
                   className="object-contain"
+                  unoptimized
                 />
               </div>
               <div className="flex flex-col items-center gap-2">
