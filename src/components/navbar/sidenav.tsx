@@ -16,7 +16,7 @@ import {
   Upload,
   User,
   // Users,
-  // Wallet,
+  Wallet,
   Download,
   // Gamepad2,
   // Crown,
@@ -58,11 +58,11 @@ const navItems: NavItem[] = [
   //   icon: <Ticket className="h-5 w-5" />,
   //   href: "#",
   // },
-  // {
-  //   title: "Bet Accounts",
-  //   icon: <Wallet className="h-5 w-5" />,
-  //   href: "#",
-  // },
+  {
+    title: "Bet History",
+    icon: <Wallet className="h-5 w-5" />,
+    href: "/bet-history",
+  },
   // {
   //   title: "Withdraw Accounts",
   //   icon: <CreditCard className="h-5 w-5" />,
