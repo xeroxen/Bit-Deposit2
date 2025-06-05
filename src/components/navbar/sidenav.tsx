@@ -1,6 +1,7 @@
 "use client"
 
 import type * as React from "react"
+import { useEffect, useState } from "react"
 import {
   ArrowRight,
   CreditCard,
@@ -28,6 +29,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/lib/authContext"
 
 interface NavItem {
   title: string
@@ -127,9 +129,23 @@ const QuickAction = ({ icon, label, href = "#" }: QuickActionProps) => (
 )
 
 export function MobileNav() {
+  const { isAuthenticated, redirectToLogin } = useAuth()
+  const [sheetOpen, setSheetOpen] = useState(false)
+  
+  // Function to check authentication when the sheet is opened
+  const handleSheetOpen = (open: boolean) => {
+    // Only open the sheet if it's closing or user is authenticated
+    if (!open || isAuthenticated) {
+      setSheetOpen(open);
+    } else {
+      // If trying to open while not authenticated, redirect without opening
+      redirectToLogin();
+    }
+  }
+
   return (
     <div className="flex items-center">
-      <Sheet>
+      <Sheet open={sheetOpen} onOpenChange={handleSheetOpen}>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon" className="md:hidden">
             <Menu className="h-6 w-6" />

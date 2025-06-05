@@ -97,8 +97,6 @@ export const apiRequest = async <T>(
     return response.json();
 };
 
-
-
 /**
  * Trigger balance update event to notify components
  */
@@ -111,5 +109,22 @@ export const triggerBalanceUpdate = (): void => {
         
         // Also set a flag in localStorage for cross-tab synchronization
         localStorage.setItem('balance_updated', Date.now().toString());
+    }
+};
+
+/**
+ * Check if the user is currently authenticated
+ */
+export const isAuthenticated = (): boolean => {
+    const token = getAuthToken();
+    return !!token;
+};
+
+/**
+ * Redirect to login page if user is not authenticated
+ */
+export const redirectToLogin = (): void => {
+    if (typeof window !== 'undefined' && !isAuthenticated()) {
+        window.location.href = '/login';
     }
 };
