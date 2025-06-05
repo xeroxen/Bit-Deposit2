@@ -153,3 +153,14 @@ export const redirectToLogin = (): void => {
         window.location.href = '/login';
     }
 };
+
+/**
+ * Get the current user data from localStorage
+ */
+export const getUserData = (): User | null => {
+    if (typeof window !== 'undefined') {
+        const userData = localStorage.getItem('user_data');
+        return userData ? JSON.parse(userData) : null;
+    }
+    return null;
+};

@@ -1,8 +1,12 @@
+'use client'
+
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { getUserData, User } from "@/lib/authentication"
+import { useEffect, useState } from "react"
 import {
-  User,
+  User as UserIcon,
   CreditCard,
   Mail,
   Phone,
@@ -15,16 +19,94 @@ import {
   ChevronRight,
   Shield,
   Calendar,
+  Check,
 } from "lucide-react"
 
+// Test user data for development
+const testUserData: User = {
+  id: 213,
+  name: "bit test",
+  user_name: "bittest",
+  email: "bittest@gmail.com",
+  email_verified_at: null,
+  created_at: "2025-06-03",
+  updated_at: "2025-06-03T13:35:50.000000Z",
+  oauth_id: null,
+  oauth_type: null,
+  avatar: null,
+  last_name: null,
+  cpf: null,
+  phone: "01943440089",
+  logged_in: 0,
+  banned: 0,
+  inviter: null,
+  inviter_code: null,
+  affiliate_revenue_share: 2,
+  affiliate_revenue_share_fake: null,
+  affiliate_cpa: "15.00",
+  affiliate_baseline: "20.00",
+  is_demo_agent: 0,
+  status: "active",
+  language: "pt_BR",
+  role_id: 3,
+  dateHumanReadable: "há 2 dias",
+  createdAt: "2025-06-03",
+  totalLikes: 0
+};
+
 export default function ProfilePage() {
+  const [userData, setUserData] = useState<User | null>(null);
+  const [copied, setCopied] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Try to get user data from localStorage
+    const user = getUserData();
+    
+    // If no user data in localStorage, use test data
+    if (!user) {
+      // For development: Store test data in localStorage to simulate login
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('user_data', JSON.stringify(testUserData));
+      }
+      setUserData(testUserData);
+    } else {
+      setUserData(user);
+    }
+  }, []);
+
+  // Reset copy status after a delay
+  useEffect(() => {
+    if (copied) {
+      const timer = setTimeout(() => {
+        setCopied(null);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [copied]);
+
+  // Function to copy text to clipboard
+  const copyToClipboard = (text: string, field: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(field);
+    });
+  };
+
+  // Check if user data is loaded
+  if (!userData) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p>Loading profile...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-md mx-auto bg-white min-h-screen">
         {/* Header Tabs */}
         <div className="flex bg-white border-b">
           <button className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-blue-500 text-white text-sm font-medium">
-            <User className="w-4 h-4" />
+            <UserIcon className="w-4 h-4" />
             Profile
           </button>
           <button className="flex-1 flex items-center justify-center gap-2 py-3 px-4 text-blue-500 text-sm font-medium">
@@ -78,9 +160,9 @@ export default function ProfilePage() {
         </div>
 
         <div className="pt-12 pb-6 text-center">
-          <h1 className="text-xl font-bold text-gray-900 mb-1">BD-0022033</h1>
+          <h1 className="text-xl font-bold text-gray-900 mb-1">{userData.user_name}</h1>
           <Badge variant="secondary" className="bg-orange-100 text-orange-600 hover:bg-orange-100">
-            ⭐ Beginner
+            ⭐ {userData.status === 'active' ? 'Active' : userData.status}
           </Badge>
         </div>
 
@@ -93,13 +175,22 @@ export default function ProfilePage() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <User className="w-4 h-4 text-gray-500" />
+                  <UserIcon className="w-4 h-4 text-gray-500" />
                   <span className="text-sm text-gray-600">Account ID</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">710341</span>
-                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                    <Copy className="w-3 h-3 text-gray-400" />
+                  <span className="text-sm font-medium">{userData.id}</span>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-6 w-6 p-0"
+                    onClick={() => copyToClipboard(userData.id.toString(), 'id')}
+                  >
+                    {copied === 'id' ? (
+                      <Check className="w-3 h-3 text-green-500" />
+                    ) : (
+                      <Copy className="w-3 h-3 text-gray-400" />
+                    )}
                   </Button>
                 </div>
               </div>
@@ -110,9 +201,18 @@ export default function ProfilePage() {
                   <span className="text-sm text-gray-600">Code Name</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">BD-0022033</span>
-                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                    <Copy className="w-3 h-3 text-gray-400" />
+                  <span className="text-sm font-medium">{userData.user_name}</span>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-6 w-6 p-0"
+                    onClick={() => copyToClipboard(userData.user_name, 'username')}
+                  >
+                    {copied === 'username' ? (
+                      <Check className="w-3 h-3 text-green-500" />
+                    ) : (
+                      <Copy className="w-3 h-3 text-gray-400" />
+                    )}
                   </Button>
                 </div>
               </div>
@@ -123,11 +223,13 @@ export default function ProfilePage() {
                   <span className="text-sm text-gray-600">Email</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-400">---</span>
-                  <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-600 h-auto p-0">
-                    <Plus className="w-3 h-3 mr-1" />
-                    Add
-                  </Button>
+                  <span className="text-sm font-medium">{userData.email || '---'}</span>
+                  {!userData.email && (
+                    <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-600 h-auto p-0">
+                      <Plus className="w-3 h-3 mr-1" />
+                      Add
+                    </Button>
+                  )}
                 </div>
               </div>
 
@@ -137,7 +239,7 @@ export default function ProfilePage() {
                   <span className="text-sm text-gray-600">Phone Number</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">01710699394</span>
+                  <span className="text-sm font-medium">{userData.phone || '---'}</span>
                   <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-600 h-auto p-0">
                     <Edit className="w-3 h-3 mr-1" />
                     Edit
@@ -155,11 +257,13 @@ export default function ProfilePage() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <User className="w-4 h-4 text-gray-500" />
+                  <UserIcon className="w-4 h-4 text-gray-500" />
                   <span className="text-sm text-gray-600">Full Name</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-400">---</span>
+                  <span className="text-sm font-medium">
+                    {userData.name ? `${userData.name}${userData.last_name ? ` ${userData.last_name}` : ''}` : '---'}
+                  </span>
                   <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-600 h-auto p-0">
                     <Edit className="w-3 h-3 mr-1" />
                     Edit
@@ -191,9 +295,9 @@ export default function ProfilePage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm text-gray-600">City</span>
+                  <span className="text-sm text-gray-600">Language</span>
                 </div>
-                <span className="text-sm text-gray-400">---</span>
+                <span className="text-sm font-medium">{userData.language || '---'}</span>
               </div>
             </div>
           </div>
@@ -209,28 +313,32 @@ export default function ProfilePage() {
                   <div className="w-4 h-4 rounded-full border-2 border-gray-300 flex items-center justify-center">
                     <div className="w-2 h-2 bg-gray-300 rounded-full" />
                   </div>
-                  <span className="text-sm font-medium text-gray-900">Not Verified</span>
+                  <span className="text-sm font-medium text-gray-900">
+                    {userData.email_verified_at ? 'Verified' : 'Not Verified'}
+                  </span>
                 </div>
-                <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-600 h-auto p-0">
-                  Verify Now
-                  <ChevronRight className="w-3 h-3 ml-1" />
-                </Button>
+                {!userData.email_verified_at && (
+                  <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-600 h-auto p-0">
+                    Verify Now
+                    <ChevronRight className="w-3 h-3 ml-1" />
+                  </Button>
+                )}
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <FileText className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm text-gray-600">Document Type</span>
+                  <span className="text-sm text-gray-600">Created At</span>
                 </div>
-                <span className="text-sm text-gray-400">---</span>
+                <span className="text-sm font-medium">{userData.createdAt || '---'}</span>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <FileText className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm text-gray-600">Document Number</span>
+                  <span className="text-sm text-gray-600">Role ID</span>
                 </div>
-                <span className="text-sm text-gray-400">---</span>
+                <span className="text-sm font-medium">{userData.role_id || '---'}</span>
               </div>
             </div>
           </div>
