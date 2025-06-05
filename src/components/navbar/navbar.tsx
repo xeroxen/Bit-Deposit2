@@ -63,22 +63,22 @@ const Navbar = () => {
             <div className="fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white">
                 <div className="flex items-center justify-center h-full px-2 gap-2">
                     {/* Login Button */}
-                    <button className="flex-1 h-[40px] bg-[#4094FF] rounded-[12px] flex items-center justify-center max-w-[calc(50%-4px)]">
-                        <Link href="/login">
+                    <Link href="/login">
+                        <button className="flex-1 h-[40px] bg-[#4094FF] rounded-[12px] flex items-center justify-center max-w-[calc(50%-4px)]">
                             <span className="font-inter font-bold text-[12.8px] leading-[19px] text-white text-center">
                                 Log In
                             </span>
-                        </Link>
-                    </button>
+                        </button>
+                    </Link>
                     
                     {/* Registration Button */}
-                    <button className="flex-1 h-[40px] bg-[#22C55E] rounded-[12px] flex items-center justify-center max-w-[calc(50%-4px)]">
-                        <Link href="/signup">
+                    <Link href="/signup">
+                        <button className="flex-1 h-[40px] bg-[#22C55E] rounded-[12px] flex items-center justify-center max-w-[calc(50%-4px)]">
                             <span className="font-inter font-bold text-[12.8px] leading-[19px] text-white text-center">
                                 Registration
                             </span>
-                        </Link>
-                    </button>
+                        </button>
+                    </Link>
                 </div>
             </div>
         )}

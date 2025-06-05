@@ -10,9 +10,7 @@ import {
   LayoutDashboard,
   Menu,
   MessageCircle,
-  QrCode,
   RefreshCcw,
-  Send,
   Settings,
   Star,
   Ticket,
@@ -179,15 +177,15 @@ export function MobileNav() {
                     <ArrowRight className="h-4 w-4" />
                   </div>
                 </div>
-                <Link href="/profile">
+                <Link href="/profile" onClick={() => setSheetOpen(false)}>
                 <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white flex justify-between mb-4">
                   Personal Profile
                 </Button>
                 </Link>
                 <div className="grid grid-cols-3 gap-4">
-                  <QuickAction icon={<Upload className="h-5 w-5" />} label="Deposit" />
-                  <QuickAction icon={<Download className="h-5 w-5" />} label="Withdraw" />
-                  <QuickAction icon={<Send className="h-5 w-5" />} label="Transfer" />
+                  <Link href="/deposit" onClick={() => setSheetOpen(false)}><QuickAction icon={<Upload className="h-5 w-5" />} label="Deposit" /></Link>
+                  <Link href="/withdraw" onClick={() => setSheetOpen(false)}><QuickAction icon={<Download className="h-5 w-5" />} label="Withdraw" /></Link>
+                  {/* <Link href="/transfer" onClick={() => setSheetOpen(false)}><QuickAction icon={<Send className="h-5 w-5" />} label="Transfer" /></Link> */}
                 </div>
               </div>
             </div>
