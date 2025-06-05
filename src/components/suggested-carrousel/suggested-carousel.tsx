@@ -6,7 +6,7 @@ import { useRef } from "react"
 const suggestedItems = [
   {
     id: 1,
-    title: "Duck Hunter",
+    title: "Crash",
     image: "https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/backend/public/2025/06/01/images/66768/112-9111a433973ea9976d2e5c4fac5d0eb5.png?w=640&q=85",
     category: "Action",
   },

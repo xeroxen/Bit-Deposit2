@@ -337,7 +337,7 @@ const ProvidersData = ({
   if (loading || !games.providers?.length) {
     return <ProviderPillsSkeleton />;
   }
-
+console.log("games.providers",games.providers);
   return <ProviderPills providers={games.providers} />;
 };
 
