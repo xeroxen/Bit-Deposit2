@@ -348,6 +348,8 @@ const AllGameMobile = () => {
     const [filteredGames, setFilteredGames] = useState<Game[]>([]);
     const [visibleGames, setVisibleGames] = useState<number>(12); // Initial 3 rows of 4 games
     const [loading, setLoading] = useState<boolean>(true);
+    const [viewAllMode, setViewAllMode] = useState<boolean>(false);
+    const [allGames, setAllGames] = useState<Game[]>([]);
     const gamesPerRow = 4;
     const initialRows = 3;
     const router = useRouter();
@@ -390,6 +392,13 @@ const AllGameMobile = () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/games/all`);
             const data: GameResponse = await response.json();
             setGames(data);
+            
+            // Extract and flatten all games from all providers
+            const extractedGames = data.providers.flatMap(provider => 
+                provider.games ? provider.games : []
+            );
+            setAllGames(extractedGames);
+            
             setLoading(false);
         } catch (error) {
             console.error("Error fetching games:", error);
@@ -418,6 +427,7 @@ const AllGameMobile = () => {
 
     // Filter games by selected category
     useEffect(() => {
+        if (viewAllMode) return; // Skip filtering when in "View All" mode
         if (!selectedCategory || !games.providers || !gameProviders.data) return;
 
         setLoading(true);
@@ -446,42 +456,71 @@ const AllGameMobile = () => {
         }, 500); // Short delay to show loading state
         
         return () => clearTimeout(filterTimer);
-    }, [selectedCategory, games, gameProviders]);
+    }, [selectedCategory, games, gameProviders, viewAllMode]);
 
     const handleCategoryClick = (categoryId: number) => {
+        if (viewAllMode) {
+            setViewAllMode(false);
+        }
         if (selectedCategory === categoryId) return;
         setSelectedCategory(categoryId);
     };
 
     const handleShowMore = () => {
-        setVisibleGames(prevVisible => prevVisible + (3 * gamesPerRow)); // Show 3 more rows
+        setVisibleGames(prevVisible => prevVisible + 12); // Show 12 more games
     };
 
     const handleGameClick = (game: Game) => {
         getSingleGameData(game);
     };
+    
+    const handleViewAll = () => {
+        setViewAllMode(true);
+        setVisibleGames(12); // Reset to initial 12 games
+    };
+
+    // Determine which games to display based on mode
+    const displayGames = viewAllMode ? allGames : filteredGames;
 
     return (
         <div className="w-full bg-gray-100 p-4">
             {/* Header Section */}
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold text-gray-800">All Games</h2>
-                <div className="bg-blue-100 px-3 py-1 rounded-bl-lg">
+                <div 
+                    className="bg-blue-100 px-3 py-1 rounded-bl-lg cursor-pointer hover:bg-blue-200"
+                    onClick={handleViewAll}
+                >
                     <span className="text-blue-800 text-sm font-medium">View All</span>
                 </div>
             </div>
 
-            {/* Category Pills */}
-            <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-                <Suspense fallback={<CategoryPillsSkeleton />}>
-                    <CategoriesData 
-                        gameProviders={gameProviders}
-                        selectedCategory={selectedCategory}
-                        handleCategoryClick={handleCategoryClick}
-                        loading={loading}
-                    />
-                </Suspense>
-            </div>
+            {/* Category Pills - Hide when in View All mode */}
+            {!viewAllMode && (
+                <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+                    <Suspense fallback={<CategoryPillsSkeleton />}>
+                        <CategoriesData 
+                            gameProviders={gameProviders}
+                            selectedCategory={selectedCategory}
+                            handleCategoryClick={handleCategoryClick}
+                            loading={loading}
+                        />
+                    </Suspense>
+                </div>
+            )}
+            
+            {/* View Mode Indicator */}
+            {viewAllMode && (
+                <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-medium text-gray-700">Viewing All Games</h3>
+                    <button 
+                        onClick={() => setViewAllMode(false)}
+                        className="text-sm text-blue-600 hover:text-blue-800"
+                    >
+                        Back to Categories
+                    </button>
+                </div>
+            )}
 
             {/* Game Rows */}
             <div className="mb-6">
@@ -492,25 +531,27 @@ const AllGameMobile = () => {
                         handleShowMore={handleShowMore}
                         gamesPerRow={gamesPerRow}
                         loading={loading}
-                        filteredGames={filteredGames}
+                        filteredGames={displayGames}
                         onGameClick={handleGameClick}
                     />
                 </Suspense>
             </div>
 
-            {/* Providers Section */}
-            <div className="mb-4">
-                <h3 className="text-lg font-bold text-gray-800 mb-3">Providers</h3>
-                
-                <div className="grid grid-cols-4 gap-2">
-                    <Suspense fallback={<ProviderPillsSkeleton />}>
-                        <ProvidersData 
-                            games={games}
-                            loading={loading}
-                        />
-                    </Suspense>
+            {/* Providers Section - Hide when in View All mode */}
+            {!viewAllMode && (
+                <div className="mb-4">
+                    <h3 className="text-lg font-bold text-gray-800 mb-3">Providers</h3>
+                    
+                    <div className="grid grid-cols-4 gap-2">
+                        <Suspense fallback={<ProviderPillsSkeleton />}>
+                            <ProvidersData 
+                                games={games}
+                                loading={loading}
+                            />
+                        </Suspense>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
