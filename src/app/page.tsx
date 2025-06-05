@@ -4,6 +4,7 @@ import EvolutionBanner from '@/components/Banners/evolutionBanner';
 import StaticGameCarousel from '@/components/static-game-carousel/static-game-carousel';
 import SuggestedCarousel from '@/components/suggested-carrousel/suggested-carousel';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 const Home = () => {
@@ -42,7 +43,9 @@ const Home = () => {
                     <div className="relative w-[92px] h-[105px] flex flex-col items-center">
                         <div className="relative">
                             <div className="w-[84px] h-[80px] rounded-[20px] relative overflow-hidden mb-2 ">
-                                <Image src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/landing-page/mobile-version/category-menu/game-4.png?format=optimal&w=256&q=85" alt="Up To 100%" width={84} height={80} />
+                                <Link href="/sports">
+                                    <Image src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/landing-page/mobile-version/category-menu/game-4.png?format=optimal&w=256&q=85" alt="Up To 100%" width={84} height={80} />
+                                </Link>
                             </div>
                         </div>
                         <div className="w-fit h-4 font-semibold text-xs leading-4 flex items-center text-center text-[#1D3D68]">Cricket</div>
