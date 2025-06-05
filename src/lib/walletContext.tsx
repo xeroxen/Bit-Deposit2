@@ -112,17 +112,27 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         fetchBalance()
       }
     }
+
+    // Handle page visibility changes
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchBalance()
+      }
+    }
     
     window.addEventListener('storage', handleStorageChange)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    
+    // Initial fetch
+    if (document.visibilityState === 'visible') {
+      fetchBalance()
+    }
     
     return () => {
       window.removeEventListener('balanceUpdated', handleBalanceUpdate)
       window.removeEventListener('storage', handleStorageChange)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
-  }, [])
-
-  useEffect(() => {
-    fetchBalance()
   }, [])
 
   const refreshBalance = async () => {

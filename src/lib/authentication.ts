@@ -64,6 +64,9 @@ export const storeUserData = (loginResponse: LoginResponse): void => {
         window.dispatchEvent(new CustomEvent('auth_status_changed', { 
             detail: { authenticated: true, timestamp: Date.now() } 
         }));
+
+        // Trigger balance update after successful login
+        window.dispatchEvent(new CustomEvent('balanceUpdated'));
     }
     
     // Store user ID in cookies as backup

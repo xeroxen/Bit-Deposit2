@@ -43,12 +43,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Check authentication status on mount
     const token = getAuthToken();
     setAuthenticated(!!token);
+    if (token) {
+      // Trigger wallet balance update when authenticated
+      window.dispatchEvent(new CustomEvent('balanceUpdated'));
+    }
     setLoading(false);
 
     // Listen for auth status changes
     const handleAuthChange = () => {
       const updatedToken = getAuthToken();
       setAuthenticated(!!updatedToken);
+      if (updatedToken) {
+        // Trigger wallet balance update when auth status changes to authenticated
+        window.dispatchEvent(new CustomEvent('balanceUpdated'));
+      }
     };
     
     // Listen for the custom event
