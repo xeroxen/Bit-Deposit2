@@ -63,23 +63,23 @@ const Navbar = () => {
         {/* Login and Registration Buttons - Below Navbar (conditionally rendered) */}
         {!shouldHideAuthButtons && (
             <div className="fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white">
-                <div className="flex items-center justify-center h-full px-2 gap-2">
+                <div className="flex items-center justify-center h-full px-4 gap-4">
                     {/* Login Button */}
-                    <Link href="/login">
-                        <button className="flex-1 h-[40px] bg-[#4094FF] rounded-[12px] flex items-center justify-center max-w-[calc(50%-4px)]">
-                            <span className="font-inter font-bold text-[12.8px] leading-[19px] text-white text-center">
+                    <Link href="/login" className="w-full max-w-[170px]">
+                        <div className="w-full h-[40px] bg-[#4094FF] rounded-[25px] flex items-center justify-center">
+                            <span className="font-inter font-bold text-sm text-white">
                                 Log In
                             </span>
-                        </button>
+                        </div>
                     </Link>
                     
                     {/* Registration Button */}
-                    <Link href="/signup">
-                        <button className="flex-1 h-[40px] bg-[#22C55E] rounded-[12px] flex items-center justify-center max-w-[calc(50%-4px)]">
-                            <span className="font-inter font-bold text-[12.8px] leading-[19px] text-white text-center">
+                    <Link href="/signup" className="w-full max-w-[170px]">
+                        <div className="w-full h-[40px] bg-[#22C55E] rounded-[25px] flex items-center justify-center">
+                            <span className="font-inter font-bold text-sm text-white">
                                 Registration
                             </span>
-                        </button>
+                        </div>
                     </Link>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import BottomFooter from "@/components/footer/footer";
 import { Toaster } from "@/components/ui/sonner";
 import NextTopLoader from 'nextjs-toploader';
 import { AuthProvider } from "@/lib/authContext";
+import { WalletProvider } from "@/lib/walletContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,10 +41,12 @@ export default function RootLayout({
           showSpinner={false}
         />
         <AuthProvider>
-          <Navbar />
-          {children}
-          <BottomFooter />
-          <Toaster />
+          <WalletProvider>
+            <Navbar />
+            {children}
+            <BottomFooter />
+            <Toaster />
+          </WalletProvider>
         </AuthProvider>
       </body>
     </html>

@@ -3,7 +3,6 @@
 import type * as React from "react"
 import { useState } from "react"
 import {
-  ArrowRight,
   CreditCard,
   Gift,
   History,
@@ -28,6 +27,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/lib/authContext"
+import { WalletBalance } from "@/components/ui/wallet-balance"
 import Link from "next/link"
 
 interface NavItem {
@@ -171,11 +171,7 @@ export function MobileNav() {
                       <div className="text-xs text-blue-500">Beginner</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 text-blue-500">
-                    <span className="text-sm font-medium">৳</span>
-                    <span className="text-sm font-medium">0.00</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </div>
+                  <WalletBalance size="sm"  />
                 </div>
                 <div className="flex flex-row gap-4 justify-around">
                   <Link href="/deposit" onClick={() => setSheetOpen(false)}><QuickAction icon={<Upload className="h-5 w-5" />} label="Deposit" /></Link>
