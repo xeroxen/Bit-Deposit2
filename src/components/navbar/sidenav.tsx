@@ -3,24 +3,24 @@
 import type * as React from "react"
 import { useState } from "react"
 import {
-  CreditCard,
-  Gift,
-  History,
+  // CreditCard,
+  // Gift,
+  // History,
   LayoutDashboard,
   Menu,
   MessageCircle,
-  RefreshCcw,
-  Settings,
+  // RefreshCcw,
+  // Settings,
   Star,
-  Ticket,
+  // Ticket,
   Upload,
   User,
-  Users,
-  Wallet,
+  // Users,
+  // Wallet,
   Download,
-  Gamepad2,
-  Crown,
-  Tag,
+  // Gamepad2,
+  // Crown,
+  // Tag,
   LogOut
 } from "lucide-react"
 
@@ -43,71 +43,71 @@ const navItems: NavItem[] = [
     icon: <LayoutDashboard className="h-5 w-5" />,
     href: "/profile",
   },
-  {
-    title: "Transactions",
-    icon: <RefreshCcw className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "Beneficiaries",
-    icon: <Users className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "My Lottery",
-    icon: <Ticket className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "Bet Accounts",
-    icon: <Wallet className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "Withdraw Accounts",
-    icon: <CreditCard className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "Redeem History",
-    icon: <History className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "Game History",
-    icon: <Gamepad2 className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "Point History",
-    icon: <Star className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "Bonus History",
-    icon: <Gift className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "VIP Levels",
-    icon: <Crown className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "Promo-codes",
-    icon: <Tag className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "Settings",
-    icon: <Settings className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "Refer to Friend",
-    icon: <User className="h-5 w-5" />,
-    href: "#",
-  },
+  // {
+  //   title: "Transactions",
+  //   icon: <RefreshCcw className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "Beneficiaries",
+  //   icon: <Users className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "My Lottery",
+  //   icon: <Ticket className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "Bet Accounts",
+  //   icon: <Wallet className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "Withdraw Accounts",
+  //   icon: <CreditCard className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "Redeem History",
+  //   icon: <History className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "Game History",
+  //   icon: <Gamepad2 className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "Point History",
+  //   icon: <Star className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "Bonus History",
+  //   icon: <Gift className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "VIP Levels",
+  //   icon: <Crown className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "Promo-codes",
+  //   icon: <Tag className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "Settings",
+  //   icon: <Settings className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "Refer to Friend",
+  //   icon: <User className="h-5 w-5" />,
+  //   href: "#",
+  // },
   {
     title: "Support",
     icon: <MessageCircle className="h-5 w-5" />,

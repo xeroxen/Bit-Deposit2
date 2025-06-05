@@ -21,20 +21,20 @@ const suggestedItems = [
   {
     id: 1,
     title: "Crash",
-    image: "https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/backend/public/2025/06/01/images/66768/112-9111a433973ea9976d2e5c4fac5d0eb5.png?w=640&q=85",
+    image: "/suggested/3.png",
     category: "Action",
     gameId: 1975,
   },
   {
     id: 2,
     title: "Gonzo's Quest Megaways",
-    image: "https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/backend/public/2025/06/02/images/67045/3-d2e271a839bc6fb8928ca6f65f452b0b.png?w=640&q=85",
+    image: "/suggested/1.png",
     category: "Adventure",
   },
   {
     id: 3,
     title: "Provider Of The Month",
-    image: "https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/backend/public/2025/06/02/images/67116/112-c0843f87152e237d723e76792ab7fd5b.png?w=640&q=85",
+    image: "/suggested/2.png",
     category: "Featured",
   }
 ]
@@ -122,7 +122,7 @@ export default function SuggestedCarousel() {
               >
                 <div className="relative h-[150px] overflow-hidden rounded-lg">
                   <Image
-                    src={item.image || "/placeholder.svg"}
+                    src={item.image}
                     alt={item.title}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
