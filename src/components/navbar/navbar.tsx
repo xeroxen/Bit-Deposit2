@@ -5,6 +5,8 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import { MobileNav } from './sidenav';
 import { useAuth } from '@/lib/authContext';
+import { WalletBalance } from '@/components/ui/wallet-balance';
+import { Plus } from 'lucide-react';
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -22,21 +24,32 @@ const Navbar = () => {
             {/* Main navbar content */}
             <div className="relative h-full flex items-center justify-between px-2">
                 
-                {/* Language Selector - Left side */}
-                <div className="flex items-center bg-[#F3F6FA] rounded-[20px] px-3 py-1 h-8">
-                    <div className="flex items-center space-x-2">
-                        {/* US Flag placeholder */}
-                        <div className="w-4 h-4 rounded-full bg-gradient-to-r from-red-500 via-white to-blue-500 border border-gray-300 flex-shrink-0"></div>
-                        <span className="text-xs font-medium text-black/88 whitespace-nowrap">US</span>
+                {/* Language Selector or Wallet Balance - Left side */}
+                {isAuthenticated ? (
+                    <div className="flex items-center bg-[#F3F6FA] rounded-[20px] px-3 py-1 h-8">
+                        <WalletBalance showArrow={false} size="sm" className="whitespace-nowrap" />
+                        <Link href="/deposit" className="ml-1">
+                            <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                <Plus className="text-white w-3 h-3" />
+                            </div>
+                        </Link>
                     </div>
-                    
-                    {/* Dropdown arrow */}
-                    <div className="ml-2 w-5 h-5 bg-white rounded-full shadow-md flex items-center justify-center flex-shrink-0">
-                        <svg className="w-3.5 h-2" viewBox="0 0 14 8" fill="none">
-                            <path d="M1 1L7 7L13 1" stroke="#48AC2F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
+                ) : (
+                    <div className="flex items-center bg-[#F3F6FA] rounded-[20px] px-3 py-1 h-8">
+                        <div className="flex items-center space-x-2">
+                            {/* US Flag placeholder */}
+                            <div className="w-4 h-4 rounded-full bg-gradient-to-r from-red-500 via-white to-blue-500 border border-gray-300 flex-shrink-0"></div>
+                            <span className="text-xs font-medium text-black/88 whitespace-nowrap">US</span>
+                        </div>
+                        
+                        {/* Dropdown arrow */}
+                        <div className="ml-2 w-5 h-5 bg-white rounded-full shadow-md flex items-center justify-center flex-shrink-0">
+                            <svg className="w-3.5 h-2" viewBox="0 0 14 8" fill="none">
+                                <path d="M1 1L7 7L13 1" stroke="#48AC2F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                        </div>
                     </div>
-                </div>
+                )}
 
                 {/* Logo/Brand - Center */}
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
