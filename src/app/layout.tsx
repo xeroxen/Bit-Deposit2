@@ -37,6 +37,7 @@ export default function RootLayout({
           initialPosition={0.08}
           shadow="0 0 10px #2299DD,0 0 5px #2299DD"
           zIndex={1600}
+          showSpinner={false}
         />
         <AuthProvider>
           <Navbar />

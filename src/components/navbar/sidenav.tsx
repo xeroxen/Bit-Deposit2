@@ -38,9 +38,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    title: "Accounts",
+    title: "Profile",
     icon: <LayoutDashboard className="h-5 w-5" />,
-    href: "#",
+    href: "/profile",
   },
   {
     title: "Transactions",
@@ -154,7 +154,7 @@ export function MobileNav() {
         <SheetContent side="right" className="w-[80%] max-w-sm p-0 bg-white">
           <div className="flex flex-col h-full">
             {/* User Profile Header */}
-            <div className="border-b">
+            <div className="border-b mt-7">
               <div className="p-4 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -177,12 +177,7 @@ export function MobileNav() {
                     <ArrowRight className="h-4 w-4" />
                   </div>
                 </div>
-                <Link href="/profile" onClick={() => setSheetOpen(false)}>
-                <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white flex justify-between mb-4">
-                  Personal Profile
-                </Button>
-                </Link>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="flex flex-row gap-4 justify-around">
                   <Link href="/deposit" onClick={() => setSheetOpen(false)}><QuickAction icon={<Upload className="h-5 w-5" />} label="Deposit" /></Link>
                   <Link href="/withdraw" onClick={() => setSheetOpen(false)}><QuickAction icon={<Download className="h-5 w-5" />} label="Withdraw" /></Link>
                   {/* <Link href="/transfer" onClick={() => setSheetOpen(false)}><QuickAction icon={<Send className="h-5 w-5" />} label="Transfer" /></Link> */}
@@ -194,9 +189,10 @@ export function MobileNav() {
             <div className="flex-1 overflow-auto py-2">
               <nav className="grid gap-1 px-2">
                 {navItems.map((item, index) => (
-                  <a
+                  <Link
                     key={index}
-                    href={item.href}
+                    href={item.href || "/"}
+                    onClick={() => setSheetOpen(false)}
                     className={cn(
                       "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent",
                       index === 0 ? "bg-accent" : "",
@@ -204,7 +200,7 @@ export function MobileNav() {
                   >
                     {item.icon}
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
