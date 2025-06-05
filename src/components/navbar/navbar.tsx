@@ -1,32 +1,14 @@
 "use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { usePathname } from 'next/navigation';
-import { getAuthToken } from '@/lib/authentication';
 import { MobileNav } from './sidenav';
+import { useAuth } from '@/lib/authContext';
 
 const Navbar = () => {
     const pathname = usePathname();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    
-    // Check authentication status
-    useEffect(() => {
-        const token = getAuthToken();
-        setIsAuthenticated(!!token);
-        
-        // Listen for auth status changes
-        const handleAuthChange = () => {
-            const updatedToken = getAuthToken();
-            setIsAuthenticated(!!updatedToken);
-        };
-        
-        window.addEventListener('auth_status_changed', handleAuthChange);
-        
-        return () => {
-            window.removeEventListener('auth_status_changed', handleAuthChange);
-        };
-    }, []);
+    const { isAuthenticated } = useAuth();
     
     // Check if we should hide login/signup buttons
     const shouldHideAuthButtons = isAuthenticated || pathname === '/login' || pathname === '/signup';

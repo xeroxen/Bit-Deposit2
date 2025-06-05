@@ -1,7 +1,8 @@
 'use client';
 
 import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
-import { getAuthToken, isAuthenticated } from './authentication';
+import { getAuthToken } from './authentication';
+import { useRouter } from 'next/navigation';
 
 // Create authentication context
 interface AuthContextType {
@@ -20,22 +21,44 @@ export function useAuth() {
   return context;
 }
 
-// Redirect to login page function
-const redirectToLogin = (): void => {
-  if (typeof window !== 'undefined') {
-    window.location.href = '/login';
-  }
-};
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
+  const router = useRouter();
+
+  // Redirect to login page function using Next.js router
+  const redirectToLogin = () => {
+    router.push('/login');
+  };
 
   useEffect(() => {
     // Check authentication status on mount
     const token = getAuthToken();
     setAuthenticated(!!token);
     setLoading(false);
+
+    // Listen for auth status changes
+    const handleAuthChange = () => {
+      const updatedToken = getAuthToken();
+      setAuthenticated(!!updatedToken);
+    };
+    
+    // Listen for the custom event
+    window.addEventListener('auth_status_changed', handleAuthChange);
+    
+    // Also check for changes in localStorage (for cross-tab synchronization)
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'auth_status_changed') {
+        handleAuthChange();
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('auth_status_changed', handleAuthChange);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   const value = { 
@@ -49,4 +72,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-} 
+}

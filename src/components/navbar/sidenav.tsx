@@ -1,7 +1,7 @@
 "use client"
 
 import type * as React from "react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   ArrowRight,
   CreditCard,
@@ -30,6 +30,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/lib/authContext"
+import Link from "next/link"
 
 interface NavItem {
   title: string
@@ -178,12 +179,11 @@ export function MobileNav() {
                     <ArrowRight className="h-4 w-4" />
                   </div>
                 </div>
-
-                <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white flex justify-between">
+                <Link href="/profile">
+                <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white flex justify-between mb-4">
                   Personal Profile
-                  <QrCode className="h-5 w-5" />
                 </Button>
-
+                </Link>
                 <div className="grid grid-cols-3 gap-4">
                   <QuickAction icon={<Upload className="h-5 w-5" />} label="Deposit" />
                   <QuickAction icon={<Download className="h-5 w-5" />} label="Withdraw" />
