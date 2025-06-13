@@ -75,9 +75,9 @@ const SportsPage = () => {
   }
 
   return (
-    <div className="w-full bg-black min-h-screen pt-[106px]">
+    <div className="w-full bg-black min-h-screen h-[calc(100vh-30px)] pt-0">
       {gameData ? (
-        <div className="w-full h-[calc(100vh-106px)] mx-auto">
+        <div className="w-full h-full mx-auto">
           <iframe
             src={gameData.gameUrl}
             className="w-full h-full border-0"
@@ -87,7 +87,7 @@ const SportsPage = () => {
           />
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-[calc(100vh-106px)] bg-gray-900 text-white">
+        <div className="flex flex-col items-center justify-center h-full bg-gray-900 text-white">
           <p className="text-xl">Unable to load game. Please try again later.</p>
           <Link href="/login">
             <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
