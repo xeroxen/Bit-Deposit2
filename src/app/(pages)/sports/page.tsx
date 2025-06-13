@@ -75,19 +75,19 @@ const SportsPage = () => {
   }
 
   return (
-    <div className="h-screen w-full bg-black">
+    <div className="w-full bg-black min-h-screen pt-[106px]">
       {gameData ? (
-        <div className="w-full h-screen mt-16">
+        <div className="w-full h-[calc(100vh-106px)] mx-auto">
           <iframe
             src={gameData.gameUrl}
-            className="w-full h-screen border-0"
+            className="w-full h-full border-0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            title={gameData.game?.game_name || "Sports Game"}
+            title={gameData.game?.game_name || 'Sports Game'}
           />
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-106px)] bg-gray-900 text-white">
           <p className="text-xl">Unable to load game. Please try again later.</p>
           <Link href="/login">
             <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
