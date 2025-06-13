@@ -14,7 +14,9 @@ export default function EvolutionBanner() {
         redirectToLogin()
         return
       }
+      let toastId: string | number | undefined;
       try {
+        toastId = toast.loading(`Loading Sweet...`);
         const response = await apiRequest<SingleGameResponse | ErrorResponse>(`/games/single/1991`);
 
         // Check if response indicates authentication failure
@@ -23,7 +25,9 @@ export default function EvolutionBanner() {
         // Open game URL in a new tab
         if ('gameUrl' in response && response.gameUrl) {
             toast.success(`Sweet ready to play!`);
-            window.location.href = response.gameUrl;
+            setTimeout(() => {
+              window.location.href = response.gameUrl;
+            }, 500); // Wait 500ms so the toast is visible
         } else {
             toast.error("Game URL not found in response");
             console.error("Game URL not found in response");
@@ -39,7 +43,7 @@ export default function EvolutionBanner() {
           return;
       }
     } finally {
-        toast.dismiss();
+        if (toastId !== undefined) toast.dismiss(toastId);
     }
   }, [router])
 
