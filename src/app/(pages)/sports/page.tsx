@@ -75,12 +75,13 @@ const SportsPage = () => {
   }
 
   return (
-    <div className="w-full bg-black min-h-screen h-[calc(100vh-30px)] pt-0">
+    <div className="w-full bg-black mt-26 pt-0">
       {gameData ? (
-        <div className="w-full h-full mx-auto">
+        <div className="w-full mx-auto" style={{ height: 'calc(100vh - 60px - 104px)' }}>
           <iframe
             src={gameData.gameUrl}
-            className="w-full h-full border-0"
+            className="w-full border-0"
+            style={{ height: '100%' }}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title={gameData.game?.game_name || 'Sports Game'}
