@@ -1,6 +1,7 @@
 "use client"
 import AllGameMobile from '@/components/all-game-mobile/all-game-mobile';
 import EvolutionBanner from '@/components/Banners/evolutionBanner';
+import StaticBanner from '@/components/static-banner/static-banner';
 import StaticGameCarousel from '@/components/static-game-carousel/static-game-carousel';
 import SuggestedCarousel from '@/components/suggested-carrousel/suggested-carousel';
 import Image from 'next/image';
@@ -59,35 +60,7 @@ const Home = () => {
             <SuggestedCarousel />
             <EvolutionBanner />
             <StaticGameCarousel />
-            
-            {/* Static Banner */}
-            <div className="relative mt-8">
-                <div className="absolute w-[382px] h-[92px] left-[calc(50%-191px)] rounded-lg overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-800 to-blue-900 bg-opacity-90 rounded-lg">
-                        {/* Replace with actual image URL */}
-                        <div className="absolute inset-0 bg-cover bg-center rounded-lg" style={{ backgroundImage: "url('/banner/1.png')" }}></div>
-                    </div>
-                    <h2 className="absolute left-2 top-12 font-bold text-[16.5px] leading-3 flex items-center text-white font-['Inter']">
-                        Fun Fun 21
-                    </h2>
-                </div>
-                {/* Spacer to maintain layout flow */}
-                <div className="h-[120px]"></div>
-            </div>
-            {/* Static Banner */}
-            <div className="relative mt-2">
-                <div className="absolute w-[382px] h-[92px] left-[calc(50%-191px)] rounded-lg overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-800 to-blue-900 bg-opacity-90 rounded-lg">
-                        {/* Replace with actual image URL */}
-                        <div className="absolute inset-0 bg-cover bg-center rounded-lg" style={{ backgroundImage: "url('/banner/2.png')" }}></div>
-                    </div>
-                    <h2 className="absolute left-2 top-12 font-bold text-[16.5px] leading-3 flex items-center text-white font-['Inter']">
-                        Fun Fun 21
-                    </h2>
-                </div>
-                {/* Spacer to maintain layout flow */}
-                <div className="h-[120px]"></div>
-            </div>
+            <StaticBanner />
         </div>
     );
 };

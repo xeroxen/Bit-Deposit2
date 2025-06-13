@@ -23,19 +23,21 @@ const suggestedItems = [
     title: "Crash",
     image: "/suggested/3.png",
     category: "Action",
-    gameId: 1975,
+    gameId: 1981,
   },
   {
     id: 2,
-    title: "Gonzo's Quest Megaways",
+    title: "Baccarat Classic",
     image: "/suggested/1.png",
     category: "Adventure",
+    gameId: 1997,
   },
   {
     id: 3,
-    title: "Provider Of The Month",
+    title: "Mega Fishing",
     image: "/suggested/2.png",
     category: "Featured",
+    gameId: 1999,
   }
 ]
 
