@@ -77,10 +77,10 @@ const SportsPage = () => {
   return (
     <div className="h-screen w-full bg-black">
       {gameData ? (
-        <div className="w-full h-full mt-16">
+        <div className="w-full h-screen mt-16">
           <iframe
             src={gameData.gameUrl}
-            className="w-full h-full border-0"
+            className="w-full h-screen border-0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title={gameData.game?.game_name || "Sports Game"}
