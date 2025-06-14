@@ -13,11 +13,9 @@ import {
   // Settings,
   Star,
   // Ticket,
-  Upload,
   User,
   // Users,
   Wallet,
-  Download,
   // Gamepad2,
   // Crown,
   // Tag,
@@ -30,6 +28,7 @@ import { cn } from "@/lib/utils"
 import { useAuth } from "@/lib/authContext"
 import { WalletBalance } from "@/components/ui/wallet-balance"
 import Link from "next/link"
+import Image from "next/image"
 
 interface NavItem {
   title: string
@@ -134,7 +133,7 @@ const QuickAction = ({ icon, label, href = "#" }: QuickActionProps) => (
   </a>
 )
 
-export function MobileNav() {
+export function SideNav() {
   const { isAuthenticated, redirectToLogin, logout } = useAuth()
   const [sheetOpen, setSheetOpen] = useState(false)
   
@@ -187,10 +186,47 @@ export function MobileNav() {
                   <WalletBalance size="sm"  />
                 </div>
                 <div className="flex flex-row gap-4 justify-around">
-                  <Link href="/deposit" onClick={() => setSheetOpen(false)}><QuickAction icon={<Upload className="h-5 w-5" />} label="Deposit" /></Link>
-                  <Link href="/withdraw" onClick={() => setSheetOpen(false)}><QuickAction icon={<Download className="h-5 w-5" />} label="Withdraw" /></Link>
-                  {/* <Link href="/transfer" onClick={() => setSheetOpen(false)}><QuickAction icon={<Send className="h-5 w-5" />} label="Transfer" /></Link> */}
-                </div>
+   <Link href="/deposit" onClick={() => setSheetOpen(false)}>
+    <QuickAction 
+      icon={
+        <Image 
+          src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/profile/board/deposit.svg"  
+          width={100}
+          height={100}
+          alt="Deposit icon"
+        />
+      } 
+      label="Deposit" 
+    />
+  </Link>
+  
+  <Link href="/withdraw" onClick={() => setSheetOpen(false)}>
+    <QuickAction 
+      icon={
+        <Image 
+          src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/profile/board/withdraw.svg"  
+          width={100}
+          height={100}
+          alt="Withdraw icon"
+        />
+      } 
+      label="Withdraw" 
+    />
+  </Link>
+  
+  {/* <Link href="/transfer" onClick={() => setSheetOpen(false)}>
+    <QuickAction 
+      icon={
+        <img 
+          src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/profile/board/transfer.svg"  
+          className="h-5 w-5" 
+          alt="Transfer icon"
+        />
+      } 
+      label="Transfer" 
+    />
+  </Link> */}
+</div>
               </div>
             </div>
 

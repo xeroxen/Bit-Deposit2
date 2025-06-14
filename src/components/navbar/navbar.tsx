@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
-import { MobileNav } from './sidenav';
+import { SideNav } from './sidenav';
 import { useAuth } from '@/lib/authContext';
 import { WalletBalance } from '@/components/ui/wallet-balance';
 import { Home, BarChart2, Gamepad2, Plus } from 'lucide-react';
@@ -77,7 +77,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Menu Button - Right side */}
-                <MobileNav />
+                <SideNav />
             </div>
         </div>
         
