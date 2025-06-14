@@ -163,15 +163,15 @@ const ProviderPills = ({ providers }: { providers: GameProvider[] }) => {
   return (
     <>
       {providers.map((provider) => (
-        <div key={provider.id} className="h-9 w-24 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+        <div key={provider.id} className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
           {provider.id === 11134 ? (
             <div className="flex items-center h-full">
               <Image
                 src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/backend/public/2025/05/31/images/66204/EVOLUTION_logo_RGB_black-1-2daa431b2513c3058ff1cbcd04ae684a.png"
                 alt={provider.name}
-                width={76}
-                height={20}
-                className="object-contain max-h-6 max-w-[76px] mr-2"
+                width={65}
+                height={24}
+                className="object-contain max-h-6 max-w-[65px] mr-2"
                 style={{ maxHeight: '1.5rem', width: 'auto' }}
               />
             </div>
