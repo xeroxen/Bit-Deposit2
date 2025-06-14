@@ -84,7 +84,7 @@ const StaticGameCarousel = () => {
   // Memoize carousel items to avoid unnecessary re-renders
   const carouselItems = useMemo(() =>
     allGames.map((game) => (
-      <CarouselItem key={game.id} className="pl-2 md:pl-4 basis-auto">
+      <CarouselItem key={game.id} className="pl-2 md:pl-4 basis-auto cursor-pointer">
         <GameCard
           name={game.game_name}
           winAmount={game.rtp ? `${game.rtp}x` : ''}
@@ -111,12 +111,12 @@ const StaticGameCarousel = () => {
           >
             <CarouselContent className="-ml-2 md:-ml-4">
               {Array.from({ length: 6 }).map((_, idx) => (
-                <CarouselItem key={idx} className="pl-2 md:pl-4 basis-auto">
+                <CarouselItem key={idx} className="pl-2 md:pl-4 basis-auto cursor-pointer">
                   <GameCardSkeleton />
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="absolute mt-18 mr-8 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
+            <div className="absolute mt-18 mr-12 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
             <CarouselPrevious
               className="w-9 h-6 bg-gradient-to-br bg-[#aaaaaa] shadow-md border transition-all duration-200 flex items-center justify-center text-white text-xl rounded-md"
             />
@@ -147,7 +147,7 @@ const StaticGameCarousel = () => {
           <CarouselContent className="-ml-2 md:-ml-4">
             {carouselItems}
           </CarouselContent>
-          <div className="absolute mt-18 mr-8 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
+          <div className="absolute mt-18 mr-12 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
             <CarouselPrevious
               className="w-9 h-6 bg-gradient-to-br bg-[#aaaaaa] shadow-md border transition-all duration-200 flex items-center justify-center text-white text-xl rounded-md"
             />
