@@ -165,86 +165,100 @@ const ProviderPills = ({ providers }: { providers: GameProvider[] }) => {
       {providers.map((provider) => (
         <div key={provider.id} className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
           {provider.id === 11134 ? (
-            <div className="flex items-center h-full">
+            <div className="flex items-center h-full w-full justify-center">
               <Image
                 src="/providers/evolution.png"
                 alt={provider.name}
                 width={65}
                 height={24}
-                className="object-contain max-h-6 max-w-[65px] mr-2"
-                style={{ maxHeight: '1.5rem', width: 'auto' }}
+                className="object-contain mr-2"
+                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+                sizes="(max-width: 768px) 80vw, 65px"
+                priority
               />
             </div>
           ) : null}
           {provider.id === 11133 ? (
-            <div className="flex items-center h-full">
+            <div className="flex items-center h-full w-full justify-center">
               <Image
                 src="/providers/spribe.png"
                 alt={provider.name}
                 width={65}
                 height={24}
-                className="object-contain max-h-6 max-w-[65px] mr-2"
-                style={{ maxHeight: '1.5rem', width: 'auto' }}
+                className="object-contain mr-2"
+                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+                sizes="(max-width: 768px) 80vw, 65px"
+                priority
               />
             </div>
           ) : null}
           {provider.id === 4 ? (
-            <div className="flex items-center h-full">
+            <div className="flex items-center h-full w-full justify-center">
               <Image
                 src="/providers/pragmatic_play.png"
                 alt={provider.name}
                 width={65}
                 height={24}
-                className="object-contain max-h-6 max-w-[65px] mr-2"
-                style={{ maxHeight: '1.5rem', width: 'auto' }}
+                className="object-contain mr-2"
+                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+                sizes="(max-width: 768px) 80vw, 65px"
+                priority
               />
             </div>
           ) : null}
           {provider.id === 11135 ? (
-            <div className="flex items-center h-full">
+            <div className="flex items-center h-full w-full justify-center">
               <Image
                 src="/providers/pragmatic.png"
                 alt={provider.name}
                 width={65}
                 height={24}
-                className="object-contain max-h-6 max-w-[65px] mr-2"
-                style={{ maxHeight: '1.5rem', width: 'auto' }}
+                className="object-contain mr-2"
+                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+                sizes="(max-width: 768px) 80vw, 65px"
+                priority
               />
             </div>
           ) : null}
           {provider.id === 2 ? (
-            <div className="flex items-center h-full">
+            <div className="flex items-center h-full w-full justify-center">
               <Image
                 src="/providers/pgsoft.png"
                 alt={provider.name}
                 width={65}
                 height={24}
-                className="object-contain max-h-6 max-w-[65px] mr-2"
-                style={{ maxHeight: '1.5rem', width: 'auto' }}
+                className="object-contain mr-2"
+                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+                sizes="(max-width: 768px) 80vw, 65px"
+                priority
               />
             </div>
           ) : null}
           {provider.id === 9 ? (
-            <div className="flex items-center h-full">
+            <div className="flex items-center h-full w-full justify-center">
               <Image
                 src="/providers/habanero.png"
                 alt={provider.name}
                 width={65}
                 height={24}
-                className="object-contain max-h-6 max-w-[65px] mr-2"
-                style={{ maxHeight: '1.5rem', width: 'auto' }}
+                className="object-contain mr-2"
+                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+                sizes="(max-width: 768px) 80vw, 65px"
+                priority
               />
             </div>
           ) : null}
           {provider.id === 13 ? (
-            <div className="flex items-center h-full">
+            <div className="flex items-center h-full w-full justify-center">
               <Image
                 src="/providers/evoplay.png"
                 alt={provider.name}
                 width={65}
                 height={24}
-                className="object-contain max-h-6 max-w-[65px] mr-2"
-                style={{ maxHeight: '1.5rem', width: 'auto' }}
+                className="object-contain mr-2"
+                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+                sizes="(max-width: 768px) 80vw, 65px"
+                priority
               />
             </div>
           ) : null}
