@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useGameContext } from '@/lib/gameContext';
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -82,39 +82,48 @@ const StaticGameCarousel = () => {
   // Show skeletons while loading or no games
   if (loading || allGames.length === 0) {
     return (
-      <div className="w-full flex justify-center items-center py-4">
-      <div className="w-[382px] py-4">
-        <Carousel
-          opts={{
-            align: "start",
-            loop: false,
-            dragFree: false,
-            containScroll: "trimSnaps",
-            slidesToScroll: 1
-          }}
-          className="w-full"
-        >
-          <CarouselContent className="-ml-2 md:-ml-4">
-            {Array.from({ length: 6 }).map((_, idx) => (
-              <CarouselItem key={idx} className="pl-2 md:pl-4 basis-auto">
-                <GameCardSkeleton />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </div>
+      <div className="w-full flex flex-col justify-center items-center py-4">
+        <div className="w-[382px] py-4 relative">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: false,
+              dragFree: true,
+              containScroll: "trimSnaps",
+              slidesToScroll: 1
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {Array.from({ length: 6 }).map((_, idx) => (
+                <CarouselItem key={idx} className="pl-2 md:pl-4 basis-auto">
+                  <GameCardSkeleton />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="absolute mt-18 mr-8 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
+            <CarouselPrevious
+              className="w-9 h-6 bg-gradient-to-br bg-[#aaaaaa] shadow-md border transition-all duration-200 flex items-center justify-center text-white text-xl rounded-md"
+            />
+            <CarouselNext
+              className="w-9 h-6 bg-gradient-to-br bg-[#aaaaaa] shadow-md border  transition-all duration-200 flex items-center justify-center text-white text-xl rounded-md"
+            />
+          </div>
+          </Carousel>
+         
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full flex justify-center items-center py-4">
-      <div className="w-[382px] py-4">
+    <div className="w-full flex flex-col justify-center items-center py-4">
+      <div className="w-[382px] py-4 relative">
         <Carousel
           opts={{
             align: "start",
             loop: false,
-            dragFree: false,
+            dragFree: true,
             containScroll: "trimSnaps",
             slidesToScroll: 1
           }}
@@ -131,7 +140,16 @@ const StaticGameCarousel = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
+          <div className="absolute mt-18 mr-8 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
+            <CarouselPrevious
+              className="w-9 h-6 bg-gradient-to-br bg-[#aaaaaa] shadow-md border transition-all duration-200 flex items-center justify-center text-white text-xl rounded-md"
+            />
+            <CarouselNext
+              className="w-9 h-6 bg-gradient-to-br bg-[#aaaaaa] shadow-md border  transition-all duration-200 flex items-center justify-center text-white text-xl rounded-md"
+            />
+          </div>
         </Carousel>
+        
       </div>
     </div>
   );
