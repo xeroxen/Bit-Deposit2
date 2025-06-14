@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useMemo, memo } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useGameContext } from '@/lib/gameContext';
 import { Skeleton } from "@/components/ui/skeleton";
@@ -11,7 +11,8 @@ interface GameCardProps {
   cover?: string;
 }
 
-const GameCard: React.FC<GameCardProps> = ({ name, winAmount, cover }) => {
+// Memoized GameCard for performance
+const GameCard: React.FC<GameCardProps> = memo(({ name, winAmount, cover }) => {
   return (
     <div className="relative w-[92px] h-[96px] bg-white rounded-[8px] flex flex-col items-center p-2 overflow-hidden">
       {/* Full card background image */}
@@ -49,7 +50,8 @@ const GameCard: React.FC<GameCardProps> = ({ name, winAmount, cover }) => {
       </div>
     </div>
   );
-};
+});
+GameCard.displayName = "GameCard";
 
 // Skeleton for the carousel card
 const GameCardSkeleton = () => (
@@ -76,8 +78,21 @@ const GameCardSkeleton = () => (
 const StaticGameCarousel = () => {
   const { games, loading } = useGameContext();
 
-  // Flatten all games from all providers
-  const allGames = games?.providers?.flatMap(provider => provider.games || []) || [];
+  // Memoize allGames to avoid recalculating on every render
+  const allGames = useMemo(() => games?.providers?.flatMap(provider => provider.games || []) || [], [games]);
+
+  // Memoize carousel items to avoid unnecessary re-renders
+  const carouselItems = useMemo(() =>
+    allGames.map((game) => (
+      <CarouselItem key={game.id} className="pl-2 md:pl-4 basis-auto">
+        <GameCard
+          name={game.game_name}
+          winAmount={game.rtp ? `${game.rtp}x` : ''}
+          cover={game.cover ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${game.cover}` : undefined}
+        />
+      </CarouselItem>
+    ))
+  , [allGames]);
 
   // Show skeletons while loading or no games
   if (loading || allGames.length === 0) {
@@ -130,15 +145,7 @@ const StaticGameCarousel = () => {
           className="w-full"
         >
           <CarouselContent className="-ml-2 md:-ml-4">
-            {allGames.map((game) => (
-              <CarouselItem key={game.id} className="pl-2 md:pl-4 basis-auto">
-                <GameCard
-                  name={game.game_name}
-                  winAmount={game.rtp ? `${game.rtp}x` : ''}
-                  cover={game.cover ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${game.cover}` : undefined}
-                />
-              </CarouselItem>
-            ))}
+            {carouselItems}
           </CarouselContent>
           <div className="absolute mt-18 mr-8 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
             <CarouselPrevious
