@@ -3,11 +3,9 @@
 import Image from 'next/image';
 import React, { useState, useEffect, Suspense } from 'react';
 import { Skeleton } from "@/components/ui/skeleton";
-import { apiRequest } from '@/lib/authentication';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { ApiResponse, CategoryInfo, ErrorResponse, Game, GameProvider, GameResponse, SingleGameResponse } from '@/types/game.type';
+import { ApiResponse, CategoryInfo, Game, GameProvider, GameResponse } from '@/types/game.type';
 import { useGameContext } from '@/lib/gameContext';
+import { useSingleGameRedirect } from "@/hooks/singGameRedirect";
 
 
 
@@ -363,36 +361,7 @@ const AllGameMobile = () => {
     const [allGames, setAllGames] = useState<Game[]>([]);
     const gamesPerRow = 4;
     const initialRows = 3;
-    const router = useRouter();
-    
-    async function getSingleGameData(game: Game) {
-        // Show loading toast
-        const toastId = toast.loading(`Loading ${game.game_name}...`);
-        try {
-            const response = await apiRequest<SingleGameResponse | ErrorResponse>(`/games/single/${game.id}`);
-            // Check if response indicates authentication failure
-            // Open game URL in a new tab
-            if ('gameUrl' in response && response.gameUrl) {
-                toast.success(`${game.game_name} ready to play!`);
-                window.location.href = response.gameUrl;
-            } else {
-                toast.error("Game URL not found in response");
-                console.error("Game URL not found in response");
-            }
-        } catch (error: unknown) {
-            if (error && typeof error === 'object' && 'status' in error && error.status === false && 'action' in error && error.action === "login") {
-                toast.error("Please login to play");
-                router.push("/login");
-                return;
-            }
-            if (error && typeof error === 'object' && 'status' in error && error.status === false && 'action' in error && error.action === "deposit") {
-              toast.error(`Please deposit to play ${game.game_name}`);
-              return;
-          }
-        } finally {
-            toast.dismiss(toastId);
-        }
-    }
+    const singleGameRedirect = useSingleGameRedirect();
     
     useEffect(() => {
         // Set first category as default selected when gameProviders loads
@@ -455,7 +424,7 @@ const AllGameMobile = () => {
     };
 
     const handleGameClick = (game: Game) => {
-        getSingleGameData(game);
+        singleGameRedirect(game.id, game.game_name);
     };
     
     const handleViewAll = () => {

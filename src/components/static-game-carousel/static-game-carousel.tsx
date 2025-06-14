@@ -4,6 +4,8 @@ import React, { useMemo, memo } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useGameContext } from '@/lib/gameContext';
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSingleGameRedirect } from "@/hooks/singGameRedirect";
+import { Game } from "@/types/game.type";
 
 interface GameCardProps {
   name: string;
@@ -77,14 +79,15 @@ const GameCardSkeleton = () => (
 
 const StaticGameCarousel = () => {
   const { games, loading } = useGameContext();
+  const singleGameRedirect = useSingleGameRedirect();
 
   // Memoize allGames to avoid recalculating on every render
   const allGames = useMemo(() => games?.providers?.flatMap(provider => provider.games || []) || [], [games]);
 
   // Memoize carousel items to avoid unnecessary re-renders
   const carouselItems = useMemo(() =>
-    allGames.map((game) => (
-      <CarouselItem key={game.id} className="pl-2 md:pl-4 basis-auto cursor-pointer">
+    allGames.map((game: Game) => (
+      <CarouselItem key={game.id} className="pl-2 md:pl-4 basis-auto cursor-pointer" onClick={() => singleGameRedirect(game.id, game.game_name)}>
         <GameCard
           name={game.game_name}
           winAmount={game.rtp ? `${game.rtp}x` : ''}
@@ -92,7 +95,7 @@ const StaticGameCarousel = () => {
         />
       </CarouselItem>
     ))
-  , [allGames]);
+  , [allGames, singleGameRedirect]);
 
   // Show skeletons while loading or no games
   if (loading || allGames.length === 0) {
