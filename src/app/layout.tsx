@@ -8,6 +8,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { AuthProvider } from "@/lib/authContext";
 import { WalletProvider } from "@/lib/walletContext";
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { GameProvider } from '@/lib/gameContext';
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -42,11 +43,13 @@ export default function RootLayout({
         />
         <AuthProvider>
           <WalletProvider>
-            <Navbar />
-            {children}
-            <BottomFooter />
-            <Toaster />
-            <SpeedInsights />
+            <GameProvider>
+              <Navbar />
+              {children}
+              <BottomFooter />
+              <Toaster />
+              <SpeedInsights />
+            </GameProvider>
           </WalletProvider>
         </AuthProvider>
       </body>

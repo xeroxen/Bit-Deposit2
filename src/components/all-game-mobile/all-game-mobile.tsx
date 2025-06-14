@@ -7,6 +7,7 @@ import { apiRequest } from '@/lib/authentication';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { ApiResponse, CategoryInfo, ErrorResponse, Game, GameProvider, GameResponse, SingleGameResponse } from '@/types/game.type';
+import { useGameContext } from '@/lib/gameContext';
 
 
 
@@ -354,12 +355,10 @@ console.log("games.providers",games.providers);
 };
 
 const AllGameMobile = () => {
-    const [games, setGames] = useState<GameResponse>({ providers: [] });
-    const [gameProviders, setGameProviders] = useState<ApiResponse>({ status: false, message: '', data: [], cat: [] });
+    const { games, gameProviders, loading } = useGameContext();
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [filteredGames, setFilteredGames] = useState<Game[]>([]);
     const [visibleGames, setVisibleGames] = useState<number>(12); // Initial 3 rows of 4 games
-    const [loading, setLoading] = useState<boolean>(true);
     const [viewAllMode, setViewAllMode] = useState<boolean>(false);
     const [allGames, setAllGames] = useState<Game[]>([]);
     const gamesPerRow = 4;
@@ -371,10 +370,7 @@ const AllGameMobile = () => {
         const toastId = toast.loading(`Loading ${game.game_name}...`);
         try {
             const response = await apiRequest<SingleGameResponse | ErrorResponse>(`/games/single/${game.id}`);
-
             // Check if response indicates authentication failure
-            
-           
             // Open game URL in a new tab
             if ('gameUrl' in response && response.gameUrl) {
                 toast.success(`${game.game_name} ready to play!`);
@@ -398,53 +394,20 @@ const AllGameMobile = () => {
         }
     }
     
-    async function getGames() {
-        try {
-            setLoading(true);
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/games/all`);
-            const data: GameResponse = await response.json();
-            setGames(data);
-            
-            // Extract and flatten all games from all providers
-            const extractedGames = data.providers.flatMap(provider => 
-                provider.games ? provider.games : []
-            );
-            setAllGames(extractedGames);
-            
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching games:", error);
-            setLoading(false);
-        }
-    }
-
-    async function getGameProviders() {
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/game-cat`);
-            const data: ApiResponse = await response.json();
-            setGameProviders(data);
-            // Set first category as default selected
-            if (data.cat && data.cat.length > 0) {
-                setSelectedCategory(data.cat[0].id);
-            }
-        } catch (error) {
-            console.error("Error fetching game categories:", error);
-        }
-    }
-
     useEffect(() => {
-        getGames();
-        getGameProviders();
-    }, []);
+        // Set first category as default selected when gameProviders loads
+        if (gameProviders && gameProviders.cat && gameProviders.cat.length > 0 && selectedCategory === null) {
+            setSelectedCategory(gameProviders.cat[0].id);
+        }
+    }, [gameProviders, selectedCategory]);
 
     // Filter games by selected category
     useEffect(() => {
         if (viewAllMode) return; // Skip filtering when in "View All" mode
-        if (!selectedCategory || !games.providers || !gameProviders.data) return;
+        if (!selectedCategory || !games?.providers || !gameProviders?.data) return;
 
-        setLoading(true);
-        
         // Simulate loading for better UX
+        setFilteredGames([]);
         const filterTimer = setTimeout(() => {
             // Get all game IDs for the selected category
             const categoryGameIds = gameProviders.data
@@ -464,11 +427,20 @@ const AllGameMobile = () => {
             setFilteredGames(gamesInCategory);
             // Reset visible games count when category changes
             setVisibleGames(initialRows * gamesPerRow);
-            setLoading(false);
         }, 500); // Short delay to show loading state
         
         return () => clearTimeout(filterTimer);
     }, [selectedCategory, games, gameProviders, viewAllMode]);
+
+    useEffect(() => {
+        // Set allGames for viewAllMode
+        if (games?.providers) {
+            const extractedGames = games.providers.flatMap(provider => 
+                provider.games ? provider.games : []
+            );
+            setAllGames(extractedGames);
+        }
+    }, [games]);
 
     const handleCategoryClick = (categoryId: number) => {
         if (viewAllMode) {
@@ -512,7 +484,7 @@ const AllGameMobile = () => {
                 <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
                     <Suspense fallback={<CategoryPillsSkeleton />}>
                         <CategoriesData 
-                            gameProviders={gameProviders}
+                            gameProviders={gameProviders || { status: false, message: '', data: [], cat: [] }}
                             selectedCategory={selectedCategory}
                             handleCategoryClick={handleCategoryClick}
                             loading={loading}
@@ -557,7 +529,7 @@ const AllGameMobile = () => {
                     <div className="grid grid-cols-4 gap-2">
                         <Suspense fallback={<ProviderPillsSkeleton />}>
                             <ProvidersData 
-                                games={games}
+                                games={games || { providers: [] }}
                                 loading={loading}
                             />
                         </Suspense>
