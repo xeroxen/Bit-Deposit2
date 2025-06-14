@@ -37,8 +37,12 @@ export const useSingleGameRedirect = () => {
                     router.push("/login");
                     return;
                 }
-                if (error && typeof error === 'object' && 'status' in error && error.status === false && 'action' in error && error.action === "deposit") {
+                else if (error && typeof error === 'object' && 'status' in error && error.status === false && 'action' in error && error.action === "deposit") {
                     toast.error(`Please deposit to play ${gameName}`);
+                    return;
+                }
+                else {
+                    toast.error("Something went wrong");
                     return;
                 }
             } finally {
