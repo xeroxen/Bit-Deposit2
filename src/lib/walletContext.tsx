@@ -88,7 +88,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       
       if (data && data.wallet) {
         setWalletData(data.wallet)
-        setBalance(data.wallet.balance || "0.00")
+        setBalance(data.wallet.total_balance || "0.00")
         setSymbol(data.wallet.symbol || "৳")
       }
     } catch (error) {

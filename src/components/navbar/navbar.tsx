@@ -6,30 +6,116 @@ import { usePathname } from 'next/navigation';
 import { SideNav } from './sidenav';
 import { useAuth } from '@/lib/authContext';
 import { WalletBalance } from '@/components/ui/wallet-balance';
-import { Home, BarChart2, Gamepad2, Plus } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Home, BarChart2, Gamepad2, Plus, ChevronDown, Globe, Menu } from 'lucide-react';
 
-const Navbar = () => {
+interface NavbarProps {
+  onSidebarToggle?: () => void;
+}
+
+const Navbar = ({ onSidebarToggle }: NavbarProps) => {
     const pathname = usePathname();
     const { isAuthenticated, loading } = useAuth();
     
     // Only hide auth buttons when explicitly on login/signup pages
-    // Don't use isAuthenticated here to prevent flashing
     const hideAuthButtonsOnRoutes = pathname === '/login' || pathname === '/signup';
     
-    // Navigation items with Lucide icons
-    const navItems = useMemo(() => [
+    // Navigation items with Lucide icons for mobile
+    const mobileNavItems = useMemo(() => [
         { name: 'Home', icon: Home, href: '/' },
         { name: 'Sports', icon: BarChart2, href: '/sports' },
         { name: 'Casino', icon: Gamepad2, href: '/casino' },
     ], []);
     
+    // Desktop navigation items
+    const desktopNavItems = useMemo(() => [
+        { name: 'SPORTS', href: '/sports' },
+        { name: 'CASINO', href: '/casino' },
+        { name: 'Bet Transfer', href: '/bet-transfer' },
+        { name: 'BD Casino', href: '/bd-casino', indicator: 'bg-[#48ac2f]' },
+        { name: 'Lottery', href: '/lottery', indicator: 'bg-[#fdbf00]' },
+    ], []);
+    
     return (
         <>
-        <div className="fixed top-0 left-0 right-0 z-50 w-full h-[50px] bg-[#001529]">
+        {/* Desktop Navbar */}
+        <div className="hidden md:block fixed top-0 left-0 right-0 z-50 w-full">
+            <header className="bg-[#1d3d68] border-b border-[#275ea5] px-4 py-3">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-6">
+                        {onSidebarToggle && (
+                            <button 
+                                onClick={onSidebarToggle} 
+                                className="text-white hover:text-[#a1b7d4] transition-colors"
+                            >
+                                <Menu className="w-5 h-5" />
+                            </button>
+                        )}
+                        
+                        {/* Logo */}
+                        <Link href="/">
+                            <Image src="/logo/logo.png" alt="logo" width={128} height={24} className="cursor-pointer" />
+                        </Link>
+                        
+                        {/* Desktop Navigation */}
+                        <nav className="flex items-center space-x-6">
+                            {desktopNavItems.map((item, index) => (
+                                <Link
+                                    key={index}
+                                    href={item.href}
+                                    className="text-white hover:text-[#a1b7d4] font-medium transition-colors flex items-center"
+                                >
+                                    {item.indicator && (
+                                        <span className={`w-2 h-2 ${item.indicator} rounded-full mr-2`}></span>
+                                    )}
+                                    {item.name}
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
+                    
+                    <div className="flex items-center space-x-4">
+                        {!loading && isAuthenticated ? (
+                            <div className="flex items-center space-x-4">
+                                <div className="flex items-center bg-[#275ea5] rounded-[10px] px-3 py-1 h-8 text-white">
+                                <WalletBalance showArrow={false} size="sm" className="whitespace-nowrap" />
+                            </div>
+                            <Button  className="w-32 h-8 bg-[#63AE50] hover:bg-[#5ca33b] text-white">
+                                <Link href="/deposit">Deposit</Link>
+                            </Button>
+                            <SideNav />
+                            </div>
+                        ) : !hideAuthButtonsOnRoutes && (
+                            <>
+                                <Button className="bg-[#48ac2f] hover:bg-[#5ca33b] text-white px-6 font-medium transition-colors">
+                                    <Link href="/signup">REGISTRATION</Link>
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    className="border-[#a1b7d4] text-white hover:bg-[#275ea5] hover:border-white transition-colors"
+                                >
+                                    <Link href="/login">Login</Link>
+                                </Button>
+                            </>
+                        )}
+                        
+                        <div className="flex items-center space-x-2 text-white">
+                            <Globe className="w-4 h-4" />
+                            <span className="text-sm">10:56 AM</span>
+                            <ChevronDown className="w-4 h-4" />
+                        </div>
+                        <div className="text-white text-sm font-medium">US $</div>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        {/* Mobile Navbar */}
+        <div className="md:hidden fixed top-0 left-0 right-0 z-50 w-full h-[50px] bg-[#001529]">
             {/* Background overlay */}
             <div className="absolute inset-0 bg-white"></div>
             
-            {/* Main navbar content */}
+            {/* Main mobile navbar content */}
             <div className="relative h-full flex items-center justify-between px-2">
                 
                 {/* Language Selector or Wallet Balance - Left side */}
@@ -81,10 +167,9 @@ const Navbar = () => {
             </div>
         </div>
         
-        {/* Login and Registration Buttons - Below Navbar */}
-        {/* Only show when not loading AND not authenticated AND not on auth pages */}
+        {/* Mobile Login and Registration Buttons - Below Navbar */}
         {!loading && !isAuthenticated && !hideAuthButtonsOnRoutes && (
-            <div className="fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white">
+            <div className="md:hidden fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white">
                 <div className="flex items-center justify-center h-full px-4 gap-4">
                     {/* Login Button */}
                     <Link href="/login" className="w-full max-w-[170px]">
@@ -107,11 +192,11 @@ const Navbar = () => {
             </div>
         )}
 
-        {/* Navigation Tabs - Only show when not loading AND authenticated */}
+        {/* Mobile Navigation Tabs - Only show when authenticated */}
         {!loading && isAuthenticated && (
-            <div className="fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white border-b border-gray-200">
+            <div className="md:hidden fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white border-b border-gray-200">
                 <div className="flex items-center justify-between h-full px-2">
-                    {navItems.map((item, index) => {
+                    {mobileNavItems.map((item, index) => {
                         const isActive = pathname === item.href;
                         const IconComponent = item.icon;
                         return (
