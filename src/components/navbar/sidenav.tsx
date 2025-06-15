@@ -3,13 +3,13 @@
 import type * as React from "react"
 import { useState } from "react"
 import {
-  // CreditCard,
+  CreditCard,
   // Gift,
   // History,
   LayoutDashboard,
   Menu,
   MessageCircle,
-  // RefreshCcw,
+  RefreshCcw,
   // Settings,
   Star,
   // Ticket,
@@ -42,11 +42,11 @@ const navItems: NavItem[] = [
     icon: <LayoutDashboard className="h-5 w-5" />,
     href: "/profile",
   },
-  // {
-  //   title: "Transactions",
-  //   icon: <RefreshCcw className="h-5 w-5" />,
-  //   href: "#",
-  // },
+  {
+    title: "Deposit History",
+    icon: <RefreshCcw className="h-5 w-5" />,
+    href: "/deposit-history",
+  },
   // {
   //   title: "Beneficiaries",
   //   icon: <Users className="h-5 w-5" />,
@@ -58,15 +58,16 @@ const navItems: NavItem[] = [
   //   href: "#",
   // },
   {
+    title: "Withdraw History",
+    icon: <CreditCard className="h-5 w-5" />,
+    href: "/withdraw-history",
+  },
+  {
     title: "Bet History",
     icon: <Wallet className="h-5 w-5" />,
     href: "/bet-history",
   },
-  // {
-  //   title: "Withdraw Accounts",
-  //   icon: <CreditCard className="h-5 w-5" />,
-  //   href: "#",
-  // },
+  
   // {
   //   title: "Redeem History",
   //   icon: <History className="h-5 w-5" />,
