@@ -1,19 +1,21 @@
 "use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { SideNav } from './sidenav';
 import { useAuth } from '@/lib/authContext';
 import { WalletBalance } from '@/components/ui/wallet-balance';
 import { Button } from "@/components/ui/button";
 import { Home, BarChart2, Gamepad2, Plus, ChevronDown, Globe, Menu } from 'lucide-react';
+import { Data } from '@/types/data.types';
 
 interface NavbarProps {
   onSidebarToggle?: () => void;
 }
 
 const Navbar = ({ onSidebarToggle }: NavbarProps) => {
+    const [logo, setLogo] = useState<Data>();
     const pathname = usePathname();
     const { isAuthenticated, loading } = useAuth();
     
@@ -22,7 +24,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
     
     // Navigation items with Lucide icons for mobile
     const mobileNavItems = useMemo(() => [
-        { name: 'Home', icon: Home, href: '/' },
+        { name: 'Top', icon: Home, href: '/' },
         { name: 'Sports', icon: BarChart2, href: '/sports' },
         { name: 'Casino', icon: Gamepad2, href: '/casino' },
     ], []);
@@ -36,6 +38,16 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
         { name: 'Lottery', href: '/lottery', indicator: 'bg-[#fdbf00]' },
     ], []);
     
+    useEffect(() => {
+        const fetchLogo = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/settings/data`);
+            const data = await response.json();
+            setLogo(data.setting);
+        };
+        fetchLogo();
+    }, []);
+
+
     return (
         <>
         {/* Desktop Navbar */}
@@ -54,7 +66,15 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                         
                         {/* Logo */}
                         <Link href="/">
-                            <Image src="/logo/logo.png" alt="logo" width={128} height={24} className="cursor-pointer" />
+                        {logo?.software_logo_white && (
+                        <Image 
+                            src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${logo.software_logo_white}`} 
+                            alt="logo" 
+                            width={128} 
+                            height={24} 
+                            className="cursor-pointer" 
+                        />
+                    )}
                         </Link>
                         
                         {/* Desktop Navigation */}
@@ -148,7 +168,15 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                 {/* Logo/Brand - Center */}
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
                     <Link href="/">
-                        <Image src="/logo/logo.png" alt="logo" width={128} height={24} className="cursor-pointer" />
+                    {logo?.software_logo_white && (
+                        <Image 
+                            src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${logo.software_logo_white}`} 
+                            alt="logo" 
+                            width={128} 
+                            height={24} 
+                            className="cursor-pointer" 
+                        />
+                    )}
                     </Link>
                 </div>
 

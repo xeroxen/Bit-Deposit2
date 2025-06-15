@@ -1,8 +1,22 @@
+"use client"
 import Link from "next/link"
 import { Facebook, Youtube, MessageCircle } from "lucide-react"
 import Image from "next/image"
+import React, { useEffect, useState } from "react"
+import { Data } from "@/types/data.types";
 
 export default function BottomFooter() {
+  const [logo, setLogo] = useState<Data>();
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/settings/data`);
+      const data = await response.json();
+      setLogo(data.setting);
+    };
+    fetchLogo();
+  }, []);
+
   return (
     <footer className="bg-slate-800 text-white">
       {/* Main Footer Content */}
@@ -10,7 +24,9 @@ export default function BottomFooter() {
         {/* Header Section */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
-            <Image src="/logo/logo.png" alt="logo" width={200} height={40} />
+            {logo?.software_logo_white && (
+              <Image src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${logo.software_logo_white}`} alt="logo" width={200} height={40} />
+            )}
           </div>
           <p className="text-gray-300 mb-4">Contact with us</p>
 
