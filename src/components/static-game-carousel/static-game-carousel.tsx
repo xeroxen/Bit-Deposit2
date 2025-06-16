@@ -16,7 +16,7 @@ interface GameCardProps {
 // Memoized GameCard for performance
 const GameCard: React.FC<GameCardProps> = memo(({ name, winAmount, cover }) => {
   return (
-    <div className="relative w-[92px] h-[96px] bg-white rounded-[8px] flex flex-col items-center p-2 overflow-hidden">
+    <div className="relative w-[92px] h-[96px] md:w-[120px] md:h-[128px] lg:w-[140px] lg:h-[150px] xl:w-[260px] xl:h-[270px] bg-white rounded-[8px] flex flex-col items-center p-2 overflow-hidden">
       {/* Full card background image */}
       {cover && (
         <div
@@ -37,14 +37,14 @@ const GameCard: React.FC<GameCardProps> = memo(({ name, winAmount, cover }) => {
       {/* Content */}
       <div className="relative z-20 flex flex-col items-center w-full h-full justify-between">
         <div className="w-full mt-3 mb-1 px-1">
-          <div className="font-inter font-semibold text-[12px] leading-[16px] text-[#ffffff] capitalize text-center truncate w-full overflow-hidden whitespace-nowrap  rounded">
+          <div className="font-inter font-semibold text-[12px] md:text-[14px] lg:text-[16px] xl:text-[20px] leading-[16px] text-[#ffffff] capitalize text-center truncate w-full overflow-hidden whitespace-nowrap  rounded">
             {name}
           </div>
         </div>
-        <div className="font-inter font-medium text-[9px] leading-[14px] text-[#ffe600] text-center mb-2  rounded px-1">
+        <div className="font-inter font-medium text-[9px] md:text-[12px] lg:text-[14px] xl:text-[24px] leading-[14px] text-[#ffe600] text-center mb-2  rounded px-1">
           win {winAmount}
         </div>
-        <div className="w-[74px] h-[24px] mb-2 bg-gradient-to-b from-[#97EB0E] to-[#19B90B] shadow-[0px_4px_8px_-2px_rgba(118,188,4,0.32)] rounded-[8px] flex items-center justify-center">
+        <div className="w-[74px] h-[24px] md:w-[100px] md:h-[32px] lg:w-[120px] lg:h-[36px] xl:w-[140px] xl:h-[40px] mb-2 bg-gradient-to-b from-[#97EB0E] to-[#19B90B] shadow-[0px_4px_8px_-2px_rgba(118,188,4,0.32)] rounded-[8px] flex items-center justify-center">
           <span className="font-inter font-semibold text-[12px] leading-[14px] text-white">
             Play Now
           </span>
@@ -101,7 +101,7 @@ const StaticGameCarousel = () => {
   if (loading || allGames.length === 0) {
     return (
       <div className="w-full flex flex-col justify-center items-center py-4">
-        <div className="w-[382px] py-4 relative">
+        <div className="w-[90vw]  py-4 relative">
           <Carousel
             opts={{
               align: "start",
@@ -136,7 +136,7 @@ const StaticGameCarousel = () => {
 
   return (
     <div className="w-full flex flex-col justify-center items-center py-4">
-      <div className="w-[382px] py-4 relative">
+      <div className="w-[90vw] py-4 relative">
         <Carousel
           opts={{
             align: "start",
