@@ -7,23 +7,28 @@ import { ApiResponse, CategoryInfo, Game, GameResponse } from '@/types/game.type
 import { useGameContext } from '@/lib/gameContext';
 import { useSingleGameRedirect } from "@/hooks/singGameRedirect";
 
-
-
-
 // Game Grid Component
 const GameGrid = ({ 
   filteredGames, 
   visibleGames, 
   handleShowMore, 
-  gamesPerRow,
   onGameClick
 }: { 
   filteredGames: Game[], 
   visibleGames: number, 
   handleShowMore: () => void, 
-  gamesPerRow: number,
   onGameClick: (game: Game) => void
 }) => {
+  // Always use 4, 6, or 8 per row based on Tailwind breakpoints
+  // Calculate gamesPerRow based on window width (for visibleGames logic only)
+  let gamesPerRow = 4;
+  if (typeof window !== 'undefined') {
+    if (window.innerWidth >= 1280) {
+      gamesPerRow = 8;
+    } else if (window.innerWidth >= 1024) {
+      gamesPerRow = 6;
+    }
+  }
   // Divide games into rows for rendering
   const gameRows = [];
   for (let i = 0; i < Math.min(filteredGames.length, visibleGames); i += gamesPerRow) {
@@ -41,7 +46,7 @@ const GameGrid = ({
   return (
     <>
       {gameRows.map((row, rowIndex) => (
-        <div key={rowIndex} className="grid grid-cols-4 gap-2 mb-3">
+        <div key={rowIndex} className="grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 mb-3">
           {row.map(game => (
             <div 
               key={game.id} 
@@ -71,7 +76,6 @@ const GameGrid = ({
           ))}
         </div>
       ))}
-      
       {/* Show More Button */}
       {filteredGames.length > visibleGames && (
         <div className="text-center mt-4">
@@ -88,12 +92,12 @@ const GameGrid = ({
 };
 
 // Skeleton component for game grid
-const GameGridSkeleton = ({ rows = 3, gamesPerRow = 4 }: { rows?: number, gamesPerRow?: number }) => {
+const GameGridSkeleton = ({ rows = 3 }: { rows?: number }) => {
   return (
     <>
       {Array.from({ length: rows }).map((_, rowIndex) => (
-        <div key={rowIndex} className="grid grid-cols-4 gap-2 mb-3">
-          {Array.from({ length: gamesPerRow }).map((_, index) => (
+        <div key={rowIndex} className="grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 mb-3">
+          {Array.from({ length: 8 }).map((_, index) => (
             <div key={index} className="aspect-[3/4] rounded-lg overflow-hidden relative">
               <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex flex-col">
                 {/* Game image skeleton */}
@@ -280,7 +284,6 @@ const ProviderPillsSkeleton = ({ count = 8 }: { count?: number }) => {
 const GamesData = ({ 
   visibleGames, 
   handleShowMore, 
-  gamesPerRow,
   loading,
   filteredGames,
   onGameClick
@@ -288,13 +291,12 @@ const GamesData = ({
   selectedCategory: number | null,
   visibleGames: number,
   handleShowMore: () => void,
-  gamesPerRow: number,
   loading: boolean,
   filteredGames: Game[],
   onGameClick: (game: Game) => void
 }) => {
   if (loading) {
-    return <GameGridSkeleton rows={3} gamesPerRow={gamesPerRow} />;
+    return <GameGridSkeleton rows={3} />;
   }
 
   return (
@@ -302,7 +304,6 @@ const GamesData = ({
       filteredGames={filteredGames} 
       visibleGames={visibleGames} 
       handleShowMore={handleShowMore} 
-      gamesPerRow={gamesPerRow}
       onGameClick={onGameClick}
     />
   );
@@ -352,11 +353,9 @@ const AllGameMobile = () => {
     const { games, gameProviders, loading } = useGameContext();
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [filteredGames, setFilteredGames] = useState<Game[]>([]);
-    const [visibleGames, setVisibleGames] = useState<number>(12); // Initial 3 rows of 4 games
+    const [visibleGames, setVisibleGames] = useState<number>(24); // 3 rows of 8 (max per row)
     const [viewAllMode, setViewAllMode] = useState<boolean>(false);
     const [allGames, setAllGames] = useState<Game[]>([]);
-    const gamesPerRow = 4;
-    const initialRows = 3;
     const singleGameRedirect = useSingleGameRedirect();
     
     useEffect(() => {
@@ -391,7 +390,7 @@ const AllGameMobile = () => {
 
             setFilteredGames(gamesInCategory);
             // Reset visible games count when category changes
-            setVisibleGames(initialRows * gamesPerRow);
+            setVisibleGames(24); // 3 rows of 8
         }, 500); // Short delay to show loading state
         
         return () => clearTimeout(filterTimer);
@@ -416,7 +415,8 @@ const AllGameMobile = () => {
     };
 
     const handleShowMore = () => {
-        setVisibleGames(prevVisible => prevVisible + 12); // Show 12 more games
+        // Always add a full row (8) for consistency with grid-cols-8
+        setVisibleGames(prevVisible => prevVisible + 8);
     };
 
     const handleGameClick = (game: Game) => {
@@ -425,7 +425,7 @@ const AllGameMobile = () => {
     
     const handleViewAll = () => {
         setViewAllMode(true);
-        setVisibleGames(12); // Reset to initial 12 games
+        setVisibleGames(24); // Reset to initial 3 rows of 8
     };
 
     // Determine which games to display based on mode
@@ -473,12 +473,11 @@ const AllGameMobile = () => {
 
             {/* Game Rows */}
             <div className="mb-6">
-                <Suspense fallback={<GameGridSkeleton rows={initialRows} gamesPerRow={gamesPerRow} />}>
+                <Suspense fallback={<GameGridSkeleton rows={3} />}>
                     <GamesData 
                         selectedCategory={selectedCategory}
                         visibleGames={visibleGames}
                         handleShowMore={handleShowMore}
-                        gamesPerRow={gamesPerRow}
                         loading={loading}
                         filteredGames={displayGames}
                         onGameClick={handleGameClick}
