@@ -60,9 +60,10 @@ const GameGrid = ({
                     <Image 
                       src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${game.cover}`} 
                       alt={game.game_name}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      width={100}
-                      height={100}
+                      fill
+                      className="object-fill"
+                      sizes="(max-width: 768px) 100vw, 100px"
+                      priority
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30"></div>
