@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import React, { useState, useEffect, Suspense } from 'react';
 import { Skeleton } from "@/components/ui/skeleton";
-import { ApiResponse, CategoryInfo, Game, GameProvider, GameResponse } from '@/types/game.type';
+import { ApiResponse, CategoryInfo, Game, GameResponse } from '@/types/game.type';
 import { useGameContext } from '@/lib/gameContext';
 import { useSingleGameRedirect } from "@/hooks/singGameRedirect";
 
@@ -158,111 +158,107 @@ const CategoryPillsSkeleton = ({ count = 5 }: { count?: number }) => {
 };
 
 // Provider Pills component
-const ProviderPills = ({ providers }: { providers: GameProvider[] }) => {
+const ProviderPills = () => {
   return (
     <>
-      {providers.map((provider) => (
-        <div key={provider.id} className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
-          {provider.id === 11134 ? (
-            <div className="flex items-center h-full w-full justify-center">
-              <Image
-                src="/providers/evolution.png"
-                alt={provider.name}
-                width={65}
-                height={24}
-                className="object-contain mr-2"
-                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-                sizes="(max-width: 768px) 80vw, 65px"
-                priority
-              />
-            </div>
-          ) : null}
-          {provider.id === 11133 ? (
-            <div className="flex items-center h-full w-full justify-center">
-              <Image
-                src="/providers/spribe.png"
-                alt={provider.name}
-                width={65}
-                height={24}
-                className="object-contain mr-2"
-                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-                sizes="(max-width: 768px) 80vw, 65px"
-                priority
-              />
-            </div>
-          ) : null}
-          {provider.id === 4 ? (
-            <div className="flex items-center h-full w-full justify-center">
-              <Image
-                src="/providers/pragmatic_play.png"
-                alt={provider.name}
-                width={65}
-                height={24}
-                className="object-contain mr-2"
-                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-                sizes="(max-width: 768px) 80vw, 65px"
-                priority
-              />
-            </div>
-          ) : null}
-          {provider.id === 11135 ? (
-            <div className="flex items-center h-full w-full justify-center">
-              <Image
-                src="/providers/pragmatic.png"
-                alt={provider.name}
-                width={65}
-                height={24}
-                className="object-contain mr-2"
-                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-                sizes="(max-width: 768px) 80vw, 65px"
-                priority
-              />
-            </div>
-          ) : null}
-          {provider.id === 2 ? (
-            <div className="flex items-center h-full w-full justify-center">
-              <Image
-                src="/providers/pgsoft.png"
-                alt={provider.name}
-                width={65}
-                height={24}
-                className="object-contain mr-2"
-                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-                sizes="(max-width: 768px) 80vw, 65px"
-                priority
-              />
-            </div>
-          ) : null}
-          {provider.id === 9 ? (
-            <div className="flex items-center h-full w-full justify-center">
-              <Image
-                src="/providers/habanero.png"
-                alt={provider.name}
-                width={65}
-                height={24}
-                className="object-contain mr-2"
-                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-                sizes="(max-width: 768px) 80vw, 65px"
-                priority
-              />
-            </div>
-          ) : null}
-          {provider.id === 13 ? (
-            <div className="flex items-center h-full w-full justify-center">
-              <Image
-                src="/providers/evoplay.png"
-                alt={provider.name}
-                width={65}
-                height={24}
-                className="object-contain mr-2"
-                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-                sizes="(max-width: 768px) 80vw, 65px"
-                priority
-              />
-            </div>
-          ) : null}
+      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+        <div className="flex items-center h-full w-full justify-center">
+          <Image
+            src="/providers/evolution.png"
+            alt="Evolution"
+            width={65}
+            height={24}
+            className="object-contain mr-2"
+            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+            sizes="(max-width: 768px) 80vw, 65px"
+            priority
+          />
         </div>
-      ))}
+      </div>
+      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+        <div className="flex items-center h-full w-full justify-center">
+          <Image
+            src="/providers/spribe.png"
+            alt="Spribe"
+            width={65}
+            height={24}
+            className="object-contain mr-2"
+            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+            sizes="(max-width: 768px) 80vw, 65px"
+            priority
+          />
+        </div>
+      </div>
+      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+        <div className="flex items-center h-full w-full justify-center">
+          <Image
+            src="/providers/pragmatic_play.png"
+            alt="Pragmatic Play"
+            width={65}
+            height={24}
+            className="object-contain mr-2"
+            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+            sizes="(max-width: 768px) 80vw, 65px"
+            priority
+          />
+        </div>
+      </div>
+      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+        <div className="flex items-center h-full w-full justify-center">
+          <Image
+            src="/providers/pragmatic.png"
+            alt="Pragmatic"
+            width={65}
+            height={24}
+            className="object-contain mr-2"
+            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+            sizes="(max-width: 768px) 80vw, 65px"
+            priority
+          />
+        </div>
+      </div>
+      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+        <div className="flex items-center h-full w-full justify-center">
+          <Image
+            src="/providers/pgsoft.png"
+            alt="PGSoft"
+            width={65}
+            height={24}
+            className="object-contain mr-2"
+            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+            sizes="(max-width: 768px) 80vw, 65px"
+            priority
+          />
+        </div>
+      </div>
+      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+        <div className="flex items-center h-full w-full justify-center">
+          <Image
+            src="/providers/habanero.png"
+            alt="Habanero"
+            width={65}
+            height={24}
+            className="object-contain mr-2"
+            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+            sizes="(max-width: 768px) 80vw, 65px"
+            priority
+          />
+        </div>
+      </div>
+      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+        <div className="flex items-center h-full w-full justify-center">
+          <Image
+            src="/providers/evoplay.png"
+            alt="Evoplay"
+            width={65}
+            height={24}
+            className="object-contain mr-2"
+            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+            sizes="(max-width: 768px) 80vw, 65px"
+            priority
+          />
+        </div>
+      </div>
     </>
   );
 };
@@ -349,7 +345,7 @@ const ProvidersData = ({
     return <ProviderPillsSkeleton />;
   }
 console.log("games.providers",games.providers);
-  return <ProviderPills providers={games.providers} />;
+  return <ProviderPills />;
 };
 
 const AllGameMobile = () => {
