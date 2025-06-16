@@ -14,7 +14,8 @@ const Home = () => {
     return (
         <div className=" bg-gray-50 mt-10">
             {/* Game Section */}
-            <div className="pt-20"> {/* Reduced from pt-20 to pt-8 */}
+            {/* Mobile: Show game cards, hide on md and up */}
+            <div className="pt-20 block md:hidden">
                 <div className="relative w-[382px] h-[105px] mx-auto mt-1 flex justify-between items-start gap-2">
                     {/* Game Card 1 - Up To 100% (Deposit Bonus) */}
                     <div className="relative w-[92px] h-[105px] flex flex-col items-center">
@@ -53,6 +54,51 @@ const Home = () => {
                         </div>
                         <div className="w-fit h-4 font-semibold text-xs leading-4 flex items-center text-center text-[#1D3D68]">Cricket</div>
                     </div>
+                </div>
+            </div>
+            {/* Desktop: Show full-width banner section, hide on small devices */}
+            <div className="hidden md:block pt-10 lg:pt-20 w-full px-4 md:px-8 lg:px-10">
+                <div
+                    className="w-full rounded-xl overflow-hidden shadow-lg flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-8 gap-8 relative"
+                    style={{
+                        backgroundImage: 'url("https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/backend/public/2024/12/11/images/18456/t_m_softic_1920x380_bdt-bd43df0d5e98b4c8a67b34f8f9888047.png?format=webp&w=1920&q=95")',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        minHeight: '260px',
+                    }}
+                >
+                    {/* Darker overlay for better text readability */}
+                    <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] pointer-events-none z-0" />
+                    <div className="flex-1 z-10">
+                        <h2 className="text-3xl font-bold text-[#ffffff] mb-2 drop-shadow-lg">Welcome to the Ultimate Gaming Experience!</h2>
+                        <p className="text-lg text-[#ffffff] mb-4 drop-shadow-lg">Enjoy Casino, Lottery, Cricket, and more. Explore our top games and exclusive bonuses on desktop.</p>
+                        <div className="flex gap-4 mt-4">
+                            <button
+                                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition"
+                                onClick={() => handleGameRedirect(1992, "Casino Mega Wheel")}
+                            >
+                                Play Casino
+                            </button>
+                            <Link href="/sports">
+                                <button className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition">
+                                    Go to Cricket
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                    {/* Optionally keep the right-side image for extra effect, or remove if not needed */}
+                    {/* <div className="flex-shrink-0 hidden lg:block z-10">
+                        <Image
+                            src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/landing-page/desktop-banner/banner-main.png"
+                            alt="Gaming Banner"
+                            width={400}
+                            height={220}
+                            className="rounded-xl object-cover"
+                        />
+                    </div> */}
+                    {/* Overlay for better text readability (optional) */}
+                    <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px] pointer-events-none" />
                 </div>
             </div>
             {/* Reduced margin between sections */}
