@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { useRef } from "react"
 import { useAuth } from "@/lib/authContext"
@@ -99,7 +99,7 @@ export default function SuggestedCarousel() {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-4">
+    <div className="w-[95vw]  mx-auto px-4 py-4">
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Selected For You</h2>
@@ -117,12 +117,12 @@ export default function SuggestedCarousel() {
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {suggestedItems.map((item) => (
-            <CarouselItem key={item.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+            <CarouselItem key={item.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
               <div 
-                className="p-0 relative cursor-pointer group"
+                className="p-0 relative cursor-pointer group h-full"
                 onClick={() => item.gameId ? handleGameClick(item) : undefined}
               >
-                <div className="relative h-[150px] overflow-hidden rounded-lg">
+                <div className="relative h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] w-full overflow-hidden rounded-lg">
                   <Image
                     src={item.image}
                     alt={item.title}
@@ -133,12 +133,12 @@ export default function SuggestedCarousel() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
                   {/* Content overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
                     <div className="text-white">
-                      <p className="text-xs font-medium text-gray-300 mb-1 uppercase tracking-wide">
+                      <p className="text-xs md:text-sm font-medium text-gray-300 mb-1 uppercase tracking-wide">
                         {item.category}
                       </p>
-                      <h3 className="text-lg font-bold leading-tight">{item.title}</h3>
+                      <h3 className="text-lg md:text-xl lg:text-2xl font-bold leading-tight">{item.title}</h3>
                     </div>
                   </div>
 
@@ -151,8 +151,8 @@ export default function SuggestedCarousel() {
         </CarouselContent>
 
         {/* Navigation arrows */}
-        <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-6" />
-        <CarouselNext className="hidden sm:flex -right-4 lg:-right-6" />
+        {/* <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-6" />
+        <CarouselNext className="hidden sm:flex -right-4 lg:-right-6" /> */}
       </Carousel>
 
       {/* Mobile navigation hint */}
