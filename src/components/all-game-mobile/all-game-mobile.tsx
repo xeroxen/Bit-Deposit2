@@ -166,7 +166,7 @@ const CategoryPillsSkeleton = ({ count = 5 }: { count?: number }) => {
 const ProviderPills = () => {
   return (
     <>
-      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
         <div className="flex items-center h-full w-full justify-center">
           <Image
             src="/providers/evolution.png"
@@ -175,12 +175,12 @@ const ProviderPills = () => {
             height={24}
             className="object-contain mr-2"
             style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, 65px"
+            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
             priority
           />
         </div>
       </div>
-      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
         <div className="flex items-center h-full w-full justify-center">
           <Image
             src="/providers/spribe.png"
@@ -189,12 +189,12 @@ const ProviderPills = () => {
             height={24}
             className="object-contain mr-2"
             style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, 65px"
+            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
             priority
           />
         </div>
       </div>
-      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
         <div className="flex items-center h-full w-full justify-center">
           <Image
             src="/providers/pragmatic_play.png"
@@ -203,12 +203,12 @@ const ProviderPills = () => {
             height={24}
             className="object-contain mr-2"
             style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, 65px"
+            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
             priority
           />
         </div>
       </div>
-      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
         <div className="flex items-center h-full w-full justify-center">
           <Image
             src="/providers/pragmatic.png"
@@ -217,12 +217,12 @@ const ProviderPills = () => {
             height={24}
             className="object-contain mr-2"
             style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, 65px"
+            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
             priority
           />
         </div>
       </div>
-      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
         <div className="flex items-center h-full w-full justify-center">
           <Image
             src="/providers/pgsoft.png"
@@ -231,12 +231,12 @@ const ProviderPills = () => {
             height={24}
             className="object-contain mr-2"
             style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, 65px"
+            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
             priority
           />
         </div>
       </div>
-      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
         <div className="flex items-center h-full w-full justify-center">
           <Image
             src="/providers/habanero.png"
@@ -245,12 +245,12 @@ const ProviderPills = () => {
             height={24}
             className="object-contain mr-2"
             style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, 65px"
+            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
             priority
           />
         </div>
       </div>
-      <div className="h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2">
+      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
         <div className="flex items-center h-full w-full justify-center">
           <Image
             src="/providers/evoplay.png"
@@ -259,7 +259,7 @@ const ProviderPills = () => {
             height={24}
             className="object-contain mr-2"
             style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, 65px"
+            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
             priority
           />
         </div>
