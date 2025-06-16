@@ -65,7 +65,7 @@ const Home = () => {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
-                        minHeight: '260px',
+                        minHeight: '380px',
                     }}
                 >
                     {/* Darker overlay for better text readability */}

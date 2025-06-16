@@ -31,11 +31,9 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
     
     // Desktop navigation items
     const desktopNavItems = useMemo(() => [
-        { name: 'SPORTS', href: '/sports' },
-        { name: 'CASINO', href: '/casino' },
-        { name: 'Bet Transfer', href: '/bet-transfer' },
-        { name: 'BD Casino', href: '/bd-casino', indicator: 'bg-[#48ac2f]' },
-        { name: 'Lottery', href: '/lottery', indicator: 'bg-[#fdbf00]' },
+        { name: 'Top', icon: Home, href: '/' },
+        { name: 'Sports', icon: BarChart2, href: '/sports' },
+        { name: 'Casino', icon: Gamepad2, href: '/casino' },
     ], []);
     
     useEffect(() => {
@@ -85,9 +83,6 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                                     href={item.href}
                                     className="text-white hover:text-[#a1b7d4] font-medium transition-colors flex items-center"
                                 >
-                                    {item.indicator && (
-                                        <span className={`w-2 h-2 ${item.indicator} rounded-full mr-2`}></span>
-                                    )}
                                     {item.name}
                                 </Link>
                             ))}

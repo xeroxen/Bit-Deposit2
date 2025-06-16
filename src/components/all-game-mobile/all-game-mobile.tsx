@@ -489,9 +489,9 @@ const AllGameMobile = () => {
             {/* Providers Section - Hide when in View All mode */}
             {!viewAllMode && (
                 <div className="mb-4">
-                    <h3 className="text-lg font-bold text-gray-800 mb-3">Providers</h3>
+                    <h3 className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-800 mb-3 ml-5">Providers</h3>
                     
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-4 gap-2 w-[95vw] mx-auto">
                         <Suspense fallback={<ProviderPillsSkeleton />}>
                             <ProvidersData 
                                 games={games || { providers: [] }}
