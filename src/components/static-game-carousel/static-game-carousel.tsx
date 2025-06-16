@@ -57,20 +57,20 @@ GameCard.displayName = "GameCard";
 
 // Skeleton for the carousel card
 const GameCardSkeleton = () => (
-  <div className="relative w-[92px] h-[96px] bg-white rounded-[8px] flex flex-col items-center p-2 overflow-hidden">
-    {/* Image skeleton */}
+  <div className="relative w-[92px] h-[96px] md:w-[120px] md:h-[128px] lg:w-[140px] lg:h-[150px] xl:w-[260px] xl:h-[270px] bg-white rounded-[8px] flex flex-col items-center p-2 overflow-hidden">
+    {/* Full card background image skeleton */}
     <div className="absolute inset-0 w-full h-full bg-gray-300 animate-pulse z-0" />
-    {/* Overlay */}
+    {/* Optional overlay for readability */}
     <div className="absolute inset-0 bg-black/60 z-10" />
     {/* Content skeletons */}
     <div className="relative z-20 flex flex-col items-center w-full h-full justify-between">
       <div className="w-full mt-3 mb-1 px-1">
-        <Skeleton className="h-4 w-full rounded" />
+        <Skeleton className="h-5 md:h-6 lg:h-7 xl:h-8 w-full rounded" />
       </div>
-      <div className="font-inter font-medium text-[9px] leading-[14px] text-[#ffe600] text-center mb-2 rounded px-1 w-full flex justify-center">
-        <Skeleton className="h-3 w-1/2 rounded" />
+      <div className="font-inter font-medium text-[9px] md:text-[12px] lg:text-[14px] xl:text-[24px] leading-[14px] text-[#ffe600] text-center mb-2 rounded px-1 w-full flex justify-center">
+        <Skeleton className="h-4 md:h-5 lg:h-6 xl:h-7 w-1/2 rounded" />
       </div>
-      <div className="w-[74px] h-[24px] mb-2 bg-gradient-to-b from-[#97EB0E] to-[#19B90B] shadow-[0px_4px_8px_-2px_rgba(118,188,4,0.32)] rounded-[8px] flex items-center justify-center">
+      <div className="w-[74px] h-[24px] md:w-[100px] md:h-[32px] lg:w-[120px] lg:h-[36px] xl:w-[140px] xl:h-[40px] mb-2 bg-gradient-to-b from-[#97EB0E] to-[#19B90B] shadow-[0px_4px_8px_-2px_rgba(118,188,4,0.32)] rounded-[8px] flex items-center justify-center">
         <Skeleton className="w-full h-full rounded-[8px]" />
       </div>
     </div>
@@ -119,7 +119,7 @@ const StaticGameCarousel = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="absolute mt-18 mr-12 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
+            <div className="absolute mt-18 md:mt-24 lg:mt-32 xl:mt-40 mr-12 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
             <CarouselPrevious
               className="w-9 h-6 bg-gradient-to-br bg-[#aaaaaa] shadow-md border transition-all duration-200 flex items-center justify-center text-white text-xl rounded-md"
             />
@@ -150,7 +150,7 @@ const StaticGameCarousel = () => {
           <CarouselContent className="-ml-2 md:-ml-4">
             {carouselItems}
           </CarouselContent>
-          <div className="absolute mt-18 mr-12 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
+          <div className="absolute mt-18 md:mt-24 lg:mt-32 xl:mt-40 mr-12 right-2 top-1/2 -translate-y-1/2 flex flex-col  z-10">
             <CarouselPrevious
               className="w-9 h-6 bg-gradient-to-br bg-[#aaaaaa] shadow-md border transition-all duration-200 flex items-center justify-center text-white text-xl rounded-md"
             />
