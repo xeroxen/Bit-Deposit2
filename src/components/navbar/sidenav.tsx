@@ -12,6 +12,9 @@ import {
   User,
   Wallet,
   LogOut,  
+  Send,
+  Phone,
+  
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -52,6 +55,16 @@ const navItems: NavItem[] = [
   {
     title: "Support",
     icon: <MessageCircle className="h-5 w-5" />,
+    href: "#",
+  },
+  {
+    title: "Telegram",
+    icon: <Send className="h-5 w-5" />,
+    href: "#",
+  },
+  {
+    title: "WhatsApp",
+    icon: <Phone className="h-5 w-5" />,
     href: "#",
   },
 ]
