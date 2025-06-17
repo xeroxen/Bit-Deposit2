@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ApiResponse, CategoryInfo, Game, GameResponse } from '@/types/game.type';
 import { useGameContext } from '@/lib/gameContext';
 import { useSingleGameRedirect } from "@/hooks/singGameRedirect";
+import { useRouter } from 'next/navigation';
 
 // Game Grid Component
 const GameGrid = ({ 
@@ -164,38 +165,40 @@ const CategoryPillsSkeleton = ({ count = 5 }: { count?: number }) => {
 
 // Provider Pills component
 const ProviderPills = () => {
+  const router = useRouter();
+
   return (
     <>
       <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center">
-          <Image
+          <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=11134`)}>
+              <Image
             src="/providers/evolution.png"
             alt="Evolution"
-            width={65}
-            height={24}
-            className="object-contain mr-2"
-            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
-            priority
-          />
+                width={65}
+                height={24}
+                className="object-contain mr-2"
+                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+                sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
+                priority
+              />
         </div>
       </div>
       <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center">
-          <Image
+        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=11133`)}>
+              <Image
             src="/providers/spribe.png"
             alt="Spribe"
-            width={65}
-            height={24}
-            className="object-contain mr-2"
-            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
-            priority
-          />
+                width={65}
+                height={24}
+                className="object-contain mr-2"
+                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
+                sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
+                priority
+              />
         </div>
-      </div>
+          </div>
       <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center">
+        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=4`)}>
           <Image
             src="/providers/pragmatic_play.png"
             alt="Pragmatic Play"
@@ -209,7 +212,7 @@ const ProviderPills = () => {
         </div>
       </div>
       <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center">
+        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=11135`)}>
           <Image
             src="/providers/pragmatic.png"
             alt="Pragmatic"
@@ -223,7 +226,7 @@ const ProviderPills = () => {
         </div>
       </div>
       <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center">
+        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=2`)}>
           <Image
             src="/providers/pgsoft.png"
             alt="PGSoft"
@@ -237,7 +240,7 @@ const ProviderPills = () => {
         </div>
       </div>
       <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center">
+        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=9`)}>
           <Image
             src="/providers/habanero.png"
             alt="Habanero"
@@ -251,7 +254,7 @@ const ProviderPills = () => {
         </div>
       </div>
       <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center">
+        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=13`)}>
           <Image
             src="/providers/evoplay.png"
             alt="Evoplay"
@@ -346,7 +349,6 @@ const ProvidersData = ({
   if (loading || !games.providers?.length) {
     return <ProviderPillsSkeleton />;
   }
-console.log("games.providers",games.providers);
   return <ProviderPills />;
 };
 

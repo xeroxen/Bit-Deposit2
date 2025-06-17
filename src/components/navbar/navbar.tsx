@@ -177,12 +177,14 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
 
                 {/* Search Icon - Center Right */}
                 <div className="absolute right-[38px] top-1/2 transform -translate-y-1/2">
+                    <Link href="/search">
                     <button className="w-6 h-6 border-[1.625px] border-[#276AA5] rounded-full flex items-center justify-center hover:bg-blue-50 transition-colors">
                         <svg className="w-3 h-3" viewBox="0 0 16 16" fill="none">
                             <circle cx="7" cy="7" r="6" stroke="#276AA5" strokeWidth="1.5"/>
                             <path d="m13 13-3-3" stroke="#276AA5" strokeWidth="1.5" strokeLinecap="round"/>
                         </svg>
                     </button>
+                    </Link>
                 </div>
 
                 {/* Menu Button - Right side */}
