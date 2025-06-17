@@ -25,7 +25,7 @@ export const useSingleGameRedirect = () => {
                 if ('gameUrl' in response && response.gameUrl) {
                     toast.success(`${gameName} ready to play!`);
                     setTimeout(() => {
-                        window.location.href = response.gameUrl;
+                        router.push(`/gaming?url=${response.gameUrl}`);
                     }, 500); // Wait 500ms so the toast is visible
                 } else {
                     toast.error("Game URL not found in response");
