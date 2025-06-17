@@ -15,7 +15,7 @@ const GamingContent = () => {
         // Keep showing loader for additional 2 seconds after iframe loads
         setTimeout(() => {
             setShowLoader(false);
-        }, 2500);
+        }, 4000);
     };
 
     return (
