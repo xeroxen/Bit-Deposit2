@@ -23,6 +23,7 @@ const SportsPage = () => {
   const [gameData, setGameData] = useState<GameData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     const checkAuthAndFetchGame = async () => {
@@ -33,7 +34,7 @@ const SportsPage = () => {
           router.push('/login');
           return;
         }
-        
+                
         // Use apiRequest instead of direct fetch
         const data = await apiRequest<GameData>('/games/single/1988');
         setGameData(data);
@@ -46,7 +47,18 @@ const SportsPage = () => {
     };
 
     checkAuthAndFetchGame();
-  }, [router]);
+  }, [router ]);
+
+  // Handle iframe load event
+  const handleIframeLoad = () => {
+    // Keep showing loader for additional 5 seconds after iframe loads
+    setTimeout(() => {
+      setShowLoader(false);
+    }, 4000);
+  };
+
+  // Show loader overlay when loading data or during the extended loader period
+  const shouldShowLoader = loading || showLoader;
 
   if (loading) {
     return (
@@ -75,18 +87,44 @@ const SportsPage = () => {
   }
 
   return (
-    <div className="w-full bg-black mt-26 pt-0">
+    <div className="w-full bg-black mt-26 pt-0 relative">
       {gameData ? (
-        <div className="w-full mx-auto" style={{ height: 'calc(100vh - 60px - 104px)' }}>
-          <iframe
-            src={gameData.gameUrl}
-            className="w-full border-0"
-            style={{ height: '100%' }}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title={gameData.game?.game_name || 'Sports Game'}
-          />
-        </div>
+        <>
+          {/* Iframe loads in background but stays hidden until loader finishes */}
+          <div 
+            className={`w-full mx-auto transition-opacity duration-300 ${shouldShowLoader ? 'opacity-0' : 'opacity-100'}`} 
+            style={{ height: 'calc(100vh - 60px - 104px)' }}
+          >
+            <iframe
+              src={gameData.gameUrl}
+              className="w-full border-0"
+              style={{ height: '100%' }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title={gameData.game?.game_name || 'Sports Game'}
+              onLoad={handleIframeLoad}
+            />
+          </div>
+          
+          {/* Loader overlay */}
+          {shouldShowLoader && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 via-black to-gray-900 text-white z-10">
+              <div className="mb-8 flex flex-col items-center">
+                <span className="text-4xl font-extrabold tracking-widest text-yellow-400 drop-shadow-lg animate-pulse">
+                  fnd777
+                </span>
+                <span className="block w-24 h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-500 rounded-full mt-2 mb-2"></span>
+              </div>
+              <div className="relative flex items-center justify-center mb-6">
+                <div className="w-20 h-20 border-8 border-t-transparent border-b-transparent border-l-blue-500 border-r-pink-500 rounded-full animate-spin shadow-lg"></div>
+                <div className="absolute w-10 h-10 bg-gradient-to-br from-yellow-400 to-pink-500 rounded-full shadow-lg animate-bounce"></div>
+              </div>
+              <p className="mt-2 text-lg font-medium text-gray-200 tracking-wide">
+                Loading game...
+              </p>
+            </div>
+          )}
+        </>
       ) : (
         <div className="flex flex-col items-center justify-center h-full bg-gray-900 text-white">
           <p className="text-xl">Unable to load game. Please try again later.</p>
