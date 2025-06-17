@@ -68,8 +68,8 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                         <Image 
                             src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${logo.software_logo_white}`} 
                             alt="logo" 
-                            width={128} 
-                            height={24} 
+                            width={80} 
+                            height={10} 
                             className="cursor-pointer" 
                         />
                     )}
@@ -167,8 +167,8 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                         <Image 
                             src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${logo.software_logo_white}`} 
                             alt="logo" 
-                            width={128} 
-                            height={24} 
+                            width={70} 
+                            height={10} 
                             className="cursor-pointer" 
                         />
                     )}

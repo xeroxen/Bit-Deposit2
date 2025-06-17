@@ -54,7 +54,7 @@ const SportsPage = () => {
     // Keep showing loader for additional 5 seconds after iframe loads
     setTimeout(() => {
       setShowLoader(false);
-    }, 4000);
+    }, 5000);
   };
 
   // Show loader overlay when loading data or during the extended loader period
