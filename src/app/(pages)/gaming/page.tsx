@@ -17,6 +17,10 @@ const GamingContent = () => {
             }
         };
         
+        // Prevent body scrolling
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+        
         // Set initial height
         updateViewportHeight();
         
@@ -24,7 +28,12 @@ const GamingContent = () => {
         window.addEventListener('resize', updateViewportHeight);
         
         // Clean up
-        return () => window.removeEventListener('resize', updateViewportHeight);
+        return () => {
+            window.removeEventListener('resize', updateViewportHeight);
+            // Restore scrolling when component unmounts
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+        };
     }, []);
     
     const handleIframeLoad = () => {
@@ -47,6 +56,7 @@ const GamingContent = () => {
                         onLoad={handleIframeLoad}
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-pointer-lock"
                         style={{ overflow: 'hidden' }}
+                        scrolling="no"
                     />
                 </div>
             ) : (
