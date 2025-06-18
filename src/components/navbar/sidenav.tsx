@@ -12,8 +12,8 @@ import {
   User,
   Wallet,
   LogOut,  
-  Send,
-  Phone,
+  // Send,
+  // Phone,
   
 } from "lucide-react"
 
@@ -55,18 +55,18 @@ const navItems: NavItem[] = [
   {
     title: "Support",
     icon: <MessageCircle className="h-5 w-5" />,
-    href: "#",
+    href: "/support",
   },
-  {
-    title: "Telegram",
-    icon: <Send className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    title: "WhatsApp",
-    icon: <Phone className="h-5 w-5" />,
-    href: "#",
-  },
+  // {
+  //   title: "Telegram",
+  //   icon: <Send className="h-5 w-5" />,
+  //   href: "#",
+  // },
+  // {
+  //   title: "WhatsApp",
+  //   icon: <Phone className="h-5 w-5" />,
+  //   href: "#",
+  // },
 ]
 
 const logoutItem: NavItem = {
@@ -353,10 +353,12 @@ export function SideNav() {
 
             {/* Chat Button (Fixed) */}
             <div className="sticky bottom-4 left-4 right-4 text-center">
+              <Link href="/support">  
               <Button size="icon" className="h-12 w-12 rounded-full bg-blue-500 hover:bg-blue-600">
                 <MessageCircle className="h-6 w-6" />
                 <span className="sr-only">Chat Support</span>
               </Button>
+              </Link>
             </div>
           </div>
         </SheetContent>
