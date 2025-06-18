@@ -141,7 +141,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
             </div>
 
             {/* Mobile Container */}
-            <div className="md:hidden flex flex-col w-full">
+            <div className="md:hidden flex flex-col w-full bg-white">
                 {/* Mobile Marquee */}
                 <div className="w-full bg-[#1d3d68] pointer-events-auto">
                     <Marquee
@@ -158,7 +158,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                 {/* Mobile Navbar */}
                 <div className="w-full h-[46px] relative pointer-events-auto">
                     {/* Background overlay */}
-                    <div className="absolute inset-0 bg-white shadow-sm"></div>
+                    <div className="absolute inset-0 "></div>
                     
                     {/* Main mobile navbar content */}
                     <div className="relative h-full flex items-center justify-between px-2">
@@ -182,7 +182,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                                 </div>
                                 
                                 {/* Dropdown arrow */}
-                                <div className="ml-1 w-4 h-4 bg-white rounded-full shadow-md flex items-center justify-center flex-shrink-0">
+                                <div className="ml-1 w-4 h-4  rounded-full shadow-md flex items-center justify-center flex-shrink-0">
                                     <svg className="w-3 h-2" viewBox="0 0 14 8" fill="none">
                                         <path d="M1 1L7 7L13 1" stroke="#48AC2F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>
@@ -224,7 +224,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                 
                 {/* Mobile Login and Registration Buttons - Below Navbar */}
                 {!loading && !isAuthenticated && !hideAuthButtonsOnRoutes && (
-                    <div className="w-full h-[46px] bg-white shadow-sm pointer-events-auto">
+                    <div className="w-full h-[46px]   pointer-events-auto">
                         <div className="flex items-center justify-center h-full px-4 gap-3">
                             {/* Login Button */}
                             <Link href="/login" className="w-full max-w-[170px]">
@@ -249,7 +249,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
 
                 {/* Mobile Navigation Tabs - Only show when authenticated */}
                 {!loading && isAuthenticated && (
-                    <div className="w-full h-[46px] bg-white border-b border-gray-200 shadow-sm pointer-events-auto">
+                    <div className="w-full h-[46px]  pointer-events-auto">
                         <div className="flex items-center justify-between h-full px-2">
                             {mobileNavItems.map((item, index) => {
                                 const isActive = pathname === item.href;

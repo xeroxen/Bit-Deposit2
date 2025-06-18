@@ -3,13 +3,6 @@
 import { useEffect, useMemo, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from "@/components/ui/card";
 import { useGameContext } from "@/lib/gameContext";
 import { useSingleGameRedirect } from "@/hooks/singGameRedirect";
 import {
@@ -87,7 +80,7 @@ const SearchPage = () => {
   }, [allGames, search, selectedProvider]);
 
   return (
-    <div className="max-w-3xl mx-auto py-8 px-4 mt-20">
+    <div className="max-w-[95vw] mx-auto py-8 px-4 mt-20">
       <h1 className="text-2xl font-bold mb-6">Search Games</h1>
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <Input
@@ -131,31 +124,39 @@ const SearchPage = () => {
       ) : filteredGames.length === 0 ? (
         <div className="text-center text-muted-foreground py-12">No games found.</div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mb-3">
           {filteredGames.map((game) => (
-            <Card
-              key={game.id}
-              className="hover:shadow-lg transition-shadow cursor-pointer"
+            <div 
+              key={game.id} 
+              className="aspect-[3/4] rounded-lg overflow-hidden relative cursor-pointer"
               onClick={() => singleGameRedirect(game.id, game.game_name)}
             >
-              <CardHeader>
-                <CardTitle className="truncate">{game.game_name}</CardTitle>
-                <CardDescription>{game.provider?.name}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {game.cover ? (
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${game.cover}`}
-                    alt={game.game_name}
-                    className="w-full h-32 object-cover rounded-md mb-2"
-                    width={100}
-                    height={100}
-                  />
-                ) : (
-                  <div className="w-full h-32 bg-muted rounded-md mb-2 flex items-center justify-center text-xs text-muted-foreground">No image</div>
-                )}
-              </CardContent>
-            </Card>
+              <div className="w-full h-full bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-800 flex flex-col">
+                {/* Game image */}
+                <div className="flex-1 relative overflow-hidden">
+                  {game.cover ? (
+                    <Image 
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${game.cover}`} 
+                      alt={game.game_name}
+                      fill
+                      className="object-fill"
+                      sizes="(max-width: 768px) 100vw, 100px"
+                      priority
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-muted flex items-center justify-center text-xs text-muted-foreground">No image</div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30"></div>
+                </div>
+                {/* Game title overlay at bottom */}
+                <div className="absolute bottom-0 left-0 right-0 p-2 bg-black/50">
+                  <div className="text-white text-xs font-bold truncate">{game.game_name}</div>
+                  {game.provider?.name && (
+                    <div className="text-white text-xs opacity-75 truncate">{game.provider.name}</div>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       )}
