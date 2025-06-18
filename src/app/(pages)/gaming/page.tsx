@@ -1,12 +1,31 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect, useRef } from "react";
 
 const GamingContent = () => {
     const searchParams = useSearchParams();
     const gameUrl = searchParams.get("url");
     const [showLoader, setShowLoader] = useState(true);
+    const iframeRef = useRef(null);
+    
+    useEffect(() => {
+        const updateViewportHeight = () => {
+            const iframe = iframeRef.current as HTMLIFrameElement | null;
+            if (iframe) {
+                iframe.style.height = `${window.innerHeight}px`;
+            }
+        };
+        
+        // Set initial height
+        updateViewportHeight();
+        
+        // Update on resize
+        window.addEventListener('resize', updateViewportHeight);
+        
+        // Clean up
+        return () => window.removeEventListener('resize', updateViewportHeight);
+    }, []);
     
     const handleIframeLoad = () => {
         // Keep showing loader for additional seconds after iframe loads
@@ -20,13 +39,14 @@ const GamingContent = () => {
             {gameUrl ? (
                 <div className="w-full h-full relative overflow-hidden">
                     <iframe
+                        ref={iframeRef}
                         src={gameUrl}
                         title="Game"
-                        className="w-full h-screen border-0 absolute top-0 left-0"
+                        className="w-full border-0 absolute top-0 left-0"
                         allowFullScreen
                         onLoad={handleIframeLoad}
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-pointer-lock"
-                        style={{ height: '100vh', overflow: 'hidden' }}
+                        style={{ overflow: 'hidden' }}
                     />
                 </div>
             ) : (
