@@ -9,6 +9,7 @@ import { WalletBalance } from '@/components/ui/wallet-balance';
 import { Button } from "@/components/ui/button";
 import { Home, BarChart2, Gamepad2, Plus, ChevronDown, Globe, Menu } from 'lucide-react';
 import { Data } from '@/types/data.types';
+import Marquee from 'react-fast-marquee';
 
 interface NavbarProps {
   onSidebarToggle?: () => void;
@@ -45,23 +46,21 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
         fetchLogo();
     }, []);
 
+    const marqueeText = "বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! FND777-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।";
 
     return (
         <div className="fixed inset-0 z-50 flex flex-col w-full pointer-events-none overflow-hidden">
             {/* Desktop Marquee */}
             <div className="hidden md:block w-full bg-[#1d3d68] pointer-events-auto">
-                <div className="overflow-hidden whitespace-nowrap leading-none">
-                    <div className="inline-block animate-marquee">
-                        <p className="py-0 text-white font-medium text-sm leading-[24px]">
-                            বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! FND777-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।
-                        </p>
-                    </div>
-                    <div className="inline-block animate-marquee2">
-                        <p className="py-0 text-white font-medium text-sm leading-[24px]">
-                            বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! FND777-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।
-                        </p>
-                    </div>
-                </div>
+                <Marquee
+                    speed={50}
+                    pauseOnHover
+                    className="leading-none"
+                >
+                    <p className="py-0 text-white font-medium text-sm leading-[24px] pr-8">
+                        {marqueeText}
+                    </p>
+                </Marquee>
             </div>
             
             {/* Desktop Navbar */}
@@ -145,18 +144,15 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
             <div className="md:hidden flex flex-col w-full">
                 {/* Mobile Marquee */}
                 <div className="w-full bg-[#1d3d68] pointer-events-auto">
-                    <div className="overflow-hidden whitespace-nowrap leading-none">
-                        <div className="inline-block animate-marquee">
-                            <p className="py-0 text-white text-xs font-medium leading-[22px]">
-                                বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! FND777-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।
-                            </p>
-                        </div>
-                        <div className="inline-block animate-marquee2">
-                            <p className="py-0 text-white text-xs font-medium leading-[22px]">
-                                বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! FND777-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।
-                            </p>
-                        </div>
-                    </div>
+                    <Marquee
+                        speed={40}
+                        pauseOnHover
+                        className="leading-none"
+                    >
+                        <p className="py-0 text-white text-xs font-medium leading-[22px] pr-8">
+                            {marqueeText}
+                        </p>
+                    </Marquee>
                 </div>
 
                 {/* Mobile Navbar */}
