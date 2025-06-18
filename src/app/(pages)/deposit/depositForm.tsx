@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2, ArrowLeft, Copy, ArrowRight } from "lucide-react"
+import { Loader2, ArrowLeft, Copy } from "lucide-react"
 import Image from "next/image"
 import { triggerBalanceUpdate } from "@/lib/authentication"
 import { apiRequest } from "@/lib/authentication"
@@ -23,29 +23,109 @@ interface PaymentMethod {
 
 const paymentMethods: PaymentMethod[] = [
   {
-    id: "bkash-personal", // bkash-personal type as payload
+    id: "bkash-personal",
     name: "bKash Personal",
     type: "mobile",
-    discount: "+ 5%",
-    logo: "/images/bkash-logo.png",
-    color: "bg-gradient-to-br from-pink-500 to-pink-600",
+    discount: "+5%",
+    logo: "/images/bkash-logo.png", 
+    color: "#E2136E",
   },
   {
-    id: "nagad-personal", // nagad-personal type as payload
+    id: "bkash-merchant",
+    name: "bKash Merchant",
+    type: "mobile",
+    discount: "+3%",
+    logo: "/images/bkash-logo.png",
+    color: "#E2136E",
+  },
+  {
+    id: "bkash-agent",
+    name: "bKash Agent",
+    type: "mobile",
+    discount: "+3%",
+    logo: "/images/bkash-logo.png",
+    color: "#E2136E",
+  },
+  {
+    id: "nagad-personal",
     name: "Nagad Personal",
     type: "mobile",
-    discount: "+ 3%",
+    discount: "+3%",
     logo: "/images/nagad-logo.png",
-    color: "bg-gradient-to-br from-orange-500 to-red-500",
+    color: "#F15A29",
   },
   {
-    id: "rocket-personal", // rocket-personal type as payload
+    id: "nagad-agent",
+    name: "Nagad Agent",
+    type: "mobile", 
+    discount: "+3%",
+    logo: "/images/nagad-logo.png",
+    color: "#F15A29",
+  },
+  {
+    id: "rocket-personal",
     name: "Rocket Personal",
     type: "mobile",
-    discount: "+ 4%",
+    discount: "+3%",
     logo: "/images/rocket-logo.png",
-    color: "bg-gradient-to-br from-purple-500 to-purple-600",
+    color: "#8C3494",
   },
+  {
+    id: "rocket-agent",
+    name: "Rocket Agent",
+    type: "mobile",
+    discount: "+3%",
+    logo: "/images/rocket-logo.png",
+    color: "#8C3494",
+  },
+  // {
+  //   id: "upay-personal",
+  //   name: "Upay Personal",
+  //   type: "mobile",
+  //   discount: "+3%", 
+  //   logo: "/images/upay-logo.png",
+  //   color: "#2C078C", 
+  // },
+  // {
+  //   id: "sure-cash",
+  //   name: "Sure Cash",
+  //   type: "mobile",
+  //   discount: "+3%",
+  //   logo: "/images/sure-cash-logo.png",
+  //   color: "#005bac",
+  // },
+  // {
+  //   id: "tap-tap",
+  //   name: "Tap Tap",
+  //   type: "mobile",
+  //   discount: "+3%",
+  //   logo: "/images/tap-tap-logo.png",
+  //   color: "#4CAF50",
+  // },
+  // {
+  //   id: "visa-mastercard",
+  //   name: "Visa MasterCard",
+  //   type: "card",
+  //   discount: "+0%",
+  //   logo: "/images/card-logo.png", 
+  //   color: "#1A1F71",
+  // },
+  // {
+  //   id: "off-number",
+  //   name: "OFF NUMBER",
+  //   type: "other",
+  //   discount: "+3%",
+  //   logo: "/images/off-number-logo.png",
+  //   color: "#FF0000",
+  // },
+  // {
+  //   id: "local-agent",
+  //   name: "Local Agent",
+  //   type: "agent",
+  //   discount: "",
+  //   logo: "/images/local-agent-logo.png",
+  //   color: "#FF5722",
+  // },
 ]
 
 export default function DepositForm() {
@@ -72,11 +152,13 @@ export default function DepositForm() {
     e.preventDefault()
     setIsSubmitting(true)
     try {
+      const paymentType = selectedMethod && selectedMethod.id ? selectedMethod.id.split('-')[0] : '';
+      
       const payload = {
         amount: Number(formData.depositAmount),
-        payment_id: formData.transactionId ,
+        payment_id: formData.transactionId,
         sender_number: formData.accountNumber,
-        type: selectedMethod?.id?.split('-')[0] 
+        type: paymentType
       }
       await apiRequest('/games/deposite', {
         method: 'POST',
@@ -143,47 +225,41 @@ export default function DepositForm() {
 
   if (step === 1) {
     return (
-      <Card className="w-full max-w-md shadow-lg border-0 bg-gradient-to-br from-blue-50 to-indigo-50">
-        <CardContent className="p-8">
-          <div className="space-y-8">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Mobile Banking</h2>
-              <p className="text-gray-600">Choose your preferred payment method</p>
+      <Card className="w-full max-w-xl shadow-lg border-0 bg-white">
+        <CardContent className="p-6">
+          <div className="space-y-4">
+            <div className="text-left">
+              <h2 className="text-2xl font-bold text-gray-800">Mobile Bank</h2>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-4 gap-3">
               {paymentMethods.map((method) => (
                 <div
                   key={method.id}
                   onClick={() => handleMethodSelect(method)}
-                  className="relative cursor-pointer group transform transition-all duration-200 hover:scale-105"
+                  className="relative cursor-pointer"
                 >
-                  <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl border-2 border-transparent hover:border-blue-200 transition-all duration-200">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
-                          <Image
-                            src={method.logo || "/placeholder.svg"}
-                            alt={method.name}
-                            width={48}
-                            height={48}
-                            className="object-contain"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-gray-800">{method.name}</h3>
-                          <p className="text-sm text-gray-500">Mobile Banking</p>
-                        </div>
-                      </div>
-                      <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                  <div className={`rounded-lg p-3 flex flex-col items-center justify-center text-center`} 
+                       style={{ backgroundColor: method.color }}>
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-1">
+                      <Image
+                        src={method.logo}
+                        alt={method.name}
+                        width={40}
+                        height={40}
+                        className="object-contain"
+                      />
                     </div>
-
-                    {/* Enhanced discount badge */}
-                    <div className="absolute -top-3 -right-3">
-                      <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                    <div className="mt-1">
+                      <p className="text-xs text-white font-semibold">{method.name}</p>
+                    </div>
+                    
+                    {/* Discount badge */}
+                    {method.discount && (
+                      <div className="absolute -top-1 -left-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-12">
                         {method.discount}
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -218,7 +294,7 @@ export default function DepositForm() {
                     className="object-contain"
                   />
                 </div>
-                <p className="text-gray-800 text-sm">{selectedMethod?.name}</p>
+                <p className="text-gray-800 text-sm">{selectedMethod?.name || ""}</p>
               </div>
 
               {/* Animated GIF */}
@@ -251,9 +327,9 @@ export default function DepositForm() {
 
           {/* Enhanced account number section */}
           <div className="bg-white rounded-xl p-6 shadow-md">
-            <Label className="font-semibold text-gray-800 mb-3 block">{selectedMethod?.name} Number</Label>
+            <Label className="font-semibold text-gray-800 mb-3 block">{selectedMethod?.name || "Payment"} Number</Label>
             <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg border">
-              <span className="flex-1 font-mono text-lg font-medium text-gray-800">{process.env.NEXT_PUBLIC_BKASH_NUMBER}</span>
+              <span className="flex-1 font-mono text-lg font-medium text-gray-800">{process.env.NEXT_PUBLIC_BKASH_NUMBER || ""}</span>
               <Button
                 variant="outline"
                 size="sm"

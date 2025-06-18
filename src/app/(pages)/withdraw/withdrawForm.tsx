@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2, ArrowLeft, ArrowRight } from "lucide-react"
+import { Loader2, ArrowLeft } from "lucide-react"
 import Image from "next/image"
-import { apiRequest , triggerBalanceUpdate } from "@/lib/authentication"
+import { apiRequest, triggerBalanceUpdate } from "@/lib/authentication"
 import Link from "next/link"
 
 interface PaymentMethod {
@@ -22,28 +22,60 @@ interface PaymentMethod {
 
 const paymentMethods: PaymentMethod[] = [
   {
-    id: "bkash-personal", // bkash-personal type as payload
+    id: "bkash-personal",
     name: "bKash Personal",
     type: "mobile",
-    discount: "",
-    logo: "/images/bkash-logo.png",
-    color: "bg-gradient-to-br from-pink-500 to-pink-600",
+    discount: "+5%",
+    logo: "/images/bkash-logo.png", 
+    color: "#E2136E",
   },
   {
-    id: "nagad-personal", // nagad-personal type as payload
+    id: "bkash-merchant",
+    name: "bKash Merchant",
+    type: "mobile",
+    discount: "+3%",
+    logo: "/images/bkash-logo.png",
+    color: "#E2136E",
+  },
+  {
+    id: "bkash-agent",
+    name: "bKash Agent",
+    type: "mobile",
+    discount: "+3%",
+    logo: "/images/bkash-logo.png",
+    color: "#E2136E",
+  },
+  {
+    id: "nagad-personal",
     name: "Nagad Personal",
     type: "mobile",
-    discount: "+ 3%",
+    discount: "+3%",
     logo: "/images/nagad-logo.png",
-    color: "bg-gradient-to-br from-orange-500 to-red-500",
+    color: "#F15A29",
   },
   {
-    id: "rocket-personal", // rocket-personal type as payload
+    id: "nagad-agent",
+    name: "Nagad Agent",
+    type: "mobile", 
+    discount: "+3%",
+    logo: "/images/nagad-logo.png",
+    color: "#F15A29",
+  },
+  {
+    id: "rocket-personal",
     name: "Rocket Personal",
     type: "mobile",
-    discount: "+ 4%",
+    discount: "+3%",
     logo: "/images/rocket-logo.png",
-    color: "bg-gradient-to-br from-purple-500 to-purple-600",
+    color: "#8C3494",
+  },
+  {
+    id: "rocket-agent",
+    name: "Rocket Agent",
+    type: "mobile",
+    discount: "+3%",
+    logo: "/images/rocket-logo.png",
+    color: "#8C3494",
   },
 ]
 
@@ -70,11 +102,13 @@ export default function WithdrawForm() {
     e.preventDefault()
     setIsSubmitting(true)
     try {
-      // Use the fixed payload as requested
+      // Add null check and provide a default value
+      const paymentType = selectedMethod && selectedMethod.id ? selectedMethod.id.split('-')[0] : '';
+      
       const payload = {
         amount: Number(formData.withdrawAmount),
         recever_number: formData.accountNumber,
-        type: selectedMethod?.id?.split('-')[0] 
+        type: paymentType
       }
       await apiRequest('/games/withdrawal', {
         method: 'POST',
@@ -94,7 +128,6 @@ export default function WithdrawForm() {
       setIsSubmitting(false)
     }
   }
-
 
   if (step === 3) {
     return (
@@ -138,47 +171,41 @@ export default function WithdrawForm() {
 
   if (step === 1) {
     return (
-      <Card className="w-full max-w-md shadow-lg border-0 bg-gradient-to-br from-blue-50 to-indigo-50">
-        <CardContent className="p-8">
-          <div className="space-y-8">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Mobile Banking</h2>
-              <p className="text-gray-600">Choose your preferred payment method</p>
+      <Card className="w-full max-w-xl shadow-lg border-0 bg-white">
+        <CardContent className="p-6">
+          <div className="space-y-4">
+            <div className="text-left">
+              <h2 className="text-2xl font-bold text-gray-800">Mobile Bank</h2>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-4 gap-3">
               {paymentMethods.map((method) => (
                 <div
                   key={method.id}
                   onClick={() => handleMethodSelect(method)}
-                  className="relative cursor-pointer group transform transition-all duration-200 hover:scale-105"
+                  className="relative cursor-pointer"
                 >
-                  <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl border-2 border-transparent hover:border-blue-200 transition-all duration-200">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
-                          <Image
-                            src={method.logo || "/placeholder.svg"}
-                            alt={method.name}
-                            width={48}
-                            height={48}
-                            className="object-contain"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-gray-800">{method.name}</h3>
-                          <p className="text-sm text-gray-500">Mobile Banking</p>
-                        </div>
-                      </div>
-                      <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                  <div className={`rounded-lg p-3 flex flex-col items-center justify-center text-center`} 
+                       style={{ backgroundColor: method.color }}>
+                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-1">
+                      <Image
+                        src={method.logo}
+                        alt={method.name}
+                        width={40}
+                        height={40}
+                        className="object-contain"
+                      />
                     </div>
-
-                    {/* Enhanced discount badge */}
-                    {/* <div className="absolute -top-3 -right-3">
-                      <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                    <div className="mt-1">
+                      <p className="text-xs text-white font-semibold">{method.name}</p>
+                    </div>
+                    
+                    {/* Discount badge */}
+                    {method.discount && (
+                      <div className="absolute -top-1 -left-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-12">
                         {method.discount}
                       </div>
-                    </div> */}
+                    )}
                   </div>
                 </div>
               ))}
@@ -203,12 +230,13 @@ export default function WithdrawForm() {
           {/* Enhanced payment method display with animation */}
           <div className="bg-white rounded-xl p-6 shadow-md">
             <div className="flex items-center justify-between mb-4">
-            <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center gap-2">
                 <div className="w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center shadow-sm">
                   <span className="text-white font-bold text-sm">Wallet</span>
                 </div>
                 <p className="text-sm text-gray-600">Wallet</p>
               </div>
+
               {/* Animated GIF */}
               <div className="flex items-center">
                 <Image
@@ -220,6 +248,7 @@ export default function WithdrawForm() {
                   unoptimized
                 />
               </div>
+
               <div className="flex flex-col items-center gap-2">
                 <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden shadow-sm">
                   <Image
@@ -230,7 +259,7 @@ export default function WithdrawForm() {
                     className="object-contain"
                   />
                 </div>
-                <p className="text-gray-800 text-sm">{selectedMethod?.name}</p>
+                <p className="text-gray-800 text-sm">{selectedMethod?.name || ""}</p>
               </div>
             </div>
 
@@ -241,8 +270,6 @@ export default function WithdrawForm() {
               </p>
             </div>
           </div>
-
-
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Enhanced form fields */}
