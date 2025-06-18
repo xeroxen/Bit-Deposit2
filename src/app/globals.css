@@ -120,3 +120,42 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee2 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+.animate-marquee2 {
+  animation: marquee2 20s linear infinite;
+}
+
+/* Gaming fullscreen mode - hides navbar and other site elements */
+body.gaming-fullscreen-mode header,
+body.gaming-fullscreen-mode nav,
+body.gaming-fullscreen-mode footer {
+  display: none !important;
+}
+
+body.gaming-fullscreen-mode {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}

@@ -19,15 +19,13 @@ const GamingContent = () => {
     };
 
     return (
-        // Fixed: Use padding-top instead of margin-top for more reliable spacing
-        <div className="w-full h-screen pt-20">
+        <div className="w-full h-screen fixed top-0 left-0 z-[100]">
             {gameUrl ? (
-                // Fixed: Wrap iframe in a container with explicit positioning
                 <div className="w-full h-full relative">
                     <iframe
                         src={gameUrl}
                         title="Game"
-                        className="w-full h-full border-0 absolute top-0 left-0 mt-5"
+                        className="w-full h-screen border-0 absolute top-0 left-0"
                         allowFullScreen
                         onLoad={handleIframeLoad}
                         // Fixed: Add sandbox attribute for better control
@@ -44,7 +42,7 @@ const GamingContent = () => {
                 <div className="fixed inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 via-black to-gray-900 text-white z-50">
                     <div className="mb-8 flex flex-col items-center">
                         <span className="text-4xl font-extrabold tracking-widest text-yellow-400 drop-shadow-lg animate-pulse">
-                            fnd777
+                            FND777
                         </span>
                         <span className="block w-24 h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-500 rounded-full mt-2 mb-2"></span>
                     </div>
@@ -64,7 +62,7 @@ const GamingContent = () => {
 const GamingPage = () => {
     return (
         <Suspense fallback={
-            <div className="w-full h-screen pt-20 flex items-center justify-center bg-gray-900">
+            <div className="w-full h-screen flex items-center justify-center bg-gray-900">
                 <div className="text-white text-lg">Loading...</div>
             </div>
         }>

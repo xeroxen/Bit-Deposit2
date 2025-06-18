@@ -48,8 +48,24 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
 
     return (
         <>
+        {/* Desktop Marquee */}
+        <div className="hidden md:block fixed top-0 left-0 right-0 z-50 w-full bg-[#1d3d68]">
+            <div className="overflow-hidden whitespace-nowrap">
+                <div className="inline-block animate-marquee">
+                    <p className="py-1 text-white font-medium">
+                        বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! FND777-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।
+                    </p>
+                </div>
+                <div className="inline-block animate-marquee2">
+                    <p className="py-1 text-white font-medium">
+                        বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! FND777-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।
+                    </p>
+                </div>
+            </div>
+        </div>
+        
         {/* Desktop Navbar */}
-        <div className="hidden md:block fixed top-0 left-0 right-0 z-50 w-full">
+        <div className="hidden md:block fixed top-[28px] left-0 right-0 z-50 w-full">
             <header className="bg-[#1d3d68] border-b border-[#275ea5] px-4 py-3">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-6">
@@ -125,8 +141,24 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
             </header>
         </div>
 
+        {/* Mobile Marquee */}
+        <div className="md:hidden fixed top-0 left-0 right-0 z-50 w-full bg-[#1d3d68]">
+            <div className="overflow-hidden whitespace-nowrap">
+                <div className="inline-block animate-marquee">
+                    <p className="py-1 text-white text-xs font-medium">
+                        বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! FND777-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।
+                    </p>
+                </div>
+                <div className="inline-block animate-marquee2">
+                    <p className="py-1 text-white text-xs font-medium">
+                        বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! FND777-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।
+                    </p>
+                </div>
+            </div>
+        </div>
+
         {/* Mobile Navbar */}
-        <div className="md:hidden fixed top-0 left-0 right-0 z-50 w-full h-[50px] bg-[#001529]">
+        <div className="md:hidden fixed top-[28px] left-0 right-0 z-50 w-full h-[50px] bg-[#001529]">
             {/* Background overlay */}
             <div className="absolute inset-0 bg-white"></div>
             
@@ -194,7 +226,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
         
         {/* Mobile Login and Registration Buttons - Below Navbar */}
         {!loading && !isAuthenticated && !hideAuthButtonsOnRoutes && (
-            <div className="md:hidden fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white">
+            <div className="md:hidden fixed top-[78px] left-0 right-0 z-40 w-full h-[56px] bg-white">
                 <div className="flex items-center justify-center h-full px-4 gap-4">
                     {/* Login Button */}
                     <Link href="/login" className="w-full max-w-[170px]">
@@ -219,7 +251,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
 
         {/* Mobile Navigation Tabs - Only show when authenticated */}
         {!loading && isAuthenticated && (
-            <div className="md:hidden fixed top-[50px] left-0 right-0 z-40 w-full h-[56px] bg-white border-b border-gray-200">
+            <div className="md:hidden fixed top-[78px] left-0 right-0 z-40 w-full h-[56px] bg-white border-b border-gray-200">
                 <div className="flex items-center justify-between h-full px-2">
                     {mobileNavItems.map((item, index) => {
                         const isActive = pathname === item.href;
