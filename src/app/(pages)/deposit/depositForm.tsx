@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -19,124 +19,62 @@ interface PaymentMethod {
   discount: string
   logo: string
   color: string
+  agentNumber: string
 }
 
-const paymentMethods: PaymentMethod[] = [
-  {
-    id: "bkash-personal",
-    name: "bKash Personal",
-    type: "mobile",
-    discount: "+5%",
-    logo: "/images/bkash-logo.png", 
-    color: "#E2136E",
-  },
-  {
-    id: "bkash-merchant",
-    name: "bKash Merchant",
-    type: "mobile",
-    discount: "+3%",
-    logo: "/images/bkash-logo.png",
-    color: "#E2136E",
-  },
-  {
-    id: "bkash-agent",
-    name: "bKash Agent",
-    type: "mobile",
-    discount: "+3%",
-    logo: "/images/bkash-logo.png",
-    color: "#E2136E",
-  },
-  {
-    id: "nagad-personal",
-    name: "Nagad Personal",
-    type: "mobile",
-    discount: "+3%",
-    logo: "/images/nagad-logo.png",
-    color: "#F15A29",
-  },
-  {
-    id: "nagad-agent",
-    name: "Nagad Agent",
-    type: "mobile", 
-    discount: "+3%",
-    logo: "/images/nagad-logo.png",
-    color: "#F15A29",
-  },
-  {
-    id: "rocket-personal",
-    name: "Rocket Personal",
-    type: "mobile",
-    discount: "+3%",
-    logo: "/images/rocket-logo.png",
-    color: "#8C3494",
-  },
-  {
-    id: "rocket-agent",
-    name: "Rocket Agent",
-    type: "mobile",
-    discount: "+3%",
-    logo: "/images/rocket-logo.png",
-    color: "#8C3494",
-  },
-  // {
-  //   id: "upay-personal",
-  //   name: "Upay Personal",
-  //   type: "mobile",
-  //   discount: "+3%", 
-  //   logo: "/images/upay-logo.png",
-  //   color: "#2C078C", 
-  // },
-  // {
-  //   id: "sure-cash",
-  //   name: "Sure Cash",
-  //   type: "mobile",
-  //   discount: "+3%",
-  //   logo: "/images/sure-cash-logo.png",
-  //   color: "#005bac",
-  // },
-  // {
-  //   id: "tap-tap",
-  //   name: "Tap Tap",
-  //   type: "mobile",
-  //   discount: "+3%",
-  //   logo: "/images/tap-tap-logo.png",
-  //   color: "#4CAF50",
-  // },
-  // {
-  //   id: "visa-mastercard",
-  //   name: "Visa MasterCard",
-  //   type: "card",
-  //   discount: "+0%",
-  //   logo: "/images/card-logo.png", 
-  //   color: "#1A1F71",
-  // },
-  // {
-  //   id: "off-number",
-  //   name: "OFF NUMBER",
-  //   type: "other",
-  //   discount: "+3%",
-  //   logo: "/images/off-number-logo.png",
-  //   color: "#FF0000",
-  // },
-  // {
-  //   id: "local-agent",
-  //   name: "Local Agent",
-  //   type: "agent",
-  //   discount: "",
-  //   logo: "/images/local-agent-logo.png",
-  //   color: "#FF5722",
-  // },
-]
+const paymentMethodLogos: { [key: string]: { logo: string; color: string } } = {
+  bkash: { logo: "/images/bkash-logo.png", color: "#E2136E" },
+  nagad: { logo: "/images/nagad-logo.png", color: "#F15A29" },
+  rocket: { logo: "/images/rocket-logo.png", color: "#8C3494" },
+}
 
 export default function DepositForm() {
   const [step, setStep] = useState(1)
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState({
     accountNumber: "",
     transactionId: "",
     depositAmount: "",
   })
+
+  useEffect(() => {
+    const fetchDepositData = async () => {
+      try {
+        const response = await fetch("https://fnd777.pro/api/agent-numbers")
+        const data = await response.json()
+        if (data.status && Array.isArray(data.data)) {
+          const transformedMethods: PaymentMethod[] = data.data.map((agent: any) => {
+            const text = (agent.text || "").toLowerCase()
+            let logoDetails = paymentMethodLogos.bkash // Default to bKash
+            if (text.includes("nagad") || text.includes("nagat")) {
+              logoDetails = paymentMethodLogos.nagad
+            } else if (text.includes("rocket")) {
+              logoDetails = paymentMethodLogos.rocket
+            }
+            return {
+              id: text.replace(/\s+/g, "-"),
+              name: agent.text,
+              type: "mobile",
+              discount: agent.bonus ? `+${agent.bonus}%` : "+0%",
+              logo: logoDetails.logo,
+              color: logoDetails.color,
+              agentNumber: agent.agent_number,
+            }
+          })
+          setPaymentMethods(transformedMethods)
+        }
+      } catch (error) {
+        console.error("Error fetching deposit data:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchDepositData()
+  }, [])
 
   const handleMethodSelect = (method: PaymentMethod) => {
     setSelectedMethod(method)
@@ -180,7 +118,9 @@ export default function DepositForm() {
     }
   }
   const copyAccountNumber = () => {
-    navigator.clipboard.writeText(process.env.NEXT_PUBLIC_BKASH_NUMBER?.toString() || '')
+    if (selectedMethod) {
+      navigator.clipboard.writeText(selectedMethod.agentNumber)
+    }
   }
 
   if (step === 3) {
@@ -231,39 +171,44 @@ export default function DepositForm() {
             <div className="text-left">
               <h2 className="text-2xl font-bold text-gray-800">Mobile Bank</h2>
             </div>
-
-            <div className="grid grid-cols-4 gap-3">
-              {paymentMethods.map((method) => (
-                <div
-                  key={method.id}
-                  onClick={() => handleMethodSelect(method)}
-                  className="relative cursor-pointer"
-                >
-                  <div className={`rounded-lg p-3 flex flex-col items-center justify-center text-center`} 
-                       style={{ backgroundColor: method.color }}>
-                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-1">
-                      <Image
-                        src={method.logo}
-                        alt={method.name}
-                        width={40}
-                        height={40}
-                        className="object-contain"
-                      />
-                    </div>
-                    <div className="mt-1">
-                      <p className="text-xs text-white font-semibold">{method.name}</p>
-                    </div>
-                    
-                    {/* Discount badge */}
-                    {method.discount && (
-                      <div className="absolute -top-1 -left-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-12">
-                        {method.discount}
+            {isLoading ? (
+              <div className="flex justify-center items-center h-40">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-4 gap-3">
+                {paymentMethods.map((method) => (
+                  <div
+                    key={method.id}
+                    onClick={() => handleMethodSelect(method)}
+                    className="relative cursor-pointer"
+                  >
+                    <div className={`rounded-lg p-3 flex flex-col items-center justify-center text-center`} 
+                         style={{ backgroundColor: method.color }}>
+                      <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-1">
+                        <Image
+                          src={method.logo}
+                          alt={method.name}
+                          width={40}
+                          height={40}
+                          className="object-contain"
+                        />
                       </div>
-                    )}
+                      <div className="mt-1">
+                        <p className="text-xs text-white font-semibold">{method.name}</p>
+                      </div>
+                      
+                      {/* Discount badge */}
+                      {method.discount && (
+                        <div className="absolute -top-1 -left-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-12">
+                          {method.discount}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -329,7 +274,7 @@ export default function DepositForm() {
           <div className="bg-white rounded-xl p-6 shadow-md">
             <Label className="font-semibold text-gray-800 mb-3 block">{selectedMethod?.name || "Payment"} Number</Label>
             <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg border">
-              <span className="flex-1 font-mono text-lg font-medium text-gray-800">{process.env.NEXT_PUBLIC_BKASH_NUMBER || ""}</span>
+              <span className="flex-1 font-mono text-lg font-medium text-gray-800">{selectedMethod?.agentNumber || ""}</span>
               <Button
                 variant="outline"
                 size="sm"
