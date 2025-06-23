@@ -46,7 +46,12 @@ export default function DepositForm() {
         const response = await fetch("https://fnd777.pro/api/agent-numbers")
         const data = await response.json()
         if (data.status && Array.isArray(data.data)) {
-          const transformedMethods: PaymentMethod[] = data.data.map((agent: any) => {
+          type Agent = {
+            text: string;
+            bonus?: number;
+            agent_number: string;
+          };
+          const transformedMethods: PaymentMethod[] = data.data.map((agent: Agent) => {
             const text = (agent.text || "").toLowerCase()
             let logoDetails = paymentMethodLogos.bkash // Default to bKash
             if (text.includes("nagad") || text.includes("nagat")) {
