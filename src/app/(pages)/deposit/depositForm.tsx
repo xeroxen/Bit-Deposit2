@@ -101,7 +101,8 @@ export default function DepositForm() {
         amount: Number(formData.depositAmount),
         payment_id: formData.transactionId,
         sender_number: formData.accountNumber,
-        type: paymentType
+        type: paymentType,
+        agent_number: selectedMethod?.agentNumber || ''
       }
       await apiRequest('/games/deposite', {
         method: 'POST',
