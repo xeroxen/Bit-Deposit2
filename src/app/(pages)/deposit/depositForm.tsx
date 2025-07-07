@@ -20,6 +20,7 @@ interface PaymentMethod {
   logo: string
   color: string
   agentNumber: string
+  agentId: string | number
 }
 
 const paymentMethodLogos: { [key: string]: { logo: string; color: string } } = {
@@ -50,6 +51,7 @@ export default function DepositForm() {
             text: string;
             bonus?: number;
             agent_number: string;
+            agent_id: string ;
           };
           const transformedMethods: PaymentMethod[] = data.data.map((agent: Agent) => {
             const text = (agent.text || "").toLowerCase()
@@ -67,6 +69,7 @@ export default function DepositForm() {
               logo: logoDetails.logo,
               color: logoDetails.color,
               agentNumber: agent.agent_number,
+              agentId: agent.agent_id,
             }
           })
           setPaymentMethods(transformedMethods)
@@ -102,7 +105,7 @@ export default function DepositForm() {
         payment_id: formData.transactionId,
         sender_number: formData.accountNumber,
         type: paymentType,
-        agent_number: selectedMethod?.agentNumber || ''
+        agent_number: selectedMethod?.agentId || '',
       }
       await apiRequest('/games/deposite', {
         method: 'POST',
