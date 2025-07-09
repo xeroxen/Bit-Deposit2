@@ -1,15 +1,16 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2, ArrowLeft } from "lucide-react"
+import { Loader2, ArrowLeft, Copy } from "lucide-react"
 import Image from "next/image"
 import { apiRequest, triggerBalanceUpdate } from "@/lib/authentication"
 import Link from "next/link"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 interface PaymentMethod {
   id: string
@@ -18,75 +19,70 @@ interface PaymentMethod {
   discount: string
   logo: string
   color: string
+  agentNumber: string
+  agentId: string | number
 }
 
-const paymentMethods: PaymentMethod[] = [
-  {
-    id: "bkash-personal",
-    name: "bKash Personal",
-    type: "mobile",
-    discount: "+5%",
-    logo: "/images/bkash-logo.png", 
-    color: "#E2136E",
-  },
-  {
-    id: "bkash-merchant",
-    name: "bKash Merchant",
-    type: "mobile",
-    discount: "+3%",
-    logo: "/images/bkash-logo.png",
-    color: "#E2136E",
-  },
-  {
-    id: "bkash-agent",
-    name: "bKash Agent",
-    type: "mobile",
-    discount: "+3%",
-    logo: "/images/bkash-logo.png",
-    color: "#E2136E",
-  },
-  {
-    id: "nagad-personal",
-    name: "Nagad Personal",
-    type: "mobile",
-    discount: "+3%",
-    logo: "/images/nagad-logo.png",
-    color: "#F15A29",
-  },
-  {
-    id: "nagad-agent",
-    name: "Nagad Agent",
-    type: "mobile", 
-    discount: "+3%",
-    logo: "/images/nagad-logo.png",
-    color: "#F15A29",
-  },
-  {
-    id: "rocket-personal",
-    name: "Rocket Personal",
-    type: "mobile",
-    discount: "+3%",
-    logo: "/images/rocket-logo.png",
-    color: "#8C3494",
-  },
-  {
-    id: "rocket-agent",
-    name: "Rocket Agent",
-    type: "mobile",
-    discount: "+3%",
-    logo: "/images/rocket-logo.png",
-    color: "#8C3494",
-  },
-]
+const paymentMethodLogos: { [key: string]: { logo: string; color: string } } = {
+  bkash: { logo: "/images/bkash-logo.png", color: "#E2136E" },
+  nagad: { logo: "/images/nagad-logo.png", color: "#F15A29" },
+  rocket: { logo: "/images/rocket-logo.png", color: "#8C3494" },
+}
 
 export default function WithdrawForm() {
   const [step, setStep] = useState(1)
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     accountNumber: "",
     withdrawAmount: "",
   })
+
+  useEffect(() => {
+    const fetchWithdrawData = async () => {
+      try {
+        const response = await fetch("https://fnd777.pro/api/agent-numbers")
+        const data = await response.json()
+        if (data.status && Array.isArray(data.data)) {
+          type Agent = {
+            text: string;
+            bonus?: number;
+            agent_number: string;
+            agent_id: string ;
+          };
+          const transformedMethods: PaymentMethod[] = data.data.map((agent: Agent) => {
+            const text = (agent.text || "").toLowerCase()
+            let logoDetails = paymentMethodLogos.bkash // Default to bKash
+            if (text.includes("nagad") || text.includes("nagat")) {
+              logoDetails = paymentMethodLogos.nagad
+            } else if (text.includes("rocket")) {
+              logoDetails = paymentMethodLogos.rocket
+            }
+            return {
+              id: text.replace(/\s+/g, "-"),
+              name: agent.text,
+              type: "mobile",
+              discount: agent.bonus ? `+${agent.bonus}%` : "+0%",
+              logo: logoDetails.logo,
+              color: logoDetails.color,
+              agentNumber: agent.agent_number,
+              agentId: agent.agent_id,
+            }
+          })
+          setPaymentMethods(transformedMethods)
+        }
+      } catch (error) {
+        console.error("Error fetching withdraw data:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchWithdrawData()
+  }, [])
 
   const handleMethodSelect = (method: PaymentMethod) => {
     setSelectedMethod(method)
@@ -101,12 +97,14 @@ export default function WithdrawForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError(null)
     try {
       // Add null check and provide a default value
       const paymentType = selectedMethod && selectedMethod.id ? selectedMethod.id.split('-')[0] : '';
       
       const payload = {
         amount: Number(formData.withdrawAmount),
+        agent_number: selectedMethod?.agentId,
         recever_number: formData.accountNumber,
         type: paymentType
       }
@@ -124,8 +122,15 @@ export default function WithdrawForm() {
       });
     } catch (error) {
       console.error("Error submitting withdraw:", error)
+      setError((error as Error).message)
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  const copyAccountNumber = () => {
+    if (selectedMethod) {
+      navigator.clipboard.writeText(selectedMethod.agentNumber)
     }
   }
 
@@ -178,38 +183,44 @@ export default function WithdrawForm() {
               <h2 className="text-2xl font-bold text-gray-800">Mobile Bank</h2>
             </div>
 
-            <div className="grid grid-cols-4 gap-3">
-              {paymentMethods.map((method) => (
-                <div
-                  key={method.id}
-                  onClick={() => handleMethodSelect(method)}
-                  className="relative cursor-pointer"
-                >
-                  <div className={`rounded-lg p-3 flex flex-col items-center justify-center text-center`} 
-                       style={{ backgroundColor: method.color }}>
-                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-1">
-                      <Image
-                        src={method.logo}
-                        alt={method.name}
-                        width={40}
-                        height={40}
-                        className="object-contain"
-                      />
-                    </div>
-                    <div className="mt-1">
-                      <p className="text-xs text-white font-semibold">{method.name}</p>
-                    </div>
-                    
-                    {/* Discount badge */}
-                    {method.discount && (
-                      <div className="absolute -top-1 -left-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-12">
-                        {method.discount}
+            {isLoading ? (
+              <div className="flex justify-center items-center h-40">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-4 gap-3">
+                {paymentMethods.map((method) => (
+                  <div
+                    key={method.id}
+                    onClick={() => handleMethodSelect(method)}
+                    className="relative cursor-pointer"
+                  >
+                    <div className={`rounded-lg p-3 flex flex-col items-center justify-center text-center`} 
+                         style={{ backgroundColor: method.color }}>
+                      <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-1">
+                        <Image
+                          src={method.logo}
+                          alt={method.name}
+                          width={40}
+                          height={40}
+                          className="object-contain"
+                        />
                       </div>
-                    )}
+                      <div className="mt-1">
+                        <p className="text-xs text-white font-semibold">{method.name}</p>
+                      </div>
+                      
+                      {/* Discount badge */}
+                      {method.discount && (
+                        <div className="absolute -top-1 -left-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-12">
+                          {method.discount}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -219,6 +230,12 @@ export default function WithdrawForm() {
   return (
     <Card className="w-full max-w-md shadow-lg border-0 bg-gradient-to-br from-blue-50 to-indigo-50">
       <CardContent className="p-6">
+        {error && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
         <div className="space-y-6">
           <div className="flex items-center gap-3 mb-6">
             <Button variant="ghost" size="sm" onClick={() => setStep(1)} className="hover:bg-white/50">
@@ -268,6 +285,23 @@ export default function WithdrawForm() {
               <p className="text-sm font-medium text-gray-700">
                 Current Rate: <span className="text-green-600 font-bold">1 BDT = 1.00 BDT</span>
               </p>
+            </div>
+          </div>
+
+          {/* Enhanced account number section */}
+          <div className="bg-white rounded-xl p-6 shadow-md">
+            <Label className="font-semibold text-gray-800 mb-3 block">{selectedMethod?.name || "Payment"} ID</Label>
+            <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg border">
+              <span className="flex-1 font-mono text-lg font-medium text-gray-800">{selectedMethod?.agentId || ""}</span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={copyAccountNumber}
+                className="hover:bg-blue-50 hover:border-blue-300"
+              >
+                <Copy className="h-4 w-4 mr-1" />
+                Copy
+              </Button>
             </div>
           </div>
 
