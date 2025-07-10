@@ -10,17 +10,14 @@ import {
   CreditCard,
   Mail,
   Phone,
-  Users,
-  MapPin,
   FileText,
   Copy,
-  Edit,
   Plus,
-  ChevronRight,
   Shield,
   Calendar,
   Check,
 } from "lucide-react"
+import Image from "next/image"
 
 // Test user data for development
 const testUserData: User = {
@@ -140,18 +137,13 @@ export default function ProfilePage() {
 
           <div className="absolute top-16 left-1/2 transform -translate-x-1/2">
             <div className="relative">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center border-4 border-white shadow-lg">
-                <div className="text-white font-bold text-xs text-center">
-                  <div className="flex items-center justify-center mb-1">
-                    <span className="text-yellow-300 text-lg">👑</span>
-                  </div>
-                  <div className="text-[10px] leading-tight">
-                    SUPER
-                    <br />
-                    EA
-                  </div>
-                </div>
-              </div>
+              <Image
+                src="/user/user.jpg"
+                alt="Avatar"
+                width={80}
+                height={80}
+                className="w-20 h-20 rounded-full border-4 border-white shadow-lg bg-gradient-to-br from-orange-400 to-red-500 object-cover"
+              />
               <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white">
                 <div className="w-2 h-2 bg-white rounded-full" />
               </div>
@@ -240,10 +232,10 @@ export default function ProfilePage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">{userData.phone || '---'}</span>
-                  <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-600 h-auto p-0">
+                  {/* <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-600 h-auto p-0">
                     <Edit className="w-3 h-3 mr-1" />
                     Edit
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>
@@ -264,22 +256,22 @@ export default function ProfilePage() {
                   <span className="text-sm font-medium">
                     {userData.name ? `${userData.name}${userData.last_name ? ` ${userData.last_name}` : ''}` : '---'}
                   </span>
-                  <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-600 h-auto p-0">
+                  {/* <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-600 h-auto p-0">
                     <Edit className="w-3 h-3 mr-1" />
                     Edit
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Users className="w-4 h-4 text-gray-500" />
                   <span className="text-sm text-gray-600">Gender</span>
                 </div>
                 <span className="text-sm text-gray-400">---</span>
-              </div>
+              </div> */}
 
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-gray-500" />
                   <span className="text-sm text-gray-600">Country</span>
@@ -290,15 +282,15 @@ export default function ProfilePage() {
                     <div className="w-2 h-2 bg-red-500 rounded-full" />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-gray-500" />
                   <span className="text-sm text-gray-600">Language</span>
                 </div>
                 <span className="text-sm font-medium">{userData.language || '---'}</span>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -308,7 +300,7 @@ export default function ProfilePage() {
             <Separator className="mb-4" />
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-4 h-4 rounded-full border-2 border-gray-300 flex items-center justify-center">
                     <div className="w-2 h-2 bg-gray-300 rounded-full" />
@@ -323,7 +315,7 @@ export default function ProfilePage() {
                     <ChevronRight className="w-3 h-3 ml-1" />
                   </Button>
                 )}
-              </div>
+              </div> */}
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
