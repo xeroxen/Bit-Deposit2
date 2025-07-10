@@ -208,6 +208,7 @@ export default function WithdrawForm() {
                       </div>
                       <div className="mt-1">
                         <p className="text-xs text-white font-semibold">{method.name}</p>
+                        <p className="text-xs text-white/80 font-mono mt-0.5">{method.agentId}</p>
                       </div>
                       
                       {/* Discount badge */}
