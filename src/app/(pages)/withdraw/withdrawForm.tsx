@@ -44,14 +44,16 @@ export default function WithdrawForm() {
   useEffect(() => {
     const fetchWithdrawData = async () => {
       try {
-        const response = await fetch("https://fnd777.pro/api/agent-numbers")
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/agent-numbers`)
         const data = await response.json()
         if (data.status && Array.isArray(data.data)) {
           type Agent = {
+            agent_name: string;
+            agent_number: string;
             text: string;
             bonus?: number;
-            agent_number: string;
             agent_id: string ;
+            status: string;
           };
           const transformedMethods: PaymentMethod[] = data.data.map((agent: Agent) => {
             const text = (agent.text || "").toLowerCase()
@@ -61,6 +63,7 @@ export default function WithdrawForm() {
             } else if (text.includes("rocket")) {
               logoDetails = paymentMethodLogos.rocket
             }
+           if(agent.status === "1"){
             return {
               id: text.replace(/\s+/g, "-"),
               name: agent.text,
@@ -71,6 +74,7 @@ export default function WithdrawForm() {
               agentNumber: agent.agent_number,
               agentId: agent.agent_id,
             }
+           }
           })
           setPaymentMethods(transformedMethods)
         }
@@ -189,7 +193,7 @@ export default function WithdrawForm() {
               </div>
             ) : (
               <div className="grid grid-cols-4 gap-3">
-                {paymentMethods.map((method) => (
+                {paymentMethods.filter(method => method !== undefined).map((method) => (
                   <div
                     key={method.id}
                     onClick={() => handleMethodSelect(method)}
