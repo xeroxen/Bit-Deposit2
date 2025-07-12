@@ -58,7 +58,7 @@ export default function DepositForm() {
           const transformedMethods: PaymentMethod[] = data.data.map((agent: Agent) => {
             const text = (agent.text || "").toLowerCase()
             let logoDetails = paymentMethodLogos.bkash // Default to bKash
-            if (text.includes("nagad") || text.includes("nagat")) {
+            if (text.includes("nagad")) {
               logoDetails = paymentMethodLogos.nagad
             } else if (text.includes("rocket")) {
               logoDetails = paymentMethodLogos.rocket
