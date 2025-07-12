@@ -46,7 +46,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
         fetchLogo();
     }, []);
 
-    const marqueeText = "বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! FND777-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।";
+    const marqueeText = "বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! Raza20-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।";
 
     return (
         <div className="fixed inset-0 z-50 flex flex-col w-full pointer-events-none overflow-hidden">
