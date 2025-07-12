@@ -81,7 +81,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                             <Link href="/">
                             {logo?.software_logo_white && (
                             <Image 
-                                src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${logo.software_logo_white}`} 
+                                src={`${process.env.NEXT_PUBLIC_API_URL}${logo.software_logo_white}`} 
                                 alt="logo" 
                                 width={80} 
                                 height={10} 
@@ -194,7 +194,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                             <Link href="/">
                             {logo?.software_logo_white && (
                                 <Image 
-                                    src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${logo.software_logo_white}`} 
+                                    src={`${process.env.NEXT_PUBLIC_API_URL}${logo.software_logo_white}`} 
                                     alt="logo" 
                                     width={70} 
                                     height={10} 

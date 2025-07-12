@@ -25,7 +25,7 @@ export default function BottomFooter() {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             {logo?.software_logo_white && (
-              <Image src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${logo.software_logo_white}`} alt="logo" width={200} height={40} />
+              <Image src={`${process.env.NEXT_PUBLIC_API_URL}${logo.software_logo_white}`} alt="logo" width={200} height={40} />
             )}
           </div>
           <p className="text-gray-300 mb-4">Contact with us</p>
@@ -336,7 +336,7 @@ export default function BottomFooter() {
               </Link>
             </div>
             <div className="text-center md:text-right">
-              <p>© 2024 All Rights Reserved bitdeposit.com</p>
+              <p>© 2025 All Rights Reserved Raza20.com</p>
             </div>
           </div>
         </div>

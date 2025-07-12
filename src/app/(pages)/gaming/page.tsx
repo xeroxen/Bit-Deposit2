@@ -69,7 +69,7 @@ const GamingContent = () => {
                 <div className="fixed inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 via-black to-gray-900 text-white z-50">
                     <div className="mb-8 flex flex-col items-center">
                         <span className="text-4xl font-extrabold tracking-widest text-yellow-400 drop-shadow-lg animate-pulse">
-                            FND777
+                            Raza20
                         </span>
                         <span className="block w-24 h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-500 rounded-full mt-2 mb-2"></span>
                     </div>

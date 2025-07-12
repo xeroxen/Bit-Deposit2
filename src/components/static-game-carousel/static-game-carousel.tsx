@@ -91,7 +91,7 @@ const StaticGameCarousel = () => {
         <GameCard
           name={game.game_name}
           winAmount={game.rtp ? `${game.rtp}x` : ''}
-          cover={game.cover ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${game.cover}` : undefined}
+          cover={game.cover ? `${process.env.NEXT_PUBLIC_API_URL}/game/${game.cover}` : undefined}
         />
       </CarouselItem>
     ))
