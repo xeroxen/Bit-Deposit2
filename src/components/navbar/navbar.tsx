@@ -89,7 +89,6 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                             />
                         )}
                             </Link>
-                            
                             {/* Desktop Navigation */}
                             <nav className="flex items-center space-x-3">
                                 {desktopNavItems.map((item, index) => (
