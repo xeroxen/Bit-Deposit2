@@ -48,7 +48,7 @@ export default function WithdrawHistoryPage() {
           const userId = userData?.id || '';
           const token = getAuthToken();
 
-          const response = await fetch(`${process.env.NEXT_PUBLIC_PROXY_LIST_API_URL}/wdraw-story/${userId}`, {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/wdraw-story/${userId}`, {
             headers: {
               'Content-Type': 'application/json',
               ...(token && { 'Authorization': `Bearer ${token}` }),

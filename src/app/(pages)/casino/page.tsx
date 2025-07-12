@@ -69,7 +69,7 @@ const CasinoCarousel = ({ title, gameId }: { title: string; gameId: number }) =>
                 className="pl-2 md:pl-4 lg:pl-6 basis-auto cursor-pointer"
                 onClick={() => singleGameRedirect(game.id, game.game_name)}
               >
-                <GameCard cover={game.cover ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${game.cover}` : undefined} />
+                <GameCard cover={game.cover ? `${process.env.NEXT_PUBLIC_API_URL}/game/${game.cover}` : undefined} />
               </CarouselItem>
             ))}
           </CarouselContent>

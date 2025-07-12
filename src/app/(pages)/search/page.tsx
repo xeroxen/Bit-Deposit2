@@ -136,7 +136,7 @@ const SearchPage = () => {
                 <div className="flex-1 relative overflow-hidden">
                   {game.cover ? (
                     <Image 
-                      src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${game.cover}`} 
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/game/${game.cover}`} 
                       alt={game.game_name}
                       fill
                       className="object-fill"

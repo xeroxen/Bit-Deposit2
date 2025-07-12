@@ -45,7 +45,7 @@ export default function DepositHistoryPage() {
           const userId = userData?.id || '';
           const token = getAuthToken();
 
-          const response = await fetch(`${process.env.NEXT_PUBLIC_PROXY_LIST_API_URL}/depo-story/${userId}`, {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/depo-story/${userId}`, {
             headers: {
               'Content-Type': 'application/json',
               ...(token && { 'Authorization': `Bearer ${token}` }),
