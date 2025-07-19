@@ -57,6 +57,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
             ...data,
             cpf: null, // Pass CPF as null
             user_name: username, // Add the extracted username
+            inviter_code: username + Math.floor(1000 + Math.random() * 9000).toString(),
             term_a: true,
             agreement: true,
           }
