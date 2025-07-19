@@ -85,3 +85,23 @@ interface CategoryGameRelationship {
   export interface GameResponse {
     providers: GameProvider[];
   }
+
+  // Provider API Response Type
+  export interface ProviderApiResponse {
+    success: boolean;
+    provider: Provider[];
+  }
+
+  export interface Provider {
+    id: number;
+    cover: string | null;
+    code: string;
+    name: string;
+    status: number;
+    rtp: number;
+    views: number;
+    distribution: string;
+    image: string;
+    created_at: string;
+    updated_at: string;
+  }

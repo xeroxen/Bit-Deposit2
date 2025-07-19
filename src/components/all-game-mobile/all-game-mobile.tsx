@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import React, { useState, useEffect, Suspense } from 'react';
 import { Skeleton } from "@/components/ui/skeleton";
-import { ApiResponse, CategoryInfo, Game, GameResponse } from '@/types/game.type';
+import { ApiResponse, CategoryInfo, Game, ProviderApiResponse, Provider } from '@/types/game.type';
 import { useGameContext } from '@/lib/gameContext';
 import { useSingleGameRedirect } from "@/hooks/singGameRedirect";
 import { useRouter } from 'next/navigation';
@@ -164,16 +164,18 @@ const CategoryPillsSkeleton = ({ count = 5 }: { count?: number }) => {
 };
 
 // Provider Pills component
-const ProviderPills = () => {
+const ProviderPills = ({ providers }: { providers: Provider[] }) => {
   const router = useRouter();
 
   return (
     <>
-      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-          <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=11134`)}>
+      {providers.map((provider) => (
+        <div key={provider.id} className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
+          <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=${provider.id}`)}>
+            {provider.image ? (
               <Image
-            src="/providers/evolution.png"
-            alt="Evolution"
+                src={`${process.env.NEXT_PUBLIC_API_URL}${provider.image}`}
+                alt={provider.name}
                 width={65}
                 height={24}
                 className="object-contain mr-2"
@@ -181,92 +183,12 @@ const ProviderPills = () => {
                 sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
                 priority
               />
-        </div>
-      </div>
-      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=11133`)}>
-              <Image
-            src="/providers/spribe.png"
-            alt="Spribe"
-                width={65}
-                height={24}
-                className="object-contain mr-2"
-                style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-                sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
-                priority
-              />
-        </div>
+            ) : (
+              <span className="text-gray-700 text-sm font-medium">{provider.name}</span>
+            )}
           </div>
-      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=4`)}>
-          <Image
-            src="/providers/pragmatic_play.png"
-            alt="Pragmatic Play"
-            width={65}
-            height={24}
-            className="object-contain mr-2"
-            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
-            priority
-          />
         </div>
-      </div>
-      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=11135`)}>
-          <Image
-            src="/providers/pragmatic.png"
-            alt="Pragmatic"
-            width={65}
-            height={24}
-            className="object-contain mr-2"
-            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
-            priority
-          />
-        </div>
-      </div>
-      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=2`)}>
-          <Image
-            src="/providers/pgsoft.png"
-            alt="PGSoft"
-            width={65}
-            height={24}
-            className="object-contain mr-2"
-            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
-            priority
-          />
-        </div>
-      </div>
-      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=9`)}>
-          <Image
-            src="/providers/habanero.png"
-            alt="Habanero"
-            width={65}
-            height={24}
-            className="object-contain mr-2"
-            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
-            priority
-          />
-        </div>
-      </div>
-      <div className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-        <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=13`)}>
-          <Image
-            src="/providers/evoplay.png"
-            alt="Evoplay"
-            width={65}
-            height={24}
-            className="object-contain mr-2"
-            style={{ width: '80%', height: '80%', maxWidth: '80%', maxHeight: '80%' }}
-            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 120px, 160px"
-            priority
-          />
-        </div>
-      </div>
+      ))}
     </>
   );
 };
@@ -292,7 +214,6 @@ const GamesData = ({
   filteredGames,
   onGameClick
 }: {
-  selectedCategory: number | null,
   visibleGames: number,
   handleShowMore: () => void,
   loading: boolean,
@@ -340,16 +261,16 @@ const CategoriesData = ({
 
 // Data fetching component for providers - will be wrapped in Suspense
 const ProvidersData = ({
-  games,
+  providers,
   loading
 }: {
-  games: GameResponse,
+  providers: Provider[],
   loading: boolean
 }) => {
-  if (loading || !games.providers?.length) {
+  if (loading || !providers?.length) {
     return <ProviderPillsSkeleton />;
   }
-  return <ProviderPills />;
+  return <ProviderPills providers={providers} />;
 };
 
 const AllGameMobile = () => {
@@ -359,6 +280,8 @@ const AllGameMobile = () => {
     const [visibleGames, setVisibleGames] = useState<number>(24); // 3 rows of 8 (max per row)
     const [viewAllMode, setViewAllMode] = useState<boolean>(false);
     const [allGames, setAllGames] = useState<Game[]>([]);
+    const [providers, setProviders] = useState<Provider[]>([]);
+    const [providersLoading, setProvidersLoading] = useState<boolean>(true);
     const singleGameRedirect = useSingleGameRedirect();
     
     useEffect(() => {
@@ -391,6 +314,8 @@ const AllGameMobile = () => {
                 categoryGameIds.includes(game.id)
             );
 
+
+
             setFilteredGames(gamesInCategory);
             // Reset visible games count when category changes
             setVisibleGames(24); // 3 rows of 8
@@ -405,9 +330,31 @@ const AllGameMobile = () => {
             const extractedGames = games.providers.flatMap(provider => 
                 provider.games ? provider.games : []
             );
+
             setAllGames(extractedGames);
         }
-    }, [games]);
+    }, [games, viewAllMode]);
+
+    // Fetch providers from API
+    useEffect(() => {
+        const fetchProviders = async () => {
+            try {
+                setProvidersLoading(true);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/get-provider`);
+                const data: ProviderApiResponse = await response.json();
+                
+                if (data.success && data.provider) {
+                    setProviders(data.provider);
+                }
+            } catch (error) {
+                console.error('Error fetching providers:', error);
+            } finally {
+                setProvidersLoading(false);
+            }
+        };
+
+        fetchProviders();
+    }, []);
 
     const handleCategoryClick = (categoryId: number) => {
         if (viewAllMode) {
@@ -433,6 +380,8 @@ const AllGameMobile = () => {
 
     // Determine which games to display based on mode
     const displayGames = viewAllMode ? allGames : filteredGames;
+    
+
 
     return (
         <div className="w-full bg-gray-100 p-4">
@@ -478,7 +427,6 @@ const AllGameMobile = () => {
             <div className="mb-6">
                 <Suspense fallback={<GameGridSkeleton rows={3} />}>
                     <GamesData 
-                        selectedCategory={selectedCategory}
                         visibleGames={visibleGames}
                         handleShowMore={handleShowMore}
                         loading={loading}
@@ -493,11 +441,11 @@ const AllGameMobile = () => {
                 <div className="mb-4">
                     <h3 className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-800 mb-3 ml-5">Providers</h3>
                     
-                    <div className="grid grid-cols-4 gap-2 w-[95vw] mx-auto">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 w-[95vw] mx-auto">
                         <Suspense fallback={<ProviderPillsSkeleton />}>
                             <ProvidersData 
-                                games={games || { providers: [] }}
-                                loading={loading}
+                                providers={providers}
+                                loading={providersLoading}
                             />
                         </Suspense>
                     </div>
