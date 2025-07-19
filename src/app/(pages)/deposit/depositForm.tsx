@@ -55,6 +55,7 @@ export default function DepositForm() {
     transactionId: "",
     depositAmount: "",
   })
+  const [amountError, setAmountError] = useState("")
 
   useEffect(() => {
     const fetchDepositData = async () => {
@@ -128,16 +129,34 @@ export default function DepositForm() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
+    
+    // Validate amount when deposit amount changes
+    if (name === "depositAmount") {
+      const amount = Number(value)
+      if (value && (amount < 300 || amount > 25000)) {
+        setAmountError("Amount must be between 300 and 25,000 BDT")
+      } else {
+        setAmountError("")
+      }
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Validate amount before submission
+    const amount = Number(formData.depositAmount)
+    if (amount < 300 || amount > 25000) {
+      setAmountError("Amount must be between 300 and 25,000 BDT")
+      return
+    }
+    
     setIsSubmitting(true)
     try {
       const paymentType = selectedMethod && selectedMethod.id ? selectedMethod.id.split('-')[0] : '';
       
       const payload = {
-        amount: Number(formData.depositAmount),
+        amount: amount,
         payment_id: formData.transactionId,
         sender_number: formData.accountNumber,
         type: paymentType,
@@ -156,6 +175,7 @@ export default function DepositForm() {
         transactionId: "",
         depositAmount: "",
       });
+      setAmountError("");
     } catch (error) {
       console.error("Error submitting deposit:", error)
     } finally {
@@ -400,12 +420,18 @@ export default function DepositForm() {
                   id="depositAmount"
                   name="depositAmount"
                   type="number"
-                  placeholder="Enter Deposit Amount"
+                  min="300"
+                  max="25000"
+                  placeholder="Enter Deposit Amount (300-25,000 BDT)"
                   value={formData.depositAmount}
                   onChange={handleInputChange}
-                  className="border-2 focus:border-blue-400 rounded-lg"
+                  className={`border-2 focus:border-blue-400 rounded-lg ${amountError ? 'border-red-500' : ''}`}
                   required
                 />
+                {amountError && (
+                  <p className="text-red-500 text-sm mt-1">{amountError}</p>
+                )}
+                <p className="text-gray-500 text-xs">Minimum: 300 BDT | Maximum: 25,000 BDT</p>
               </div>
             </div>
 

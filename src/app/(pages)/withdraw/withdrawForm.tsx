@@ -40,6 +40,7 @@ export default function WithdrawForm() {
     accountNumber: "",
     withdrawAmount: "",
   })
+  const [amountError, setAmountError] = useState("")
 
   useEffect(() => {
     const fetchWithdrawData = async () => {
@@ -96,10 +97,28 @@ export default function WithdrawForm() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
+    
+    // Validate amount when withdraw amount changes
+    if (name === "withdrawAmount") {
+      const amount = Number(value)
+      if (value && (amount < 300 || amount > 25000)) {
+        setAmountError("Amount must be between 300 and 25,000 BDT")
+      } else {
+        setAmountError("")
+      }
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Validate amount before submission
+    const amount = Number(formData.withdrawAmount)
+    if (amount < 300 || amount > 25000) {
+      setAmountError("Amount must be between 300 and 25,000 BDT")
+      return
+    }
+    
     setIsSubmitting(true)
     setError(null)
     try {
@@ -107,7 +126,7 @@ export default function WithdrawForm() {
       const paymentType = selectedMethod && selectedMethod.id ? selectedMethod.id.split('-')[0] : '';
       
       const payload = {
-        amount: Number(formData.withdrawAmount),
+        amount: amount,
         agent_number: selectedMethod?.agentId,
         recever_number: formData.accountNumber,
         type: paymentType
@@ -124,6 +143,7 @@ export default function WithdrawForm() {
         accountNumber: "",
         withdrawAmount: "",
       });
+      setAmountError("");
     } catch (error) {
       console.error("Error submitting withdraw:", error)
       setError((error as Error).message)
@@ -336,12 +356,18 @@ export default function WithdrawForm() {
                   id="withdrawAmount"
                   name="withdrawAmount"
                   type="number"
-                  placeholder="Enter Withdraw Amount"
+                  min="300"
+                  max="25000"
+                  placeholder="Enter Withdraw Amount (300-25,000 BDT)"
                   value={formData.withdrawAmount}
                   onChange={handleInputChange}
-                  className="border-2 focus:border-blue-400 rounded-lg"
+                  className={`border-2 focus:border-blue-400 rounded-lg ${amountError ? 'border-red-500' : ''}`}
                   required
                 />
+                {amountError && (
+                  <p className="text-red-500 text-sm mt-1">{amountError}</p>
+                )}
+                <p className="text-gray-500 text-xs">Minimum: 300 BDT | Maximum: 25,000 BDT</p>
               </div>
             </div>
 
