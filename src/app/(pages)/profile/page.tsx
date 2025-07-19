@@ -19,37 +19,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 
-// Test user data for development
-const testUserData: User = {
-  id: 213,
-  name: "bit test",
-  user_name: "bittest",
-  email: "bittest@gmail.com",
-  email_verified_at: null,
-  created_at: "2025-06-03",
-  updated_at: "2025-06-03T13:35:50.000000Z",
-  oauth_id: null,
-  oauth_type: null,
-  avatar: null,
-  last_name: null,
-  cpf: null,
-  phone: "01943440089",
-  logged_in: 0,
-  banned: 0,
-  inviter: null,
-  inviter_code: null,
-  affiliate_revenue_share: 2,
-  affiliate_revenue_share_fake: null,
-  affiliate_cpa: "15.00",
-  affiliate_baseline: "20.00",
-  is_demo_agent: 0,
-  status: "active",
-  language: "pt_BR",
-  role_id: 3,
-  dateHumanReadable: "há 2 dias",
-  createdAt: "2025-06-03",
-  totalLikes: 0
-};
+
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState<User | null>(null);
@@ -58,17 +28,7 @@ export default function ProfilePage() {
   useEffect(() => {
     // Try to get user data from localStorage
     const user = getUserData();
-    
-    // If no user data in localStorage, use test data
-    if (!user) {
-      // For development: Store test data in localStorage to simulate login
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('user_data', JSON.stringify(testUserData));
-      }
-      setUserData(testUserData);
-    } else {
-      setUserData(user);
-    }
+    setUserData(user);
   }, []);
 
   // Reset copy status after a delay
@@ -179,6 +139,27 @@ export default function ProfilePage() {
                     onClick={() => copyToClipboard(userData.id.toString(), 'id')}
                   >
                     {copied === 'id' ? (
+                      <Check className="w-3 h-3 text-green-500" />
+                    ) : (
+                      <Copy className="w-3 h-3 text-gray-400" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <UserIcon className="w-4 h-4 text-gray-500" />
+                  <span className="text-sm text-gray-600"> Inviter Code</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">{userData.inviter_code}</span>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-6 w-6 p-0"
+                    onClick={() => userData.inviter_code != null && copyToClipboard(userData.inviter_code.toString(), 'inviter_code')}
+                  >
+                    {copied === 'inviter_code' ? (
                       <Check className="w-3 h-3 text-green-500" />
                     ) : (
                       <Copy className="w-3 h-3 text-gray-400" />
