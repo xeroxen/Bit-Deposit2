@@ -21,6 +21,8 @@ interface PaymentMethod {
   color: string
   agentNumber: string
   agentId: string | number
+  isBank: boolean
+  customLogo?: string
 }
 
 const paymentMethodLogos: { [key: string]: { logo: string; color: string } } = {
@@ -29,11 +31,24 @@ const paymentMethodLogos: { [key: string]: { logo: string; color: string } } = {
   rocket: { logo: "/images/rocket-logo.png", color: "#8C3494" },
 }
 
+const getLogoUrl = (logoPath: string, isBank: boolean) => {
+  if (!logoPath) return ""
+  
+  // If it's a bank and has a custom logo, use the full URL
+  if (isBank && logoPath) {
+    return `https://new.fnd777.pro${logoPath}`
+  }
+  
+  // For mobile banking, use the default logos
+  return logoPath
+}
+
 export default function WithdrawForm() {
   const [step, setStep] = useState(1)
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([])
+  const [mobilePaymentMethods, setMobilePaymentMethods] = useState<PaymentMethod[]>([])
+  const [bankPaymentMethods, setBankPaymentMethods] = useState<PaymentMethod[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
@@ -53,31 +68,48 @@ export default function WithdrawForm() {
             agent_number: string;
             text: string;
             bonus?: number;
-            agent_id: string ;
+            agent_id: string;
             status: string;
+            logo: string;
+            is_bank: string | null;
           };
-          const transformedMethods: PaymentMethod[] = data.data.map((agent: Agent) => {
-            const text = (agent.text || "").toLowerCase()
-            let logoDetails = paymentMethodLogos.bkash // Default to bKash
-            if (text.includes("nagad")) {
-              logoDetails = paymentMethodLogos.nagad
-            } else if (text.includes("rocket")) {
-              logoDetails = paymentMethodLogos.rocket
+          
+          const mobileMethods: PaymentMethod[] = []
+          const bankMethods: PaymentMethod[] = []
+          
+          data.data.forEach((agent: Agent) => {
+            if (agent.status === "1") {
+              const text = (agent.text || "").toLowerCase()
+              let logoDetails = paymentMethodLogos.bkash // Default to bKash
+              if (text.includes("nagad")) {
+                logoDetails = paymentMethodLogos.nagad
+              } else if (text.includes("rocket")) {
+                logoDetails = paymentMethodLogos.rocket
+              }
+              
+              const paymentMethod: PaymentMethod = {
+                id: text.replace(/\s+/g, "-"),
+                name: agent.text,
+                type: "mobile",
+                discount: agent.bonus ? `+${agent.bonus}%` : "+0%",
+                logo: agent.is_bank === "1" ? getLogoUrl(agent.logo, true) : (agent.logo || logoDetails.logo),
+                color: logoDetails.color,
+                agentNumber: agent.agent_number,
+                agentId: agent.agent_id,
+                isBank: agent.is_bank === "1",
+                customLogo: agent.is_bank === "1" ? getLogoUrl(agent.logo, true) : undefined
+              }
+              
+              if (agent.is_bank === "1") {
+                bankMethods.push(paymentMethod)
+              } else {
+                mobileMethods.push(paymentMethod)
+              }
             }
-           if(agent.status === "1"){
-            return {
-              id: text.replace(/\s+/g, "-"),
-              name: agent.text,
-              type: "mobile",
-              discount: agent.bonus ? `+${agent.bonus}%` : "+0%",
-              logo: logoDetails.logo,
-              color: logoDetails.color,
-              agentNumber: agent.agent_number,
-              agentId: agent.agent_id,
-            }
-           }
           })
-          setPaymentMethods(transformedMethods)
+          
+          setMobilePaymentMethods(mobileMethods)
+          setBankPaymentMethods(bankMethods)
         }
       } catch (error) {
         console.error("Error fetching withdraw data:", error)
@@ -198,56 +230,79 @@ export default function WithdrawForm() {
     )
   }
 
-  if (step === 1) {
-    return (
-      <Card className="w-full max-w-xl shadow-lg border-0 bg-white">
-        <CardContent className="p-6">
-          <div className="space-y-4">
-            <div className="text-left">
-              <h2 className="text-2xl font-bold text-gray-800">Mobile Bank</h2>
+  const renderPaymentMethods = (methods: PaymentMethod[]) => (
+    <div className="grid grid-cols-4 gap-3">
+      {methods.map((method) => (
+        <div
+          key={method.id}
+          onClick={() => handleMethodSelect(method)}
+          className="relative cursor-pointer"
+        >
+          <div className={`rounded-lg p-3 flex flex-col items-center justify-center text-center`}>
+            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-1">
+              <Image
+                src={method.logo}
+                alt={method.name}
+                width={40}
+                height={40}
+                className="object-contain"
+              />
             </div>
-
-            {isLoading ? (
-              <div className="flex justify-center items-center h-40">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              </div>
-            ) : (
-              <div className="grid grid-cols-4 gap-3">
-                {paymentMethods.filter(method => method !== undefined).map((method) => (
-                  <div
-                    key={method.id}
-                    onClick={() => handleMethodSelect(method)}
-                    className="relative cursor-pointer"
-                  >
-                    <div className={`rounded-lg p-3 flex flex-col items-center justify-center text-center`} 
-                         style={{ backgroundColor: method.color }}>
-                      <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-1">
-                        <Image
-                          src={method.logo}
-                          alt={method.name}
-                          width={40}
-                          height={40}
-                          className="object-contain"
-                        />
-                      </div>
-                      <div className="mt-1">
-                        <p className="text-xs text-white font-semibold">{method.name}</p>
-                        <p className="text-xs text-white/80 font-mono mt-0.5">{method.agentId}</p>
-                      </div>
-                      
-                      {/* Discount badge */}
-                      {method.discount && (
-                        <div className="absolute -top-1 -left-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-12">
-                          {method.discount}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+            <div className="mt-1">
+              <p className="text-xs text-black font-semibold">{method.name}</p>
+              <p className="text-xs text-black/80 font-mono mt-0.5">{method.agentId}</p>
+            </div>
+            
+            {/* Discount badge */}
+            {method.discount && (
+              <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-45">
+                {method.discount}
               </div>
             )}
           </div>
-        </CardContent>
+        </div>
+      ))}
+    </div>
+  )
+
+  if (step === 1) {
+    return (
+      <Card className="w-full max-w-xl shadow-lg border-0 bg-white">
+        {/* Mobile Banking Section */}
+        {mobilePaymentMethods.length > 0 && (
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              <div className="text-left">
+                <h2 className="text-2xl font-bold text-gray-800">Mobile Bank</h2>
+              </div>
+              {isLoading ? (
+                <div className="flex justify-center items-center h-40">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                </div>
+              ) : (
+                renderPaymentMethods(mobilePaymentMethods)
+              )}
+            </div>
+          </CardContent>
+        )}
+
+        {/* Bank Section */}
+        {bankPaymentMethods.length > 0 && (
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              <div className="text-left">
+                <h2 className="text-2xl font-bold text-gray-800">Bank Transfer</h2>
+              </div>
+              {isLoading ? (
+                <div className="flex justify-center items-center h-40">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                </div>
+              ) : (
+                renderPaymentMethods(bankPaymentMethods)
+              )}
+            </div>
+          </CardContent>
+        )}
       </Card>
     )
   }
@@ -266,7 +321,9 @@ export default function WithdrawForm() {
             <Button variant="ghost" size="sm" onClick={() => setStep(1)} className="hover:bg-white/50">
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h2 className="text-xl font-bold text-gray-800">Mobile Banking</h2>
+            <h2 className="text-xl font-bold text-gray-800">
+              {selectedMethod?.isBank ? "Bank Transfer" : "Mobile Banking"}
+            </h2>
           </div>
 
           {/* Enhanced payment method display with animation */}
