@@ -197,7 +197,7 @@ export default function DepositForm() {
                     className="relative cursor-pointer"
                   >
                     <div className={`rounded-lg p-3 flex flex-col items-center justify-center text-center`} 
-                         style={{ backgroundColor: method.color }}>
+                        >
                       <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-1">
                         <Image
                           src={method.logo}
@@ -208,13 +208,13 @@ export default function DepositForm() {
                         />
                       </div>
                       <div className="mt-1">
-                        <p className="text-xs text-white font-semibold">{method.name}</p>
-                        <p className="text-xs text-white/80 font-mono mt-0.5">{method.agentId}</p>
+                        <p className="text-xs text-black font-semibold">{method.name}</p>
+                        <p className="text-xs text-black/80 font-mono mt-0.5">{method.agentId}</p>
                       </div>
                       
                       {/* Discount badge */}
                       {method.discount && (
-                        <div className="absolute -top-1 -left-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-12">
+                        <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-45">
                           {method.discount}
                         </div>
                       )}
@@ -225,6 +225,7 @@ export default function DepositForm() {
             )}
           </div>
         </CardContent>
+        
       </Card>
     )
   }
