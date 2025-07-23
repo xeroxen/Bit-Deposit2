@@ -9,6 +9,7 @@ import { AuthProvider } from "@/lib/authContext";
 import { WalletProvider } from "@/lib/walletContext";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GameProvider } from '@/lib/gameContext';
+import BottomNavigation from "@/components/bottom-navbar/bottom-navbar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -46,6 +47,9 @@ export default function RootLayout({
             <GameProvider>
               <Navbar />
               {children}
+              <div className="block md:hidden">
+                <BottomNavigation />
+              </div>
               <BottomFooter />
               <Toaster />
               <SpeedInsights />

@@ -13,6 +13,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from "next/image";
+import { addFavourite } from "@/hooks/addFavourite";
+import { Heart } from "lucide-react";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
@@ -131,6 +133,18 @@ const SearchPage = () => {
               className="aspect-[3/4] rounded-lg overflow-hidden relative cursor-pointer"
               onClick={() => singleGameRedirect(game.id, game.game_name)}
             >
+              {/* Favorite Icon */}
+              <button
+                type="button"
+                className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow hover:bg-red-100 transition-colors cursor-pointer"
+                onClick={e => {
+                  e.stopPropagation(); // Prevent triggering game click
+                  addFavourite(game);
+                }}
+                aria-label="Add to favorites"
+              >
+                <Heart className="w-3 h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 text-red-500 group-hover:text-red-600" strokeWidth={2} />
+              </button>
               <div className="w-full h-full bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-800 flex flex-col">
                 {/* Game image */}
                 <div className="flex-1 relative overflow-hidden">
