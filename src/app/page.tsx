@@ -8,6 +8,7 @@ import { useSingleGameRedirect } from '@/hooks/singGameRedirect';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import MobileBannerCarousel from '@/components/mobile-banner-carousel/mobile-banner-carousel';
 
 const Home = () => {
     const handleGameRedirect = useSingleGameRedirect();
@@ -52,6 +53,8 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+            {/* Mobile: Banner Carousel below game cards */}
+                <MobileBannerCarousel />
             {/* Desktop: Show full-width banner section, hide on small devices */}
             <div className="hidden md:block pt-10 lg:pt-20 w-full px-4 md:px-8 lg:px-10">
                 <div
