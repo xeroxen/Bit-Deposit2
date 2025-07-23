@@ -149,7 +149,7 @@ export default function ProfilePage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <UserIcon className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm text-gray-600"> Inviter Code</span>
+                  <span className="text-sm text-gray-600"> Reference Code</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">{userData.inviter_code}</span>
@@ -157,7 +157,7 @@ export default function ProfilePage() {
                     variant="ghost" 
                     size="sm" 
                     className="h-6 w-6 p-0"
-                    onClick={() => userData.inviter_code != null && copyToClipboard(userData.inviter_code.toString(), 'inviter_code')}
+                    onClick={() => userData.inviter_code != null && copyToClipboard(`${window.location.origin}/signup?referer=${userData.inviter_code}`, 'inviter_code')}
                   >
                     {copied === 'inviter_code' ? (
                       <Check className="w-3 h-3 text-green-500" />

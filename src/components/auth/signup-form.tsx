@@ -1,12 +1,11 @@
 "use client"
 
-import type React from "react"
+import React, { useState, useEffect } from "react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -14,7 +13,7 @@ import { Eye, EyeOff, X } from "lucide-react"
 import Cookies from "js-cookie"
 import { storeUserData, type LoginResponse } from "@/lib/authentication"
 
-export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+export function SignupForm({ className, referer = "", ...props }: React.ComponentPropsWithoutRef<"div"> & { referer?: string }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -24,6 +23,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       name: "",
@@ -31,9 +31,16 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
       phone: "",
       password: "",
       password_confirmation: "",
-      reference_code: "",
+      reference_code: referer || "",
     },
   })
+
+  // If referer changes, update the reference_code field
+  useEffect(() => {
+    if (referer) {
+      setValue("reference_code", referer)
+    }
+  }, [referer, setValue])
 
   const onSubmit = async (data: {
     name: string
@@ -283,9 +290,9 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 
         <div className="space-y-2">
           <Label htmlFor="reference_code" className="text-sm font-medium text-gray-700">
-            Promo Code
+            Referer Code
           </Label>
-          <Input id="reference_code" placeholder="Enter Promo Code" className="h-12" {...register("reference_code")} />
+          <Input id="reference_code" placeholder="Enter Referer Code" className="h-12" {...register("reference_code")} />
         </div>
 
         <Button
