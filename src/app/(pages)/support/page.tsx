@@ -1,11 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaWhatsapp, FaTelegram, FaEnvelope } from "react-icons/fa";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 export default function SupportPage() {
+  const [contacts, setContacts] = useState({ wapp: null, tgram: null });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchContacts() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/settings/data`);
+        const data = await res.json();
+        setContacts({
+          wapp: data?.setting?.wapp || null,
+          tgram: data?.setting?.tgram || null,
+        });
+      } catch (error) {
+        console.error("Error fetching contacts:", error);
+        setContacts({ wapp: null, tgram: null });
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchContacts();
+  }, []);
+
+  // Fallbacks if API returns null or placeholder
+  const whatsappNumber = contacts.wapp ? contacts.wapp : "1234567890";
+  const telegramUser = contacts.tgram ? contacts.tgram : "bitdeposit";
+
   return (
     <div className="container mx-auto py-12 px-4 mt-25">
       <div className="text-center mb-12">
@@ -44,11 +70,13 @@ export default function SupportPage() {
           </CardHeader>
           <CardContent>
             <p className="mb-4">Get quick responses to your questions through WhatsApp messaging.</p>
-            <Button 
+            <Button
               className="w-full bg-[#25D366] hover:bg-[#25D366]/90"
-              onClick={() => window.open("https://wa.me/1234567890", "_blank")}
+              onClick={() => window.open(`https://wa.me/${whatsappNumber}`, "_blank")}
+              disabled={loading}
             >
-              <FaWhatsapp className="mr-2" /> Connect on WhatsApp
+              <FaWhatsapp className="mr-2" />
+              {loading ? "Loading..." : "Connect on WhatsApp"}
             </Button>
           </CardContent>
         </Card>
@@ -63,11 +91,13 @@ export default function SupportPage() {
           </CardHeader>
           <CardContent>
             <p className="mb-4">Join our Telegram channel for support and updates about our services.</p>
-            <Button 
+            <Button
               className="w-full bg-[#0088cc] hover:bg-[#0088cc]/90"
-              onClick={() => window.open("https://t.me/bitdeposit", "_blank")}
+              onClick={() => window.open(`https://t.me/${telegramUser}`, "_blank")}
+              disabled={loading}
             >
-              <FaTelegram className="mr-2" /> Join on Telegram
+              <FaTelegram className="mr-2" />
+              {loading ? "Loading..." : "Join on Telegram"}
             </Button>
           </CardContent>
         </Card>

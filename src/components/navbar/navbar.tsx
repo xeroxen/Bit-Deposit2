@@ -17,6 +17,7 @@ interface NavbarProps {
 
 const Navbar = ({ onSidebarToggle }: NavbarProps) => {
     const [logo, setLogo] = useState<Data>();
+    const [marqueeText, setMarqueeText] = useState<string>("");
     const pathname = usePathname();
     const { isAuthenticated, loading } = useAuth();
     
@@ -42,26 +43,29 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/settings/data`);
             const data = await response.json();
             setLogo(data.setting);
+            // Set marquee text: use marque if present, otherwise software_description
+            setMarqueeText(data.setting.marque );
         };
         fetchLogo();
     }, []);
 
-    const marqueeText = "বন্ধুকে নিয়ে আসুন, প্রতি রেফারেলে ৩০০ টাকা করে আয় করুন! Raza20-এ এখনই জয় শুরু করুন! অফারটি সীমিত সময়ের জন্য। টাকা সরাররি মেইন একাউন্ট এ যোগ হবে।";
-
+   
     return (
         <div className="fixed inset-0 z-50 flex flex-col w-full pointer-events-none overflow-hidden">
             {/* Desktop Marquee */}
-            <div className="hidden md:block w-full bg-[#1d3d68] pointer-events-auto">
-                <Marquee
-                    speed={50}
-                    pauseOnHover
-                    className="leading-none"
-                >
-                    <p className="py-0 text-white font-medium text-sm leading-[24px] pr-8">
-                        {marqueeText}
-                    </p>
-                </Marquee>
-            </div>
+            {marqueeText && (
+                <div className="hidden md:block w-full bg-[#1d3d68] pointer-events-auto">
+                    <Marquee
+                        speed={50}
+                        pauseOnHover
+                        className="leading-none"
+                    >
+                        <p className="py-0 text-white font-medium text-sm leading-[24px] pr-8">
+                            {marqueeText}
+                        </p>
+                    </Marquee>
+                </div>
+            )}
             
             {/* Desktop Navbar */}
             <div className="hidden md:block w-full bg-[#1d3d68] border-b border-[#275ea5] pointer-events-auto">
@@ -142,17 +146,19 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
             {/* Mobile Container */}
             <div className="md:hidden flex flex-col w-full bg-white">
                 {/* Mobile Marquee */}
-                <div className="w-full bg-[#1d3d68] pointer-events-auto">
-                    <Marquee
-                        speed={40}
-                        pauseOnHover
-                        className="leading-none"
-                    >
-                        <p className="py-0 text-white text-xs font-medium leading-[22px] pr-8">
-                            {marqueeText}
-                        </p>
-                    </Marquee>
-                </div>
+                {marqueeText && (
+                    <div className="w-full bg-[#1d3d68] pointer-events-auto">
+                        <Marquee
+                            speed={40}
+                            pauseOnHover
+                            className="leading-none"
+                        >
+                            <p className="py-0 text-white text-xs font-medium leading-[22px] pr-8">
+                                {marqueeText}
+                            </p>
+                        </Marquee>
+                    </div>
+                )}
 
                 {/* Mobile Navbar */}
                 <div className="w-full h-[46px] relative pointer-events-auto">
