@@ -179,14 +179,13 @@ const CategoryPillsSkeleton = ({ count = 5 }: { count?: number }) => {
 };
 
 // Provider Pills component
-const ProviderPills = ({ providers }: { providers: Provider[] }) => {
-  const router = useRouter();
+const ProviderPills = ({ providers, onProviderClick }: { providers: Provider[], onProviderClick: (id: number) => void }) => {
 
   return (
     <>
       {providers.map((provider) => (
         <div key={provider.id} className="h-9 md:h-12 lg:h-16 bg-white rounded-full flex items-center justify-center border border-gray-200 px-2 md:px-4 lg:px-6">
-          <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => router.push(`/search?provider=${provider.id}`)}>
+          <div className="flex items-center h-full w-full justify-center cursor-pointer" onClick={() => onProviderClick(provider.id)}>
             {provider.image ? (
               <Image
                 src={`${process.env.NEXT_PUBLIC_API_URL}${provider.image}`}
@@ -277,15 +276,19 @@ const CategoriesData = ({
 // Data fetching component for providers - will be wrapped in Suspense
 const ProvidersData = ({
   providers,
-  loading
+  loading,
+  visibleProviders,
+  onProviderClick
 }: {
   providers: Provider[],
-  loading: boolean
+  loading: boolean,
+  visibleProviders: number,
+  onProviderClick: (id: number) => void
 }) => {
   if (loading || !providers?.length) {
     return <ProviderPillsSkeleton />;
   }
-  return <ProviderPills providers={providers} />;
+  return <ProviderPills providers={providers.slice(0, visibleProviders)} onProviderClick={onProviderClick} />;
 };
 
 const AllGameMobile = () => {
@@ -297,7 +300,9 @@ const AllGameMobile = () => {
     const [allGames, setAllGames] = useState<Game[]>([]);
     const [providers, setProviders] = useState<Provider[]>([]);
     const [providersLoading, setProvidersLoading] = useState<boolean>(true);
+    const [visibleProviders, setVisibleProviders] = useState<number>(8);
     const singleGameRedirect = useSingleGameRedirect();
+    const router = useRouter();
     
     useEffect(() => {
         // Set first category as default selected when gameProviders loads
@@ -393,6 +398,14 @@ const AllGameMobile = () => {
         setVisibleGames(24); // Reset to initial 3 rows of 8
     };
 
+    const handleShowMoreProviders = () => {
+        setVisibleProviders(prev => prev + 8);
+    };
+
+    const handleProviderClick = (providerId: number) => {
+        router.push(`/search?provider=${providerId}`);
+    };
+
     // Determine which games to display based on mode
     const displayGames = viewAllMode ? allGames : filteredGames;
     
@@ -461,9 +474,21 @@ const AllGameMobile = () => {
                             <ProvidersData 
                                 providers={providers}
                                 loading={providersLoading}
+                                visibleProviders={visibleProviders}
+                                onProviderClick={handleProviderClick}
                             />
                         </Suspense>
                     </div>
+                    {providers.length > visibleProviders && (
+                        <div className="text-center mt-4">
+                            <button 
+                                onClick={handleShowMoreProviders}
+                                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md font-medium text-sm transition-colors"
+                            >
+                                Show More Providers
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

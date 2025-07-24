@@ -3,7 +3,7 @@
  */
 export async function handlePasswordReset(email: string): Promise<{ success: boolean; error?: string }> {
   try {
-    const response = await fetch("https://mybet24.online/api/auth/forget-password", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/forget-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export async function completePasswordReset(
   token: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const response = await fetch("https://mybet24.online/api/auth/reset-password", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/reset-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
