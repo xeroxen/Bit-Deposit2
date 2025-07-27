@@ -91,7 +91,7 @@ function ResetPasswordForm() {
 
     try {
       // Call the API with the token in the URL and data in the body
-      const response = await fetch(`${process.env.NEXT_PUBLIC_PROXY_LIST_API_URL}/reset-password/${token}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/reset-password/${token}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
