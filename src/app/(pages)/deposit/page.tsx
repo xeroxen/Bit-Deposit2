@@ -4,18 +4,20 @@ import { useState, useEffect } from "react"
 import DepositForm from "./depositForm"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { getAuthToken } from "@/lib/authentication"
+import { getAuthToken, getUserData, User } from "@/lib/authentication"
 
 export default function DepositPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-
+  const [userData, setUserData] = useState<User | null>(null);
   useEffect(() => {
     // Check authentication status
     const token = getAuthToken()
     setIsAuthenticated(!!token)
     setIsLoading(false)
-
+   // Try to get user data from localStorage
+   const user = getUserData();
+   setUserData(user);
     // Listen for auth status changes
     const handleAuthChange = () => {
       const updatedToken = getAuthToken()
@@ -46,7 +48,11 @@ export default function DepositPage() {
         </h1>
         
         <div className="w-full max-w-md flex flex-col items-center justify-center px-4 sm:px-0">
-          {isAuthenticated ? (
+          {isAuthenticated && userData?.banned === 1 ? (
+            <div className="bg-red-500 text-white font-bold text-center py-3">
+              This user is banned and cannot withdraw or deposit. contact support.
+            </div>
+          ) : isAuthenticated && userData?.banned === 0 ? (
             <DepositForm />
           ) : (
             <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md text-center">

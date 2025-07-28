@@ -61,7 +61,7 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-md mx-auto bg-white min-h-screen">
         {/* Header Tabs */}
-        <div className="flex bg-white border-b">
+        {/* <div className="flex bg-white border-b">
           <button className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-blue-500 text-white text-sm font-medium">
             <UserIcon className="w-4 h-4" />
             Profile
@@ -74,7 +74,7 @@ export default function ProfilePage() {
             <Calendar className="w-4 h-4" />
             Sessions
           </button>
-        </div>
+        </div> */}
 
         {/* Profile Header */}
         <div className="relative">
@@ -117,7 +117,11 @@ export default function ProfilePage() {
             ⭐ {userData.status === 'active' ? 'Active' : userData.status}
           </Badge>
         </div>
-
+        {userData.banned === 1 ? (
+        <div className=" text-re font-bold text-center py-3">
+          This user is banned and cannot withdraw or deposit. contact support.
+        </div>
+      ) : null}
         <div className="px-4 space-y-6">
           {/* Account Info */}
           <div>
