@@ -37,3 +37,19 @@ export interface Data {
     perc_sub_lv3: number;
     sharkpay_is_enable: number;
 }
+
+export interface Transaction {
+    id: number;
+    user_id: string;
+    transaction: string;
+    type: 'deposit' | 'withdrawal' | 'bonus' | 'refund' | 'other';
+    text: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface TransactionHistoryResponse {
+    status: number;
+    message: string;
+    activity: Transaction[];
+}

@@ -53,6 +53,11 @@ const navItems: NavItem[] = [
     href: "/bet-history",
   },
   {
+    title: "Success Transaction History",
+    icon: <CreditCard className="h-5 w-5" />,
+    href: "/transaction-history",
+  },
+  {
     title: "Support",
     icon: <MessageCircle className="h-5 w-5" />,
     href: "/support",
