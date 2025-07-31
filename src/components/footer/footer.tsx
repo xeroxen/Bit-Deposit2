@@ -1,12 +1,25 @@
 "use client"
 import Link from "next/link"
-import { Facebook, Youtube, MessageCircle } from "lucide-react"
+import { Facebook, Youtube } from "lucide-react"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
 import { Data } from "@/types/data.types";
 
+interface SocialData {
+  id: number;
+  facebook: string | null;
+  twitter: string | null;
+  instagram: string | null;
+  youtube: string | null;
+  tiktok: string | null;
+  linkedin: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export default function BottomFooter() {
   const [logo, setLogo] = useState<Data>();
+  const [socialLinks, setSocialLinks] = useState<SocialData | null>(null);
 
   useEffect(() => {
     const fetchLogo = async () => {
@@ -15,6 +28,21 @@ export default function BottomFooter() {
       setLogo(data.setting);
     };
     fetchLogo();
+  }, []);
+
+  useEffect(() => {
+    const fetchSocialLinks = async () => {
+      try {
+        const response = await fetch('https://new.fnd777.pro/api/social');
+        const data = await response.json();
+        if (data.status && data.social) {
+          setSocialLinks(data.social);
+        }
+      } catch (error) {
+        console.error('Error fetching social links:', error);
+      }
+    };
+    fetchSocialLinks();
   }, []);
 
   return (
@@ -32,60 +60,78 @@ export default function BottomFooter() {
 
           {/* Social Media Icons */}
           <div className="flex gap-3 mb-4">
-            <Link
-              href="#"
-              className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-            >
-              <Facebook className="w-5 h-5 text-blue-600" />
-            </Link>
-            <Link
-              href="#"
-              className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-            >
-              <Youtube className="w-5 h-5 text-red-600" />
-            </Link>
-            <Link
-              href="#"
-              className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-            >
-              <div className="w-5 h-5 bg-black rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-bold">t</span>
-              </div>
-            </Link>
-            <Link
-              href="#"
-              className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-            >
-              <div className="w-5 h-5 bg-blue-600 rounded flex items-center justify-center">
-                <span className="text-white text-xs font-bold">in</span>
-              </div>
-            </Link>
-            <Link
-              href="#"
-              className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-            >
-              <div className="w-5 h-5 bg-blue-400 rounded flex items-center justify-center">
-                <span className="text-white text-xs">🐦</span>
-              </div>
-            </Link>
-            <Link
-              href="#"
-              className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-            >
-              <MessageCircle className="w-5 h-5 text-green-500" />
-            </Link>
-            <Link
-              href="#"
-              className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-            >
-              <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-bold">@</span>
-              </div>
-            </Link>
+            {socialLinks?.facebook && (
+              <Link
+                href={`https://${socialLinks.facebook}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+              >
+                <Facebook className="w-5 h-5 text-blue-600" />
+              </Link>
+            )}
+            {socialLinks?.youtube && (
+              <Link
+                href={`https://${socialLinks.youtube}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+              >
+                <Youtube className="w-5 h-5 text-red-600" />
+              </Link>
+            )}
+            {socialLinks?.twitter && (
+              <Link
+                href={`https://${socialLinks.twitter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+              >
+                <div className="w-5 h-5 bg-black rounded-full flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">t</span>
+                </div>
+              </Link>
+            )}
+            {socialLinks?.linkedin && (
+              <Link
+                href={`https://${socialLinks.linkedin}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+              >
+                <div className="w-5 h-5 bg-blue-600 rounded flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">in</span>
+                </div>
+              </Link>
+            )}
+            {socialLinks?.instagram && (
+              <Link
+                href={`https://${socialLinks.instagram}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+              >
+                <div className="w-5 h-5 bg-blue-400 rounded flex items-center justify-center">
+                  <span className="text-white text-xs">🐦</span>
+                </div>
+              </Link>
+            )}
+            {socialLinks?.tiktok && (
+              <Link
+                href={`https://${socialLinks.tiktok}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+              >
+                <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">@</span>
+                </div>
+              </Link>
+            )}
           </div>
 
           {/* Phone Number */}
-          <div className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold">+61 483 915 084</div>
+          {/* <div className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold">+61 483 915 084</div> */}
         </div>
 
         {/* Links Grid */}
