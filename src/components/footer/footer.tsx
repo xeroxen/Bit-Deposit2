@@ -347,17 +347,113 @@ export default function BottomFooter() {
         {/* Payment Methods */}
         <div className="mb-8">
           <h3 className="text-white font-semibold mb-4">Quick & Easy Payment Methods We Support</h3>
-          <div className="flex gap-4">
-            <div className="w-12 h-8 bg-white rounded flex items-center justify-center">
-              <div className="w-8 h-6 bg-gradient-to-r from-blue-600 to-yellow-400 rounded-sm"></div>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {/* bKash */}
+            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
+              <Image 
+                src="/images/bkash-logo.png" 
+                alt="bKash" 
+                width={48} 
+                height={24} 
+                className="object-contain w-full h-full"
+              />
             </div>
-            <div className="w-12 h-8 bg-white rounded flex items-center justify-center">
-              <div className="w-8 h-6 bg-red-600 rounded-sm flex items-center justify-center">
-                <span className="text-white text-xs font-bold">MC</span>
-              </div>
+            
+            {/* Nagad */}
+            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
+              <Image 
+                src="/images/nagad-logo.png" 
+                alt="Nagad" 
+                width={48} 
+                height={24} 
+                className="object-contain w-full h-full"
+              />
             </div>
-            <div className="w-12 h-8 bg-white rounded flex items-center justify-center">
-              <div className="w-8 h-6 bg-green-600 rounded-sm"></div>
+            
+            {/* Rocket */}
+            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
+              <Image 
+                src="/images/rocket-logo.png" 
+                alt="Rocket" 
+                width={48} 
+                height={24} 
+                className="object-contain w-full h-full"
+              />
+            </div>
+            
+            {/* Upay */}
+            <div className="w-20 h-12 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
+              <span className="text-white text-xs font-bold">Upay</span>
+            </div>
+            
+            {/* Tap */}
+            <div className="w-20 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
+              <span className="text-white text-xs font-bold">Tap</span>
+            </div>
+            
+            {/* Sure Cash */}
+            <div className="w-20 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+              <span className="text-white text-xs font-bold">Sure</span>
+            </div>
+            
+            {/* Bank Transfer */}
+            <div className="w-20 h-12 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white text-xs font-bold">Bank</span>
+            </div>
+            
+            {/* Visa */}
+            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
+              <Image 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" 
+                alt="Visa" 
+                width={48} 
+                height={24} 
+                className="object-contain w-full h-full"
+              />
+            </div>
+            
+            {/* Mastercard */}
+            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
+              <Image 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2560px-Mastercard-logo.svg.png" 
+                alt="Mastercard" 
+                width={48} 
+                height={24} 
+                className="object-contain w-full h-full"
+              />
+            </div>
+            
+            {/* American Express */}
+            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
+              <Image 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/2560px-American_Express_logo_%282018%29.svg.png" 
+                alt="American Express" 
+                width={48} 
+                height={24} 
+                className="object-contain w-full h-full"
+              />
+            </div>
+            
+            {/* DBBL */}
+            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
+            <Image 
+                src="https://www.dutchbanglabank.com/img/logo.png" 
+                alt="DBBL" 
+                width={48} 
+                height={24} 
+                className="object-contain w-full h-full"
+              />
+            </div>
+            
+            {/* City Bank */}
+            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
+            <Image 
+                src="https://www.citybankplc.com/dist/img/logo/citylogo.png" 
+                alt="City Bank" 
+                width={48} 
+                height={24} 
+                className="object-contain w-full h-full"
+              />
             </div>
           </div>
         </div>
