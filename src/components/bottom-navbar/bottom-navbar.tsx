@@ -2,19 +2,24 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Home, Heart, Gift } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/lib/authContext"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { getUserData } from "@/lib/authentication"
+import { getUserData, apiRequest } from "@/lib/authentication"
 
 interface NavigationItem {
   id: string
   label: string
   icon: React.ComponentType<{ className?: string }>
   href: string
+}
+
+interface ReferralCountResponse {
+  status: boolean;
+  count: number;
 }
 
 const navigationItems: NavigationItem[] = [
@@ -41,7 +46,31 @@ const navigationItems: NavigationItem[] = [
 export default function BottomNavigation() {
   const [activeItem, setActiveItem] = useState("home")
   const [referOpen, setReferOpen] = useState(false)
+  const [referralCount, setReferralCount] = useState<number>(0)
+  const [loadingReferralCount, setLoadingReferralCount] = useState<boolean>(true)
   const { isAuthenticated, redirectToLogin } = useAuth()
+
+  // Fetch referral count
+  useEffect(() => {
+    const fetchReferralCount = async () => {
+      try {
+        setLoadingReferralCount(true);
+        const response = await apiRequest<ReferralCountResponse>('/rafer-count');
+        if (response.status) {
+          setReferralCount(response.count);
+        }
+      } catch (error) {
+        console.error('Error fetching referral count:', error);
+        setReferralCount(0);
+      } finally {
+        setLoadingReferralCount(false);
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchReferralCount();
+    }
+  }, [isAuthenticated]);
 
   // Dynamically set navigation items based on authentication
   const navItems = isAuthenticated
@@ -127,6 +156,15 @@ export default function BottomNavigation() {
           <div className="flex flex-col items-center gap-2 py-4">
             <span className="text-sm text-gray-600">Your Referral Code:</span>
             <span className="text-lg font-bold text-blue-600">{referralCode}</span>
+            
+            {/* Referral Count Display */}
+            <div className="flex items-center gap-2 mt-2">
+              <span className="text-sm text-gray-600">Total Referrals:</span>
+              <span className="text-sm font-medium text-green-600">
+                {loadingReferralCount ? 'Loading...' : referralCount}
+              </span>
+            </div>
+            
             <div className="flex items-center gap-2 mt-2">
               <input
                 type="text"

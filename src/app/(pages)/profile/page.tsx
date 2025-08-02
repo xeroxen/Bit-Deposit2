@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { getUserData, User, apiRequest } from "@/lib/authentication"
+import { getUserData, User } from "@/lib/authentication"
 import { useEffect, useState } from "react"
 import {
   User as UserIcon,
@@ -19,43 +19,14 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 
-interface ReferralCountResponse {
-  status: boolean;
-  count: number;
-}
-
-
-
 export default function ProfilePage() {
   const [userData, setUserData] = useState<User | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
-  const [referralCount, setReferralCount] = useState<number>(0);
-  const [loadingReferralCount, setLoadingReferralCount] = useState<boolean>(true);
 
   useEffect(() => {
     // Try to get user data from localStorage
     const user = getUserData();
     setUserData(user);
-  }, []);
-
-  // Fetch referral count
-  useEffect(() => {
-    const fetchReferralCount = async () => {
-      try {
-        setLoadingReferralCount(true);
-        const response = await apiRequest<ReferralCountResponse>('/rafer-count');
-        if (response.status) {
-          setReferralCount(response.count);
-        }
-      } catch (error) {
-        console.error('Error fetching referral count:', error);
-        setReferralCount(0);
-      } finally {
-        setLoadingReferralCount(false);
-      }
-    };
-
-    fetchReferralCount();
   }, []);
 
   // Reset copy status after a delay
@@ -196,17 +167,6 @@ export default function ProfilePage() {
                       <Copy className="w-3 h-3 text-gray-400" />
                     )}
                   </Button>
-                </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <UserIcon className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm text-gray-600"> Reference Count</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">
-                    {loadingReferralCount ? 'Loading...' : referralCount}
-                  </span>
                 </div>
               </div>
 
