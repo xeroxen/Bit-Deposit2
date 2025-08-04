@@ -1,7 +1,26 @@
+"use client"
+
 import { LoginForm } from "@/components/auth/login-form"
 import Image from "next/image"
+import { useEffect, useState } from "react"
+import { Data } from "@/types/data.types"
 
 export default function LoginPage() {
+  const [logo, setLogo] = useState<Data>()
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/settings/data`)
+        const data = await response.json()
+        setLogo(data.setting)
+      } catch (error) {
+        console.error('Error fetching logo:', error)
+      }
+    }
+    fetchLogo()
+  }, [])
+
   return (
     <main className="flex min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Left side - Banners and branding */}
@@ -23,18 +42,22 @@ export default function LoginPage() {
           
           {/* Logo overlay */}
           <div className="absolute top-8 left-8 z-20">
-            <Image
-              src="/logo/logo.png"
-              alt="Bit Deposit Logo"
-              width={120}
-              height={40}
-              className="object-contain"
-            />
+            {logo?.software_logo_white ? (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_API_URL}${logo.software_logo_white}`}
+                alt="Logo"
+                width={120}
+                height={40}
+                className="object-contain"
+              />
+            ) : (
+              <div className="w-30 h-10 bg-white/20 backdrop-blur-sm rounded-lg animate-pulse"></div>
+            )}
           </div>
           
           {/* Welcome text overlay */}
           <div className="absolute bottom-20 left-8 right-8 z-20 text-white">
-            <h1 className="text-4xl font-bold mb-4">Welcome to Bit Deposit</h1>
+            <h1 className="text-4xl font-bold mb-4">Welcome Back</h1>
             <p className="text-lg opacity-90">Your trusted platform for secure gaming and transactions</p>
           </div>
           
@@ -70,13 +93,17 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="lg:hidden text-center mb-8">
-            <Image
-              src="/logo/logo.png"
-              alt="Bit Deposit Logo"
-              width={140}
-              height={50}
-              className="mx-auto object-contain"
-            />
+            {logo?.software_logo_white ? (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_API_URL}${logo.software_logo_white}`}
+                alt="Logo"
+                width={140}
+                height={50}
+                className="mx-auto object-contain"
+              />
+            ) : (
+              <div className="w-36 h-12 bg-gray-200 rounded-lg animate-pulse mx-auto"></div>
+            )}
           </div>
           
           <LoginForm />
