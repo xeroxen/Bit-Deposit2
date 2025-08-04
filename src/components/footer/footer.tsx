@@ -129,331 +129,120 @@ export default function BottomFooter() {
               </Link>
             )}
           </div>
-
-          {/* Phone Number */}
-          {/* <div className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold">+61 483 915 084</div> */}
-        </div>
-
-        {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-8">
-          {/* Game Types */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Game Types</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Baccarat
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Slot
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Fish Shooting
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Roulette
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Hi-Lo/Sic Bo
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Game Providers */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Game Providers</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Evolution
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Red Tiger
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  NetEnt
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Big
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Live Games */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Live Games</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  First Person Lightning
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Lotto
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Monopoly Big Baller
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Cash Or Crash
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Lightning Dice
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Services</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Affiliate
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Agents
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  White Level
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  b2b
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Games */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Games</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Big Time Bonus
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Sports Bonus
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Signup Bonus
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Weekly Bonus
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* About */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">About</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Terms & Conditions
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Instruction
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  About Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Rewards Section */}
-        <div className="mb-8">
-          <h3 className="text-white font-semibold mb-4">Rewards</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-400">
-            <Link href="#" className="hover:text-white transition-colors">
-              Bet Transfer Bonus
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors">
-              Sports Bonus
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors">
-              Signup Bonus
-            </Link>
-            <Link href="#" className="hover:text-white transition-colors">
-              Weekly Bonus
-            </Link>
-          </div>
-        </div>
-
-        {/* Downloads Section */}
-        <div className="mb-8">
-          <h3 className="text-white font-semibold mb-4">Downloads</h3>
-          <Link href="#" className="inline-block">
-            <div className="bg-black rounded-lg px-4 py-2 flex items-center gap-2 hover:bg-gray-900 transition-colors">
-              <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-blue-500 rounded flex items-center justify-center">
-                <span className="text-white text-xs font-bold">▶</span>
-              </div>
-              <div>
-                <div className="text-xs text-gray-400">GET IT ON</div>
-                <div className="text-sm font-semibold text-white">Google Play</div>
-              </div>
-            </div>
-          </Link>
         </div>
 
         {/* Payment Methods */}
         <div className="mb-8">
           <h3 className="text-white font-semibold mb-4">Quick & Easy Payment Methods We Support</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {/* bKash */}
-            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
+          <div className="flex justify-center">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+              {/* bKash */}
+              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
+                <Image 
+                  src="/images/bkash-logo.png" 
+                  alt="bKash" 
+                  width={96} 
+                  height={48} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* Nagad */}
+              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
+                <Image 
+                  src="/images/nagad-logo.png" 
+                  alt="Nagad" 
+                  width={96} 
+                  height={48} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* Rocket */}
+              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
+                <Image 
+                  src="/images/rocket-logo.png" 
+                  alt="Rocket" 
+                  width={96} 
+                  height={48} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* Upay */}
+              {/* <div className="w-32 h-20 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
+                <span className="text-white text-base font-bold">Upay</span>
+              </div> */}
+              
+              {/* Tap */}
+              {/* <div className="w-32 h-20 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
+                <span className="text-white text-base font-bold">Tap</span>
+              </div> */}
+              
+              {/* Sure Cash */}
+              {/* <div className="w-32 h-20 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                <span className="text-white text-base font-bold">Sure</span>
+              </div> */}
+              
+              {/* Bank Transfer */}
+              {/* <div className="w-32 h-20 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white text-base font-bold">Bank</span>
+              </div> */}
+              
+              {/* Visa */}
+              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
+                <Image 
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" 
+                  alt="Visa" 
+                  width={96} 
+                  height={48} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* Mastercard */}
+              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
+                <Image 
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2560px-Mastercard-logo.svg.png" 
+                  alt="Mastercard" 
+                  width={96} 
+                  height={48} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* American Express */}
+              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
+                <Image 
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/2560px-American_Express_logo_%282018%29.svg.png" 
+                  alt="American Express" 
+                  width={96} 
+                  height={48} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* DBBL */}
+              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
               <Image 
-                src="/images/bkash-logo.png" 
-                alt="bKash" 
-                width={48} 
-                height={24} 
-                className="object-contain w-full h-full"
-              />
-            </div>
-            
-            {/* Nagad */}
-            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
+                  src="https://www.dutchbanglabank.com/img/logo.png" 
+                  alt="DBBL" 
+                  width={96} 
+                  height={48} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* City Bank */}
+              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
               <Image 
-                src="/images/nagad-logo.png" 
-                alt="Nagad" 
-                width={48} 
-                height={24} 
-                className="object-contain w-full h-full"
-              />
-            </div>
-            
-            {/* Rocket */}
-            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
-              <Image 
-                src="/images/rocket-logo.png" 
-                alt="Rocket" 
-                width={48} 
-                height={24} 
-                className="object-contain w-full h-full"
-              />
-            </div>
-            
-            {/* Upay */}
-            <div className="w-20 h-12 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-              <span className="text-white text-xs font-bold">Upay</span>
-            </div>
-            
-            {/* Tap */}
-            <div className="w-20 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
-              <span className="text-white text-xs font-bold">Tap</span>
-            </div>
-            
-            {/* Sure Cash */}
-            <div className="w-20 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-              <span className="text-white text-xs font-bold">Sure</span>
-            </div>
-            
-            {/* Bank Transfer */}
-            <div className="w-20 h-12 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white text-xs font-bold">Bank</span>
-            </div>
-            
-            {/* Visa */}
-            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
-              <Image 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" 
-                alt="Visa" 
-                width={48} 
-                height={24} 
-                className="object-contain w-full h-full"
-              />
-            </div>
-            
-            {/* Mastercard */}
-            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
-              <Image 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2560px-Mastercard-logo.svg.png" 
-                alt="Mastercard" 
-                width={48} 
-                height={24} 
-                className="object-contain w-full h-full"
-              />
-            </div>
-            
-            {/* American Express */}
-            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
-              <Image 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/2560px-American_Express_logo_%282018%29.svg.png" 
-                alt="American Express" 
-                width={48} 
-                height={24} 
-                className="object-contain w-full h-full"
-              />
-            </div>
-            
-            {/* DBBL */}
-            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
-            <Image 
-                src="https://www.dutchbanglabank.com/img/logo.png" 
-                alt="DBBL" 
-                width={48} 
-                height={24} 
-                className="object-contain w-full h-full"
-              />
-            </div>
-            
-            {/* City Bank */}
-            <div className="w-20 h-12 bg-white rounded-lg flex items-center justify-center p-2 overflow-hidden">
-            <Image 
-                src="https://www.citybankplc.com/dist/img/logo/citylogo.png" 
-                alt="City Bank" 
-                width={48} 
-                height={24} 
-                className="object-contain w-full h-full"
-              />
+                  src="https://www.citybankplc.com/dist/img/logo/citylogo.png" 
+                  alt="City Bank" 
+                  width={96} 
+                  height={48} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -463,20 +252,6 @@ export default function BottomFooter() {
       <div className="border-t border-gray-700">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-            <div className="flex flex-wrap gap-4">
-              <Link href="#" className="hover:text-white transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="#" className="hover:text-white transition-colors">
-                Terms & Conditions
-              </Link>
-              <Link href="#" className="hover:text-white transition-colors">
-                Instruction
-              </Link>
-              <Link href="#" className="hover:text-white transition-colors">
-                About Us
-              </Link>
-            </div>
             <div className="text-center md:text-right">
               <p>© 2025 All Rights Reserved Raza20.com</p>
             </div>
