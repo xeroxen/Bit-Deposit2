@@ -1,21 +1,30 @@
 import { apiRequest, isAuthenticated, redirectToLogin } from "@/lib/authentication";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { toast } from "sonner";
 import { ErrorResponse, SingleGameResponse } from "@/types/game.type";
 import { useRouter } from "next/navigation";
 
 export const useSingleGameRedirect = () => {
     const router = useRouter();
+    const isLoadingRef = useRef(false);
     
     return useCallback((gameId: number, gameName: string) => {
+        // Prevent multiple simultaneous requests
+        if (isLoadingRef.current) {
+            toast.info("Please wait, game is loading...");
+            return;
+        }
+
         if (!isAuthenticated()) {
             redirectToLogin()
             return
         }
+
         let toastId: string | number | undefined;
         
         const handleRedirect = async () => {
             try {
+                isLoadingRef.current = true;
                 toastId = toast.loading(`Loading ${gameName}...`);
                 const response = await apiRequest<SingleGameResponse | ErrorResponse>(`/games/single/${gameId}`);
                 
@@ -46,6 +55,7 @@ export const useSingleGameRedirect = () => {
                     return;
                 }
             } finally {
+                isLoadingRef.current = false;
                 if (toastId !== undefined) toast.dismiss(toastId);
             }
         };

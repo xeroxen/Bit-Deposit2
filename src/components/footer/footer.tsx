@@ -58,116 +58,116 @@ export default function BottomFooter() {
           </div>
           <p className="text-gray-300 mb-4">Contact with us</p>
 
-          {/* Social Media Icons */}
-          <div className="flex gap-3 mb-4">
-            {socialLinks?.facebook && (
-              <Link
-                href={`https://${socialLinks.facebook}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-              >
-                <Facebook className="w-5 h-5 text-blue-600" />
-              </Link>
-            )}
-            {socialLinks?.youtube && (
-              <Link
-                href={`https://${socialLinks.youtube}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-              >
-                <Youtube className="w-5 h-5 text-red-600" />
-              </Link>
-            )}
-            {socialLinks?.twitter && (
-              <Link
-                href={`https://${socialLinks.twitter}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-              >
-                <div className="w-5 h-5 bg-black rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">t</span>
-                </div>
-              </Link>
-            )}
-            {socialLinks?.linkedin && (
-              <Link
-                href={`https://${socialLinks.linkedin}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-              >
-                <div className="w-5 h-5 bg-blue-600 rounded flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">in</span>
-                </div>
-              </Link>
-            )}
-            {socialLinks?.instagram && (
-              <Link
-                href={`https://${socialLinks.instagram}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-              >
-                <div className="w-5 h-5 bg-blue-400 rounded flex items-center justify-center">
-                  <span className="text-white text-xs">🐦</span>
-                </div>
-              </Link>
-            )}
-            {socialLinks?.tiktok && (
-              <Link
-                href={`https://${socialLinks.tiktok}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-              >
-                <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">@</span>
-                </div>
-              </Link>
-            )}
-          </div>
+                     {/* Social Media Icons */}
+           <div className="flex gap-3 mb-4">
+             {socialLinks?.facebook && (
+               <Link
+                 href={`https://${socialLinks.facebook}`}
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+               >
+                 <Facebook className="w-5 h-5 text-white" />
+               </Link>
+             )}
+             {socialLinks?.youtube && (
+               <Link
+                 href={`https://${socialLinks.youtube}`}
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+               >
+                 <Youtube className="w-5 h-5 text-white" />
+               </Link>
+             )}
+             {socialLinks?.twitter && (
+               <Link
+                 href={`https://${socialLinks.twitter}`}
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+               >
+                 <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                   <span className="text-black text-xs font-bold">t</span>
+                 </div>
+               </Link>
+             )}
+             {socialLinks?.linkedin && (
+               <Link
+                 href={`https://${socialLinks.linkedin}`}
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+               >
+                 <div className="w-5 h-5 bg-white rounded flex items-center justify-center">
+                   <span className="text-blue-600 text-xs font-bold">in</span>
+                 </div>
+               </Link>
+             )}
+             {socialLinks?.instagram && (
+               <Link
+                 href={`https://${socialLinks.instagram}`}
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+               >
+                 <div className="w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-500 rounded flex items-center justify-center">
+                   <span className="text-white text-xs">📷</span>
+                 </div>
+               </Link>
+             )}
+             {socialLinks?.tiktok && (
+               <Link
+                 href={`https://${socialLinks.tiktok}`}
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+               >
+                 <div className="w-5 h-5 bg-black rounded-full flex items-center justify-center">
+                   <span className="text-white text-xs font-bold">@</span>
+                 </div>
+               </Link>
+             )}
+           </div>
         </div>
 
         {/* Payment Methods */}
         <div className="mb-8">
           <h3 className="text-white font-semibold mb-4">Quick & Easy Payment Methods We Support</h3>
-          <div className="flex justify-center">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
-              {/* bKash */}
-              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
-                <Image 
-                  src="/images/bkash-logo.png" 
-                  alt="bKash" 
-                  width={96} 
-                  height={48} 
-                  className="object-contain w-full h-full"
-                />
-              </div>
-              
-              {/* Nagad */}
-              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
-                <Image 
-                  src="/images/nagad-logo.png" 
-                  alt="Nagad" 
-                  width={96} 
-                  height={48} 
-                  className="object-contain w-full h-full"
-                />
-              </div>
-              
-              {/* Rocket */}
-              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
-                <Image 
-                  src="/images/rocket-logo.png" 
-                  alt="Rocket" 
-                  width={96} 
-                  height={48} 
-                  className="object-contain w-full h-full"
-                />
-              </div>
+                     <div className="flex justify-center">
+             <div className="grid grid-cols-4 gap-6">
+                             {/* bKash */}
+               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
+                 <Image 
+                   src="/images/bkash-logo.png" 
+                   alt="bKash" 
+                   width={96} 
+                   height={48} 
+                   className="object-contain w-full h-full"
+                 />
+               </div>
+               
+               {/* Nagad */}
+               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
+                 <Image 
+                   src="/images/nagad-logo.png" 
+                   alt="Nagad" 
+                   width={96} 
+                   height={48} 
+                   className="object-contain w-full h-full"
+                 />
+               </div>
+               
+               {/* Rocket */}
+               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
+                 <Image 
+                   src="/images/rocket-logo.png" 
+                   alt="Rocket" 
+                   width={96} 
+                   height={48} 
+                   className="object-contain w-full h-full"
+                 />
+               </div>
               
               {/* Upay */}
               {/* <div className="w-32 h-20 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
@@ -189,60 +189,60 @@ export default function BottomFooter() {
                 <span className="text-white text-base font-bold">Bank</span>
               </div> */}
               
-              {/* Visa */}
-              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
-                <Image 
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" 
-                  alt="Visa" 
-                  width={96} 
-                  height={48} 
-                  className="object-contain w-full h-full"
-                />
-              </div>
-              
-              {/* Mastercard */}
-              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
-                <Image 
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2560px-Mastercard-logo.svg.png" 
-                  alt="Mastercard" 
-                  width={96} 
-                  height={48} 
-                  className="object-contain w-full h-full"
-                />
-              </div>
-              
-              {/* American Express */}
-              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
-                <Image 
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/2560px-American_Express_logo_%282018%29.svg.png" 
-                  alt="American Express" 
-                  width={96} 
-                  height={48} 
-                  className="object-contain w-full h-full"
-                />
-              </div>
-              
-              {/* DBBL */}
-              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
-              <Image 
-                  src="https://www.dutchbanglabank.com/img/logo.png" 
-                  alt="DBBL" 
-                  width={96} 
-                  height={48} 
-                  className="object-contain w-full h-full"
-                />
-              </div>
-              
-              {/* City Bank */}
-              <div className="w-32 h-20 bg-white rounded-lg flex items-center justify-center p-4 overflow-hidden">
-              <Image 
-                  src="https://www.citybankplc.com/dist/img/logo/citylogo.png" 
-                  alt="City Bank" 
-                  width={96} 
-                  height={48} 
-                  className="object-contain w-full h-full"
-                />
-              </div>
+                             {/* Visa */}
+               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
+                 <Image 
+                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" 
+                   alt="Visa" 
+                   width={96} 
+                   height={48} 
+                   className="object-contain w-full h-full"
+                 />
+               </div>
+               
+               {/* Mastercard */}
+               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
+                 <Image 
+                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2560px-Mastercard-logo.svg.png" 
+                   alt="Mastercard" 
+                   width={96} 
+                   height={48} 
+                   className="object-contain w-full h-full"
+                 />
+               </div>
+               
+               {/* American Express */}
+               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
+                 <Image 
+                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/2560px-American_Express_logo_%282018%29.svg.png" 
+                   alt="American Express" 
+                   width={96} 
+                   height={48} 
+                   className="object-contain w-full h-full"
+                 />
+               </div>
+               
+               {/* DBBL */}
+               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
+               <Image 
+                   src="https://www.dutchbanglabank.com/img/logo.png" 
+                   alt="DBBL" 
+                   width={96} 
+                   height={48} 
+                   className="object-contain w-full h-full"
+                 />
+               </div>
+               
+               {/* City Bank */}
+               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
+               <Image 
+                   src="https://www.citybankplc.com/dist/img/logo/citylogo.png" 
+                   alt="City Bank" 
+                   width={96} 
+                   height={48} 
+                   className="object-contain w-full h-full"
+                 />
+               </div>
             </div>
           </div>
         </div>

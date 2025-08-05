@@ -15,12 +15,18 @@ const GameGrid = ({
   filteredGames, 
   visibleGames, 
   handleShowMore, 
-  onGameClick
+  onGameClick,
+  clickedGameId,
+  favoriteLoading,
+  setFavoriteLoading
 }: { 
   filteredGames: Game[], 
   visibleGames: number, 
   handleShowMore: () => void, 
-  onGameClick: (game: Game) => void
+  onGameClick: (game: Game) => void,
+  clickedGameId: number | null,
+  favoriteLoading: number | null,
+  setFavoriteLoading: (id: number | null) => void
 }) => {
   // Always use 4, 6, or 8 per row based on Tailwind breakpoints
   // Calculate gamesPerRow based on window width (for visibleGames logic only)
@@ -55,18 +61,32 @@ const GameGrid = ({
           {row.map(game => (
             <div 
               key={game.id} 
-              className="aspect-[3/4] rounded-lg overflow-hidden relative cursor-pointer group"
+              className={`aspect-[3/4] rounded-lg overflow-hidden relative cursor-pointer group transition-all duration-200 ${
+                clickedGameId === game.id 
+                  ? 'opacity-50 scale-95 pointer-events-none' 
+                  : 'hover:scale-105'
+              }`}
               onClick={() => onGameClick(game)}
             >
               {/* Favorite Icon */}
               <button
                 type="button"
-                className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow hover:bg-red-100 transition-colors cursor-pointer"
+                className={`absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow transition-colors ${
+                  favoriteLoading === game.id 
+                    ? 'cursor-not-allowed opacity-50' 
+                    : 'hover:bg-red-100 cursor-pointer'
+                }`}
                 onClick={e => {
                   e.stopPropagation(); // Prevent triggering game click
-                  addFavourite(game);
+                  if (favoriteLoading === game.id) return; // Prevent multiple clicks
+                  
+                  setFavoriteLoading(game.id);
+                  addFavourite(game).finally(() => {
+                    setFavoriteLoading(null);
+                  });
                 }}
                 aria-label="Add to favorites"
+                disabled={favoriteLoading === game.id}
               >
                 <Heart className="w-3 h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 text-red-500 group-hover:text-red-600" strokeWidth={2} />
               </button>
@@ -226,13 +246,19 @@ const GamesData = ({
   handleShowMore, 
   loading,
   filteredGames,
-  onGameClick
+  onGameClick,
+  clickedGameId,
+  favoriteLoading,
+  setFavoriteLoading
 }: {
   visibleGames: number,
   handleShowMore: () => void,
   loading: boolean,
   filteredGames: Game[],
-  onGameClick: (game: Game) => void
+  onGameClick: (game: Game) => void,
+  clickedGameId: number | null,
+  favoriteLoading: number | null,
+  setFavoriteLoading: (id: number | null) => void
 }) => {
   if (loading) {
     return <GameGridSkeleton rows={3} />;
@@ -244,6 +270,9 @@ const GamesData = ({
       visibleGames={visibleGames} 
       handleShowMore={handleShowMore} 
       onGameClick={onGameClick}
+      clickedGameId={clickedGameId}
+      favoriteLoading={favoriteLoading}
+      setFavoriteLoading={setFavoriteLoading}
     />
   );
 };
@@ -301,6 +330,8 @@ const AllGameMobile = () => {
     const [providers, setProviders] = useState<Provider[]>([]);
     const [providersLoading, setProvidersLoading] = useState<boolean>(true);
     const [visibleProviders, setVisibleProviders] = useState<number>(8);
+    const [clickedGameId, setClickedGameId] = useState<number | null>(null);
+    const [favoriteLoading, setFavoriteLoading] = useState<number | null>(null);
     const singleGameRedirect = useSingleGameRedirect();
     const router = useRouter();
     
@@ -390,7 +421,18 @@ const AllGameMobile = () => {
     };
 
     const handleGameClick = (game: Game) => {
+        // Prevent multiple clicks on the same game
+        if (clickedGameId === game.id) {
+            return;
+        }
+        
+        setClickedGameId(game.id);
         singleGameRedirect(game.id, game.game_name);
+        
+        // Reset clicked game ID after a delay to allow for new clicks
+        setTimeout(() => {
+            setClickedGameId(null);
+        }, 2000);
     };
     
     const handleViewAll = () => {
@@ -460,6 +502,9 @@ const AllGameMobile = () => {
                         loading={loading}
                         filteredGames={displayGames}
                         onGameClick={handleGameClick}
+                        clickedGameId={clickedGameId}
+                        favoriteLoading={favoriteLoading}
+                        setFavoriteLoading={setFavoriteLoading}
                     />
                 </Suspense>
             </div>

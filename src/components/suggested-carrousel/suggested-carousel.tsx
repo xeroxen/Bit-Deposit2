@@ -1,7 +1,8 @@
+"use client"
 import Image from "next/image"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { useAuth } from "@/lib/authContext"
 import { useWallet } from "@/lib/walletContext"
 import { apiRequest } from "@/lib/authentication"
@@ -47,8 +48,15 @@ export default function SuggestedCarousel() {
   )
   const { isAuthenticated, redirectToLogin } = useAuth()
   const { balance } = useWallet()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleGameClick = async (item: typeof suggestedItems[0]) => {
+    // Prevent multiple simultaneous requests
+    if (isLoading) {
+      toast.info("Please wait, game is loading...")
+      return
+    }
+
     // Check if user is authenticated
     if (!isAuthenticated) {
       toast.error("Please login to play")
@@ -66,6 +74,7 @@ export default function SuggestedCarousel() {
     const toastId = toast.loading(`Loading ${item.title}...`)
 
     try {
+      setIsLoading(true)
       // Call API to get game URL
       if (item.gameId) {
         const response = await apiRequest<SingleGameResponse | ErrorResponse>(`/games/single/${item.gameId}`)
@@ -94,6 +103,7 @@ export default function SuggestedCarousel() {
       toast.error("Failed to load game")
       console.error("Error loading game:", error)
     } finally {
+      setIsLoading(false)
       toast.dismiss(toastId)
     }
   }
@@ -119,7 +129,9 @@ export default function SuggestedCarousel() {
           {suggestedItems.map((item) => (
             <CarouselItem key={item.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
               <div 
-                className="p-0 relative cursor-pointer group h-full"
+                className={`p-0 relative cursor-pointer group h-full transition-all duration-200 ${
+                  isLoading ? 'opacity-50 pointer-events-none' : ''
+                }`}
                 onClick={() => item.gameId ? handleGameClick(item) : undefined}
               >
                 <div className="relative h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] w-full overflow-hidden rounded-lg">
