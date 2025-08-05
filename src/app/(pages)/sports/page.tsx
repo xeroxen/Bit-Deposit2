@@ -36,7 +36,7 @@ const SportsPage = () => {
         }
                 
         // Use apiRequest instead of direct fetch
-        const data = await apiRequest<GameData>('/games/single/1988');
+        const data = await apiRequest<GameData>('/games/single/2021');
         setGameData(data);
       } catch (error) {
         console.error('Error fetching game data:', error);
