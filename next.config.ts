@@ -24,6 +24,22 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'mybet24.online',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.upaybd.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.prod.website-files.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'play-lh.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.bankasia-bd.com',
+      },
     ],
   },
 };

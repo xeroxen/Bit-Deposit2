@@ -151,131 +151,157 @@ export default function BottomFooter() {
                  </div>
                </Link>
              )}
-             {/* Google Play Store Badge */}
+           </div>
+        </div>
+        <div>
+          {/* Google Play Store Badge */}
 
-               <Image 
+          <Image 
                  src="/google-play-badge.svg" 
                  alt="Get it on Google Play" 
                  width={120} 
                  height={36} 
-                 className="h-9 w-auto cursor-pointer"
+                 className="h-9 w-auto cursor-pointer my-4"
                  onClick={handleDownloadApp}
                />
-           </div>
         </div>
 
         {/* Payment Methods */}
         <div className="mb-8">
           <h3 className="text-white font-semibold mb-4">Quick & Easy Payment Methods We Support</h3>
-                     <div className="flex justify-center">
-             <div className="grid grid-cols-4 gap-6">
-                             {/* bKash */}
-               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
-                 <Image 
-                   src="/images/bkash-logo.png" 
-                   alt="bKash" 
-                   width={96} 
-                   height={48} 
-                   className="object-contain w-full h-full"
-                 />
-               </div>
-               
-               {/* Nagad */}
-               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
-                 <Image 
-                   src="/images/nagad-logo.png" 
-                   alt="Nagad" 
-                   width={96} 
-                   height={48} 
-                   className="object-contain w-full h-full"
-                 />
-               </div>
-               
-               {/* Rocket */}
-               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
-                 <Image 
-                   src="/images/rocket-logo.png" 
-                   alt="Rocket" 
-                   width={96} 
-                   height={48} 
-                   className="object-contain w-full h-full"
-                 />
-               </div>
+          <div className="flex justify-center">
+            <div className="grid grid-cols-6 gap-4">
+              {/* bKash */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="/images/bkash-logo.png" 
+                  alt="bKash" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* Nagad */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="/images/nagad-logo.png" 
+                  alt="Nagad" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* Rocket */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="/images/rocket-logo.png" 
+                  alt="Rocket" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
               
               {/* Upay */}
-              {/* <div className="w-32 h-20 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-                <span className="text-white text-base font-bold">Upay</span>
-              </div> */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+              <Image 
+                  src="https://www.upaybd.com/images/Upay-logo-revised-new.png" 
+                  alt="Upay" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
               
               {/* Tap */}
-              {/* <div className="w-32 h-20 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
-                <span className="text-white text-base font-bold">Tap</span>
-              </div> */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+              <Image 
+                  src="https://cdn.prod.website-files.com/5ae897b18423ad8b62ceba7c/5b3a97163c43bae706308fca_logo_horz_mint_bg%402x.avif" 
+                  alt="Tap" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
               
               {/* Sure Cash */}
-              {/* <div className="w-32 h-20 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                <span className="text-white text-base font-bold">Sure</span>
-              </div> */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+              <Image 
+                  src="https://play-lh.googleusercontent.com/7P3DsQan_NHSE3PwEM9PwqVgdpqI-HsXwhJx-vwx2hjrUzy882Q7z3HVR2cL96IR2g=w240-h480-rw" 
+                  alt="Sure Cash" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
               
               {/* Bank Transfer */}
-              {/* <div className="w-32 h-20 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white text-base font-bold">Bank</span>
-              </div> */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center">
+              <Image 
+                  src="https://www.bankasia-bd.com/style/images/bank_asia_logo-2.png" 
+                  alt="Bank Transfer" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
               
-                             {/* Visa */}
-               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
-                 <Image 
-                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" 
-                   alt="Visa" 
-                   width={96} 
-                   height={48} 
-                   className="object-contain w-full h-full"
-                 />
-               </div>
-               
-               {/* Mastercard */}
-               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
-                 <Image 
-                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2560px-Mastercard-logo.svg.png" 
-                   alt="Mastercard" 
-                   width={96} 
-                   height={48} 
-                   className="object-contain w-full h-full"
-                 />
-               </div>
-               
-               {/* American Express */}
-               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
-                 <Image 
-                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/2560px-American_Express_logo_%282018%29.svg.png" 
-                   alt="American Express" 
-                   width={96} 
-                   height={48} 
-                   className="object-contain w-full h-full"
-                 />
-               </div>
-               
-               {/* DBBL */}
-               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
-               <Image 
-                   src="https://www.dutchbanglabank.com/img/logo.png" 
-                   alt="DBBL" 
-                   width={96} 
-                   height={48} 
-                   className="object-contain w-full h-full"
-                 />
-               </div>
-               
-               {/* City Bank */}
-               <div className="w-20 h-12 md:w-32 md:h-20 flex items-center justify-center overflow-hidden">
-               <Image 
-                   src="https://www.citybankplc.com/dist/img/logo/citylogo.png" 
-                   alt="City Bank" 
-                   width={96} 
-                   height={48} 
-                   className="object-contain w-full h-full"
-                 />
-               </div>
+              {/* Visa */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" 
+                  alt="Visa" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* Mastercard */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2560px-Mastercard-logo.svg.png" 
+                  alt="Mastercard" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* American Express */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/2560px-American_Express_logo_%282018%29.svg.png" 
+                  alt="American Express" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* DBBL */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="https://www.dutchbanglabank.com/img/logo.png" 
+                  alt="DBBL" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              
+              {/* City Bank */}
+              <div className="w-16 h-10 md:w-20 md:h-12 flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="https://www.citybankplc.com/dist/img/logo/citylogo.png" 
+                  alt="City Bank" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain w-full h-full"
+                />
+              </div>
             </div>
           </div>
         </div>
