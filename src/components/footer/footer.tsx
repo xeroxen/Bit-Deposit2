@@ -76,7 +76,7 @@ export default function BottomFooter() {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             {logo?.software_logo_white && (
-              <Image src={`${process.env.NEXT_PUBLIC_API_URL}${logo.software_logo_white}`} alt="logo" width={200} height={40} />
+              <Image src={`${process.env.NEXT_PUBLIC_API_URL}${logo.software_logo_white}`} alt="logo" width={80} height={24} />
             )}
           </div>
           <p className="text-gray-300 mb-4">Contact with us</p>
