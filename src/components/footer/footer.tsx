@@ -20,6 +20,7 @@ interface SocialData {
 export default function BottomFooter() {
   const [logo, setLogo] = useState<Data>();
   const [socialLinks, setSocialLinks] = useState<SocialData | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     const fetchLogo = async () => {
@@ -33,7 +34,7 @@ export default function BottomFooter() {
   useEffect(() => {
     const fetchSocialLinks = async () => {
       try {
-        const response = await fetch('https://new.fnd777.pro/api/social');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/social`);
         const data = await response.json();
         if (data.status && data.social) {
           setSocialLinks(data.social);
@@ -44,6 +45,28 @@ export default function BottomFooter() {
     };
     fetchSocialLinks();
   }, []);
+
+  const handleDownloadApp = () => {
+    if (isDownloading) return;
+    
+    setIsDownloading(true);
+    
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = `${process.env.NEXT_PUBLIC_API_URL}/api/download-apk`;
+    link.download = 'Raza20.apk';
+    // link.target = '_blank';
+    
+    // Append to body, click, and remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Reset loading state after a short delay
+    setTimeout(() => {
+      setIsDownloading(false);
+    }, 1000);
+  };
 
   return (
     <footer className="bg-slate-800 text-white">
@@ -128,6 +151,16 @@ export default function BottomFooter() {
                  </div>
                </Link>
              )}
+             {/* Google Play Store Badge */}
+
+               <Image 
+                 src="/google-play-badge.svg" 
+                 alt="Get it on Google Play" 
+                 width={120} 
+                 height={36} 
+                 className="h-9 w-auto cursor-pointer"
+                 onClick={handleDownloadApp}
+               />
            </div>
         </div>
 
