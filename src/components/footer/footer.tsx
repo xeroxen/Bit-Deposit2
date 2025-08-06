@@ -1,9 +1,10 @@
 "use client"
 import Link from "next/link"
-import { Facebook, Youtube } from "lucide-react"
+import { Facebook, Instagram, Linkedin, X, Youtube } from "lucide-react"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
 import { Data } from "@/types/data.types";
+import { FaTiktok } from "react-icons/fa"
 
 interface SocialData {
   id: number;
@@ -82,15 +83,15 @@ export default function BottomFooter() {
           <p className="text-gray-300 mb-4">Contact with us</p>
 
                      {/* Social Media Icons */}
-           <div className="flex gap-3 mb-4">
+           <div className="flex gap-0 mb-4">
              {socialLinks?.facebook && (
                <Link
                  href={`https://${socialLinks.facebook}`}
                  target="_blank"
                  rel="noopener noreferrer"
-                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+                 className="w-8 h-8 flex items-center justify-center hover:opacity-80 transition-opacity"
                >
-                 <Facebook className="w-5 h-5 text-white" />
+                 <Facebook className="w-8 h-8 text-white" />
                </Link>
              )}
              {socialLinks?.youtube && (
@@ -98,9 +99,9 @@ export default function BottomFooter() {
                  href={`https://${socialLinks.youtube}`}
                  target="_blank"
                  rel="noopener noreferrer"
-                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+                 className="w-8 h-8 flex items-center justify-center hover:opacity-80 transition-opacity"
                >
-                 <Youtube className="w-5 h-5 text-white" />
+                 <Youtube className="w-8 h-8 text-white" />
                </Link>
              )}
              {socialLinks?.twitter && (
@@ -108,11 +109,10 @@ export default function BottomFooter() {
                  href={`https://${socialLinks.twitter}`}
                  target="_blank"
                  rel="noopener noreferrer"
-                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+                 className="w-8 h-8 flex items-center justify-center hover:opacity-80 transition-opacity"
                >
-                 <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
-                   <span className="text-black text-xs font-bold">t</span>
-                 </div>
+                   <X className="w-8 h-8 text-white" />
+                 
                </Link>
              )}
              {socialLinks?.linkedin && (
@@ -120,11 +120,10 @@ export default function BottomFooter() {
                  href={`https://${socialLinks.linkedin}`}
                  target="_blank"
                  rel="noopener noreferrer"
-                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+                 className="w-8 h-8 flex items-center justify-center hover:opacity-80 transition-opacity"
                >
-                 <div className="w-5 h-5 bg-white rounded flex items-center justify-center">
-                   <span className="text-blue-600 text-xs font-bold">in</span>
-                 </div>
+                   <Linkedin className="w-8 h-8 text-white" />
+                 
                </Link>
              )}
              {socialLinks?.instagram && (
@@ -132,11 +131,10 @@ export default function BottomFooter() {
                  href={`https://${socialLinks.instagram}`}
                  target="_blank"
                  rel="noopener noreferrer"
-                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+                 className="w-8 h-8 flex items-center justify-center hover:opacity-80 transition-opacity"
                >
-                 <div className="w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-500 rounded flex items-center justify-center">
-                   <span className="text-white text-xs">📷</span>
-                 </div>
+                   <Instagram className="w-8 h-8 text-white" />
+                 
                </Link>
              )}
              {socialLinks?.tiktok && (
@@ -144,11 +142,10 @@ export default function BottomFooter() {
                  href={`https://${socialLinks.tiktok}`}
                  target="_blank"
                  rel="noopener noreferrer"
-                 className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition-opacity"
+                 className="w-8 h-8 flex items-center justify-center hover:opacity-80 transition-opacity"
                >
-                 <div className="w-5 h-5 bg-black rounded-full flex items-center justify-center">
-                   <span className="text-white text-xs font-bold">@</span>
-                 </div>
+                   <FaTiktok className="w-8 h-8 text-white" />
+                 
                </Link>
              )}
            </div>
