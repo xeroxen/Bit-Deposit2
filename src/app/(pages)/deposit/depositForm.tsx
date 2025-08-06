@@ -25,12 +25,6 @@ interface PaymentMethod {
   customLogo?: string
 }
 
-  const paymentMethodLogos: { [key: string]: { logo: string; color: string } } = {
-    bkash: { logo: "/images/bkash-logo.png", color: "#E2136E" },
-    nagad: { logo: "/images/nagad-logo.png", color: "#F15A29" },
-    rocket: { logo: "/images/rocket-logo.png", color: "#8C3494" },
-  }
-
   const getLogoUrl = (logoPath: string, isBank: boolean) => {
     if (!logoPath) return ""
     
@@ -39,7 +33,7 @@ interface PaymentMethod {
       return `https://new.fnd777.pro${logoPath}`
     }
     
-    // For mobile banking, use the default logos
+    // For mobile banking, use the logo from API
     return logoPath
   }
 
@@ -80,25 +74,19 @@ export default function DepositForm() {
           data.data.forEach((agent: Agent) => {
             if (agent.status === "1") {
               const text = (agent.text || "").toLowerCase()
-              let logoDetails = paymentMethodLogos.bkash // Default to bKash
-              if (text.includes("nagad")) {
-                logoDetails = paymentMethodLogos.nagad
-              } else if (text.includes("rocket")) {
-                logoDetails = paymentMethodLogos.rocket
-              }
               
-                             const paymentMethod: PaymentMethod = {
-                 id: text.replace(/\s+/g, "-"),
-                 name: agent.text,
-                 type: "mobile",
-                 discount: agent.bonus ? `+${agent.bonus}%` : "+0%",
-                 logo: agent.is_bank === "1" ? getLogoUrl(agent.logo, true) : (agent.logo || logoDetails.logo),
-                 color: logoDetails.color,
-                 agentNumber: agent.agent_number,
-                 agentId: agent.agent_id,
-                 isBank: agent.is_bank === "1",
-                 customLogo: agent.is_bank === "1" ? getLogoUrl(agent.logo, true) : undefined
-               }
+              const paymentMethod: PaymentMethod = {
+                id: text.replace(/\s+/g, "-"),
+                name: agent.text,
+                type: "mobile",
+                discount: agent.bonus ? `+${agent.bonus}%` : "+0%",
+                logo: agent.is_bank === "1" ? getLogoUrl(agent.logo, true) : (agent.logo || ""),
+                color: "#E2136E", // Default color
+                agentNumber: agent.agent_number,
+                agentId: agent.agent_id,
+                isBank: agent.is_bank === "1",
+                customLogo: agent.is_bank === "1" ? getLogoUrl(agent.logo, true) : undefined
+              }
               
               if (agent.is_bank === "1") {
                 bankMethods.push(paymentMethod)
@@ -199,7 +187,7 @@ export default function DepositForm() {
           <div className={`rounded-lg p-3 flex flex-col items-center justify-center text-center`}>
                          <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-1">
                <Image
-                 src={method.logo}
+                 src={`https://new.fnd777.pro${method.logo}`}
                  alt={method.name}
                  width={40}
                  height={40}
@@ -334,17 +322,7 @@ export default function DepositForm() {
                 <p className="text-gray-800 text-sm">{selectedMethod?.name || ""}</p>
               </div>
 
-              {/* Animated GIF */}
-              <div className="flex items-center">
-                <Image
-                  src="/images/anime4.gif"
-                  alt="Transaction Animation"
-                  width={128}
-                  height={96}
-                  className="object-contain"
-                  unoptimized
-                />
-              </div>
+
 
               <div className="flex flex-col items-center gap-2">
                 <div className="w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center shadow-sm">
