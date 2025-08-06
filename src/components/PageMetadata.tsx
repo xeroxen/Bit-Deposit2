@@ -18,7 +18,7 @@ export function PageMetadata({ customTitle, customDescription }: PageMetadataPro
     if (customTitle || customDescription) {
       // Use custom metadata if provided
       updateMetadata({
-        title: customTitle || 'Bit-Deposit',
+        title: customTitle || 'Raza20',
         description: customDescription || 'Your trusted platform for secure gaming and transactions',
       });
     } else {
@@ -29,7 +29,7 @@ export function PageMetadata({ customTitle, customDescription }: PageMetadataPro
       } else {
         // Default metadata for unknown pages
         updateMetadata({
-          title: 'Bit-Deposit - Your Trusted Gaming Platform',
+          title: 'Raza20 - Your Trusted Gaming Platform',
           description: 'Your trusted platform for secure gaming and transactions.',
         });
       }

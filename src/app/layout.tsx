@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Bit-Deposit - Your Trusted Gaming Platform',
+  title: 'Raza20 - Your Trusted Gaming Platform',
   description: 'Your trusted platform for secure gaming and transactions.',
 };
 

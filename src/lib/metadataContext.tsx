@@ -12,7 +12,7 @@ const MetadataContext = createContext<MetadataContextType | undefined>(undefined
 
 export function MetadataProvider({ children }: { children: React.ReactNode }) {
   const [metadata, setMetadata] = useState<Metadata>({
-    title: 'Bit-Deposit',
+    title: 'Raza20',
     description: 'Your trusted platform for secure gaming and transactions',
   });
 
@@ -23,7 +23,7 @@ export function MetadataProvider({ children }: { children: React.ReactNode }) {
     if (newMetadata.title) {
       document.title = typeof newMetadata.title === 'string' 
         ? newMetadata.title 
-        : 'Bit-Deposit';
+        : 'Raza20';
     }
     
     if (newMetadata.description) {

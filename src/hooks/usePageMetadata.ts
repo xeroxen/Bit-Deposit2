@@ -16,7 +16,7 @@ export function usePageMetadata() {
     } else {
       // Default metadata for unknown pages
       updateMetadata({
-        title: 'Bit-Deposit',
+        title: 'Raza20',
         description: 'Your trusted platform for secure gaming and transactions',
       });
     }

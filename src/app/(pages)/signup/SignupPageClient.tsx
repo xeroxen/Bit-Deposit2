@@ -64,7 +64,7 @@ export default function SignupPageClient() {
             {/* Welcome text overlay */}
             <div className="absolute bottom-20 left-8 right-8 z-20 text-white">
               <h1 className="text-4xl font-bold mb-4">Join Us Today</h1>
-              <p className="text-lg opacity-90">Create your account and start your gaming journey with Bit-Deposit</p>
+              <p className="text-lg opacity-90">Create your account and start your gaming journey with Raza20</p>
             </div>
           </div>
         </div>
