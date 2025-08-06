@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { apiRequest, isAuthenticated } from '@/lib/authentication';
 import Link from 'next/link';
+import { PageMetadata } from '@/components/PageMetadata';
 
 interface GameData {
   game: {
@@ -87,6 +88,8 @@ const SportsPage = () => {
   }
 
   return (
+    <>
+    <PageMetadata />
     <div className="w-full bg-black mt-26 pt-0 relative">
       {gameData ? (
         <>
@@ -136,6 +139,7 @@ const SportsPage = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

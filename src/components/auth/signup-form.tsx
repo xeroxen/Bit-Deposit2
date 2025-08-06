@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { Eye, EyeOff, X } from "lucide-react"
+import { Eye, EyeOff } from "lucide-react"
 import Cookies from "js-cookie"
 import { storeUserData, type LoginResponse } from "@/lib/authentication"
 

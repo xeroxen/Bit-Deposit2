@@ -1,5 +1,6 @@
 "use client";
 
+import { PageMetadata } from "@/components/PageMetadata";
 import { useSearchParams } from "next/navigation";
 import { useState, Suspense, useEffect, useRef } from "react";
 
@@ -88,6 +89,8 @@ const GamingContent = () => {
 
 const GamingPage = () => {
     return (
+        <>
+        <PageMetadata />
         <Suspense fallback={
             <div className="w-full h-screen flex items-center justify-center bg-gray-900">
                 <div className="text-white text-lg">Loading...</div>
@@ -95,6 +98,7 @@ const GamingPage = () => {
         }>
             <GamingContent />
         </Suspense>
+        </>
     );
 };
 

@@ -5,6 +5,7 @@ import { useAuth } from '@/lib/authContext';
 import { getUserData, getAuthToken } from '@/lib/authentication';
 import { format, parseISO } from 'date-fns';
 import { Loader2, AlertCircle } from 'lucide-react';
+import { PageMetadata } from '@/components/PageMetadata';
 
 interface DepositHistoryItem {
   id: number;
@@ -98,6 +99,8 @@ export default function DepositHistoryPage() {
   };
 
   return (
+    <>
+    <PageMetadata />
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-24">
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 mb-8 shadow-lg">
         <h1 className="text-3xl font-bold text-white">Deposit History</h1>
@@ -192,5 +195,6 @@ export default function DepositHistoryPage() {
         </div>
       )}
     </div>
+    </>
   );
 }

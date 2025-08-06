@@ -7,6 +7,7 @@ import { useAuth } from '@/lib/authContext';
 import { apiRequest } from '@/lib/authentication';
 import { Transaction, TransactionHistoryResponse } from '@/types/data.types';
 import { ArrowUpRight, ArrowDownRight, Gift, RefreshCw, AlertCircle } from 'lucide-react';
+import { PageMetadata } from '@/components/PageMetadata';
 
 const TransactionHistoryPage = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -94,6 +95,8 @@ const TransactionHistoryPage = () => {
     }
 
     return (
+        <>
+        <PageMetadata />
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 mt-25">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
@@ -237,6 +240,7 @@ const TransactionHistoryPage = () => {
                 )}
             </div>
         </div>
+        </>
     );
 };
 

@@ -12,6 +12,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { handlePasswordReset } from "@/lib/password-reset"
+import { PageMetadata } from "@/components/PageMetadata"
 
 // Form validation schema
 const formSchema = z.object({
@@ -61,6 +62,8 @@ export default function ForgotPasswordPage() {
   }
 
   return (
+    <>
+    <PageMetadata />
     <div className="grid h-screen place-items-center px-4 md:px-6">
       <div className="w-full max-w-[350px] flex flex-col justify-center space-y-6">
         <div className="flex flex-col space-y-2 text-center">
@@ -122,5 +125,6 @@ export default function ForgotPasswordPage() {
         </Link>
       </div>
     </div>
+    </>
   )
 }

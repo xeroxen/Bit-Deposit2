@@ -6,6 +6,7 @@ import { useSingleGameRedirect } from '@/hooks/singGameRedirect';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Loader2 } from "lucide-react";
+import { PageMetadata } from '@/components/PageMetadata';
 
 const FavouritePage = () => {
     const { games } = useGameContext();
@@ -39,6 +40,8 @@ const FavouritePage = () => {
     const favouriteGames = allGames.filter(game => favouriteIds.includes(game.id));
 
     return (
+        <>
+        <PageMetadata />
         <div>
             <div className="text-3xl font-bold mt-30 mb-5 items-center justify-center flex">Favourites</div>
             {loading ? (
@@ -84,6 +87,7 @@ const FavouritePage = () => {
                 </div>
             )}
         </div>
+        </>
     );
 };
 

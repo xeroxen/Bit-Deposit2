@@ -5,6 +5,7 @@ import DepositForm from "./depositForm"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getAuthToken, getUserData, User } from "@/lib/authentication"
+import { PageMetadata } from "@/components/PageMetadata"
 
 export default function DepositPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -41,6 +42,8 @@ export default function DepositPage() {
   }
 
   return (
+    <>
+    <PageMetadata />
     <div className="bg-gradient-to-br from-blue-100 via-white to-indigo-100 py-10 mt-10">
       <div className="container mx-auto flex flex-col items-center justify-center min-h-[80vh]">
         <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-sky-500 to-indigo-600 bg-clip-text text-transparent">
@@ -73,5 +76,6 @@ export default function DepositPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }

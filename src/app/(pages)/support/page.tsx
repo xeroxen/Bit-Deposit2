@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaWhatsapp, FaTelegram, FaEnvelope } from "react-icons/fa";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { PageMetadata } from "@/components/PageMetadata";
 
 export default function SupportPage() {
   const [contacts, setContacts] = useState({ wapp: null, tgram: null });
@@ -33,6 +34,8 @@ export default function SupportPage() {
   const telegramUser = contacts.tgram ? contacts.tgram : "bitdeposit";
 
   return (
+    <>
+    <PageMetadata />
     <div className="container mx-auto py-12 px-4 mt-25">
       <div className="text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">Customer Support</h1>
@@ -135,5 +138,6 @@ export default function SupportPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

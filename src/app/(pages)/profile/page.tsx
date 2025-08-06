@@ -18,6 +18,7 @@ import {
   Check,
 } from "lucide-react"
 import Image from "next/image"
+import { PageMetadata } from "@/components/PageMetadata"
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState<User | null>(null);
@@ -56,7 +57,9 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+    <PageMetadata />
+    <div className="min-h-screen bg-gray-50 mt-15">
       <div className="max-w-md mx-auto bg-white min-h-screen">
         {/* Header Tabs */}
         {/* <div className="flex bg-white border-b">
@@ -320,5 +323,6 @@ export default function ProfilePage() {
         </div>
       </div>
     </div>
+    </>
   )
 }

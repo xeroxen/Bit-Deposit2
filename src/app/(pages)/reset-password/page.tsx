@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { PageMetadata } from "@/components/PageMetadata"
 
 // Form validation schema
 const formSchema = z.object({
@@ -25,9 +26,12 @@ type FormValues = z.infer<typeof formSchema>
 // Main component wrapper with Suspense
 export default function ResetPasswordPage() {
   return (
+    <>
+    <PageMetadata />
     <Suspense fallback={<ResetPasswordFallback />}>
       <ResetPasswordForm />
-    </Suspense>
+      </Suspense>
+    </>
   )
 }
 
