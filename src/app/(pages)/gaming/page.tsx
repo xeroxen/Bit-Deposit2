@@ -10,37 +10,38 @@ const GamingContent = () => {
     const gameUrl = searchParams.get("url");
     const [showLoader, setShowLoader] = useState(true);
     const iframeRef = useRef(null);
-    
+
+    // Handle viewport height for iframe
     useEffect(() => {
         const updateViewportHeight = () => {
             const iframe = iframeRef.current as HTMLIFrameElement | null;
             if (iframe) {
-                // Adjust height to account for navbar
                 iframe.style.height = `${window.innerHeight - 60}px`;
             }
         };
-        
-        // Prevent body scrolling
-        document.body.style.overflow = 'hidden';
-        document.documentElement.style.overflow = 'hidden';
-        
-        // Set initial height
+        document.body.classList.add('gaming-fullscreen-mode');
         updateViewportHeight();
-        
-        // Update on resize
         window.addEventListener('resize', updateViewportHeight);
-        
-        // Clean up
         return () => {
             window.removeEventListener('resize', updateViewportHeight);
-            // Restore scrolling when component unmounts
-            document.body.style.overflow = '';
-            document.documentElement.style.overflow = '';
+            document.body.classList.remove('gaming-fullscreen-mode');
         };
     }, []);
-    
+
+    // Handle browser/hardware back button: always go home
+    useEffect(() => {
+        const handlePopState = (e: PopStateEvent) => {
+            router.push('/');
+            console.log("Back button pressed",e);
+        };
+        window.history.pushState(null, '', window.location.href); // add extra state
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, [router]);
+
     const handleIframeLoad = () => {
-        // Keep showing loader for additional seconds after iframe loads
         setTimeout(() => {
             setShowLoader(false);
         }, 6000);
@@ -54,30 +55,18 @@ const GamingContent = () => {
         <div className="w-full h-screen fixed top-0 left-0 z-[100] overflow-hidden">
             {/* Navbar */}
             <div className="w-full h-15 bg-black/90 backdrop-blur-sm border-b border-gray-700 flex items-center justify-between px-4 z-50 relative">
-                <button
-                    onClick={handleBackClick}
-                    className="flex items-center gap-2 text-white hover:text-yellow-400 transition-colors duration-200"
-                >
-                    <svg 
-                        width="24" 
-                        height="24" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round"
-                    >
-                        <path d="m15 18-6-6 6-6"/>
-                    </svg>
-                    <span className="font-medium">Back</span>
-                </button>
                 <div className="flex items-center gap-2">
                     <span className="text-2xl font-extrabold tracking-widest text-yellow-400">
                         Raza20
                     </span>
                 </div>
-                <div className="w-12"></div> {/* Spacer for centering */}
+                <button
+                    onClick={handleBackClick}
+                    className="flex items-center gap-2 text-white hover:text-yellow-400 transition-colors duration-200"
+                    aria-label="Close"
+                >
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
             </div>
 
             {gameUrl ? (
@@ -95,8 +84,14 @@ const GamingContent = () => {
                     />
                 </div>
             ) : (
-                <div className="flex items-center justify-center h-full text-white" style={{ height: 'calc(100vh - 60px)' }}>
-                    No game URL provided.
+                <div className="flex flex-col items-center justify-center h-full text-white" style={{ height: 'calc(100vh - 60px)' }}>
+                    <span className="text-2xl font-bold mb-4">No game URL provided.</span>
+                    <button
+                        onClick={() => router.push('/')}
+                        className="px-6 py-2 bg-yellow-400 text-black rounded font-semibold hover:bg-yellow-500 transition"
+                    >
+                        Go Home
+                    </button>
                 </div>
             )}
 

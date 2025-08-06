@@ -255,7 +255,7 @@ export default function WithdrawForm() {
             
             {/* Discount badge */}
             {method.discount && (
-              <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform -rotate-45">
+              <div className="absolute top-1 left-10 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform rotate-45">
                 {method.discount}
               </div>
             )}
