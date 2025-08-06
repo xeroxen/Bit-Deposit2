@@ -18,6 +18,7 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const {
     register,
@@ -98,59 +99,35 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
               const storedToken = Cookies.get("access_token")
               console.log("Stored token:", storedToken ? "Token stored" : "Token not found")
 
-              if (typeof window !== "undefined") {
-                const storedUserData = localStorage.getItem("user_data")
-                console.log("Stored user data:", storedUserData ? "User data stored" : "User data not found")
-              }
+              // Redirect to home page or dashboard
+              router.push("/")
             } catch (storageError) {
               console.error("Error storing user data:", storageError)
-
-              // Fallback: Store manually if storeUserData fails
-              try {
-                Cookies.set("access_token", userData.access_token, { expires: 1 / 12 })
-                Cookies.set("user_id", userData.user.id.toString(), { expires: 1 / 12 })
-                if (typeof window !== "undefined") {
-                  localStorage.setItem("user_data", JSON.stringify(userData.user))
-                }
-                console.log("Fallback storage completed")
-              } catch (fallbackError) {
-                console.error("Fallback storage also failed:", fallbackError)
-              }
+              throw new Error("Failed to store user data")
             }
-
-            // Redirect to home page after successful signup
-            setTimeout(() => {
-              router.push("/")
-            }, 1500) // Short delay to allow the success message to be seen
-
-            return userData
           } else {
-            throw new Error("Access token not received")
+            throw new Error("Invalid response from server")
           }
-        } catch (err) {
-          setError(err instanceof Error ? err.message : "Signup failed. Please try again.")
-          throw err // Re-throw to show error in toast
+        } catch (error) {
+          console.error("Signup error:", error)
+          setError(error instanceof Error ? error.message : "Signup failed")
+          throw error
         } finally {
           setIsLoading(false)
         }
       },
       {
         loading: "Creating your account...",
-        success: () => "Account created successfully! Redirecting to home page...",
-        error: (err) => `${err.message || "Failed to create account"}`,
-      },
+        success: "Account created successfully!",
+        error: (err) => err.message || "Failed to create account",
+      }
     )
   }
 
   return (
-    <div className={cn("w-full max-w-md mx-auto bg-white rounded-lg p-6 relative mt-10", className)} {...props}>
-      {/* Close button */}
-      <Button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-        <X className="h-5 w-5" />
-      </Button>
-
+    <div className={cn("w-full max-w-md mx-auto", className)} {...props}>
       <div className="text-center mb-6">
-        <h1 className="text-2xl font-semibold text-slate-800 mb-2">Welcome Back!</h1>
+        <h1 className="text-2xl font-semibold text-slate-800 mb-2">Join Us Today</h1>
         <p className="text-sm text-gray-500">Enter your details below to create your account.</p>
       </div>
 
@@ -234,7 +211,7 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
             <Button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"
+              className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 hover:bg-transparent"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -242,6 +219,7 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
           </div>
           {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
         </div>
+
         <div className="space-y-2">
           <Label htmlFor="password_confirmation" className="text-sm font-medium text-gray-700">
             Confirm Password<span className="text-red-500 ml-0.5">*</span>
@@ -249,11 +227,11 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
           <div className="relative">
             <Input
               id="password_confirmation"
-              type={showPassword ? "text" : "password"}
+              type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm password"
               className="pl-10 pr-10 h-12"
               {...register("password_confirmation", {
-                required: "Password is required",
+                required: "Password confirmation is required",
                 minLength: {
                   value: 8,
                   message: "Password must be at least 8 characters",
@@ -278,14 +256,14 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
             </div>
             <Button
               type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 hover:bg-transparent"
+              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
             >
-              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
             </Button>
           </div>
-          {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+          {errors.password_confirmation && <p className="text-sm text-red-500">{errors.password_confirmation.message}</p>}
         </div>
 
         <div className="space-y-2">
