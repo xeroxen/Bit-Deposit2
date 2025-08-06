@@ -1,11 +1,12 @@
 "use client";
 
 import { PageMetadata } from "@/components/PageMetadata";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState, Suspense, useEffect, useRef } from "react";
 
 const GamingContent = () => {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const gameUrl = searchParams.get("url");
     const [showLoader, setShowLoader] = useState(true);
     const iframeRef = useRef(null);
@@ -14,7 +15,8 @@ const GamingContent = () => {
         const updateViewportHeight = () => {
             const iframe = iframeRef.current as HTMLIFrameElement | null;
             if (iframe) {
-                iframe.style.height = `${window.innerHeight}px`;
+                // Adjust height to account for navbar
+                iframe.style.height = `${window.innerHeight - 60}px`;
             }
         };
         
@@ -44,10 +46,42 @@ const GamingContent = () => {
         }, 6000);
     };
 
+    const handleBackClick = () => {
+        router.push('/');
+    };
+
     return (
         <div className="w-full h-screen fixed top-0 left-0 z-[100] overflow-hidden">
+            {/* Navbar */}
+            <div className="w-full h-15 bg-black/90 backdrop-blur-sm border-b border-gray-700 flex items-center justify-between px-4 z-50 relative">
+                <button
+                    onClick={handleBackClick}
+                    className="flex items-center gap-2 text-white hover:text-yellow-400 transition-colors duration-200"
+                >
+                    <svg 
+                        width="24" 
+                        height="24" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                    >
+                        <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                    <span className="font-medium">Back</span>
+                </button>
+                <div className="flex items-center gap-2">
+                    <span className="text-2xl font-extrabold tracking-widest text-yellow-400">
+                        Raza20
+                    </span>
+                </div>
+                <div className="w-12"></div> {/* Spacer for centering */}
+            </div>
+
             {gameUrl ? (
-                <div className="w-full h-full relative overflow-hidden">
+                <div className="w-full h-full relative overflow-hidden" style={{ height: 'calc(100vh - 60px)' }}>
                     <iframe
                         ref={iframeRef}
                         src={gameUrl}
@@ -61,7 +95,7 @@ const GamingContent = () => {
                     />
                 </div>
             ) : (
-                <div className="flex items-center justify-center h-full text-white">
+                <div className="flex items-center justify-center h-full text-white" style={{ height: 'calc(100vh - 60px)' }}>
                     No game URL provided.
                 </div>
             )}

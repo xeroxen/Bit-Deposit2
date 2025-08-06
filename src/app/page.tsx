@@ -24,7 +24,9 @@ const Home = () => {
                         {/* Game Card 1 - Up To 100% (Deposit Bonus) */}
                         <div className="flex-1 flex flex-col items-center">
                             <div className="relative w-full aspect-square rounded-[16px] overflow-hidden mb-1">
+                               <Link href="/deposit">
                                <Image src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/landing-page/mobile-version/category-menu/game-1.png?format=optimal&w=256&q=85" alt="Up To 100%" fill style={{objectFit: 'cover'}} />
+                               </Link>
                             </div>
                             <div className="w-fit h-4 font-semibold text-xs leading-4 flex items-center text-center text-[#1D3D68]">Up To 100%</div>
                         </div>
