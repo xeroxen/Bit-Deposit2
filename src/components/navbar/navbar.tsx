@@ -137,7 +137,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                                 <span className="text-xs">10:56 AM</span>
                                 <ChevronDown className="w-4 h-4" />
                             </div>
-                            <div className="text-white text-xs font-medium">US $</div>
+                            <div className="text-white text-xs font-medium">BDT</div>
                         </div>
                     </div>
                 </header>
@@ -183,7 +183,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
                                 <div className="flex items-center space-x-1">
                                     {/* US Flag placeholder */}
                                     <div className="w-4 h-4 rounded-full bg-gradient-to-r from-red-500 via-white to-blue-500 border border-gray-300 flex-shrink-0"></div>
-                                    <span className="text-xs font-medium text-black/88 whitespace-nowrap">US</span>
+                                    <span className="text-xs font-medium text-black/88 whitespace-nowrap">BDT</span>
                                 </div>
                                 
                                 {/* Dropdown arrow */}
