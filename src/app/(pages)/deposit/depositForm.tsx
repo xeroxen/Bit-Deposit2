@@ -30,7 +30,7 @@ interface PaymentMethod {
     
     // If it's a bank and has a custom logo, use the full URL
     if (isBank && logoPath) {
-      return `https://new.fnd777.pro${logoPath}`
+      return `${logoPath}`
     }
     
     // For mobile banking, use the logo from API

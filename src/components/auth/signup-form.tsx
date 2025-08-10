@@ -1,17 +1,53 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Eye, EyeOff } from "lucide-react"
 import Cookies from "js-cookie"
 import { storeUserData, type LoginResponse } from "@/lib/authentication"
+
+// Zod schema for signup form validation
+const signupSchema = z.object({
+  name: z.string().min(1, "Full name is required"),
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Invalid email format")
+    .refine((value) => !/^[\d.@_-]+$/.test(value), {
+      message: "Email cannot contain only numbers and special characters"
+    }),
+  phone: z
+    .string()
+    .min(1, "Phone number is required")
+    .refine((value) => /^[\d\s\-\+\(\)]+$/.test(value), {
+      message: "Phone number can only contain numbers, spaces, hyphens, plus signs, and parentheses"
+    })
+    .refine((value) => !/[a-zA-Z@._]/.test(value), {
+      message: "Phone number cannot contain letters or email characters"
+    }),
+  password: z
+    .string()
+    .min(1, "Password is required")
+    .min(8, "Password must be at least 8 characters"),
+  password_confirmation: z
+    .string()
+    .min(1, "Password confirmation is required"),
+  reference_code: z.string().optional(),
+}).refine((data) => data.password === data.password_confirmation, {
+  message: "Passwords don't match",
+  path: ["password_confirmation"],
+})
+
+type SignupFormData = z.infer<typeof signupSchema>
 
 export function SignupForm({ className, referer = "", ...props }: React.ComponentPropsWithoutRef<"div"> & { referer?: string }) {
   const router = useRouter()
@@ -25,7 +61,8 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm({
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -43,14 +80,7 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
     }
   }, [referer, setValue])
 
-  const onSubmit = async (data: {
-    name: string
-    email: string
-    phone: string
-    password: string
-    password_confirmation: string
-    reference_code: string
-  }) => {
+  const onSubmit = async (data: SignupFormData) => {
     setIsLoading(true)
     setError(null)
 
@@ -142,7 +172,7 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
             id="name"
             placeholder="Your full name"
             className="h-12"
-            {...register("name", { required: "Full name is required" })}
+            {...register("name")}
           />
           {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
         </div>
@@ -156,7 +186,7 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
             type="email"
             placeholder="Your email address"
             className="h-12"
-            {...register("email", { required: "Email is required" })}
+            {...register("email")}
           />
           {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
         </div>
@@ -169,7 +199,7 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
             id="phone"
             placeholder="Your phone number"
             className="h-12"
-            {...register("phone", { required: "Phone number is required" })}
+            {...register("phone")}
           />
           {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
         </div>
@@ -184,13 +214,7 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
               type={showPassword ? "text" : "password"}
               placeholder="Enter password"
               className="pl-10 pr-10 h-12"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
-                },
-              })}
+              {...register("password")}
             />
             <div className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
               <svg
@@ -230,13 +254,7 @@ export function SignupForm({ className, referer = "", ...props }: React.Componen
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm password"
               className="pl-10 pr-10 h-12"
-              {...register("password_confirmation", {
-                required: "Password confirmation is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
-                },
-              })}
+              {...register("password_confirmation")}
             />
             <div className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
               <svg
