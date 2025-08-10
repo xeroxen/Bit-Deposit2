@@ -118,7 +118,7 @@ export default function SupportPage() {
               <h3 className="font-medium text-lg">Email Support</h3>
               <p className="text-muted-foreground mb-2">Send us an email and we&apos;ll respond within 24 hours</p>
               <a href="mailto:raza20official@gmail.com" className="text-primary hover:underline">
-                support@bitdeposit.com
+              raza20official@gmail.com
               </a>
             </div>
           </div>
