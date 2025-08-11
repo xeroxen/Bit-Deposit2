@@ -28,9 +28,9 @@ const GameGrid = ({
   favoriteLoading: number | null,
   setFavoriteLoading: (id: number | null) => void
 }) => {
-  // Always use 4, 6, or 8 per row based on Tailwind breakpoints
+  // Always use 3, 6, or 8 per row based on Tailwind breakpoints
   // Calculate gamesPerRow based on window width (for visibleGames logic only)
-  let gamesPerRow = 4;
+  let gamesPerRow = 3;
   if (typeof window !== 'undefined') {
     if (window.innerWidth >= 1280) {
       gamesPerRow = 8;
@@ -57,7 +57,7 @@ const GameGrid = ({
   return (
     <>
       {gameRows.map((row, rowIndex) => (
-        <div key={rowIndex} className="grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 mb-3">
+        <div key={rowIndex} className="grid grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 gap-2 mb-3">
           {row.map(game => (
             <div 
               key={game.id} 
@@ -130,11 +130,23 @@ const GameGrid = ({
 
 // Skeleton component for game grid
 const GameGridSkeleton = ({ rows = 3 }: { rows?: number }) => {
+  // Calculate skeleton items per row based on screen size
+  const getSkeletonItemsPerRow = () => {
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth >= 1280) return 8; // xl: 8 per row
+      if (window.innerWidth >= 1024) return 6; // lg: 6 per row
+      return 3; // mobile: 3 per row
+    }
+    return 3; // default to mobile
+  };
+
+  const skeletonItemsPerRow = getSkeletonItemsPerRow();
+
   return (
     <>
       {Array.from({ length: rows }).map((_, rowIndex) => (
-        <div key={rowIndex} className="grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 mb-3">
-          {Array.from({ length: 8 }).map((_, index) => (
+        <div key={rowIndex} className="grid grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 gap-2 mb-3">
+          {Array.from({ length: skeletonItemsPerRow }).map((_, index) => (
             <div key={index} className="aspect-[3/4] rounded-lg overflow-hidden relative">
               <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex flex-col">
                 {/* Game image skeleton */}
@@ -324,7 +336,7 @@ const AllGameMobile = () => {
     const { games, gameProviders, loading } = useGameContext();
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [filteredGames, setFilteredGames] = useState<Game[]>([]);
-    const [visibleGames, setVisibleGames] = useState<number>(24); // 3 rows of 8 (max per row)
+    const [visibleGames, setVisibleGames] = useState<number>(9); // 3 rows of 3 (mobile default)
     const [viewAllMode, setViewAllMode] = useState<boolean>(false);
     const [allGames, setAllGames] = useState<Game[]>([]);
     const [providers, setProviders] = useState<Provider[]>([]);
@@ -369,7 +381,7 @@ const AllGameMobile = () => {
 
             setFilteredGames(gamesInCategory);
             // Reset visible games count when category changes
-            setVisibleGames(24); // 3 rows of 8
+            setVisibleGames(9); // 3 rows of 3 (mobile default)
         }, 500); // Short delay to show loading state
         
         return () => clearTimeout(filterTimer);
@@ -416,8 +428,18 @@ const AllGameMobile = () => {
     };
 
     const handleShowMore = () => {
-        // Always add a full row (8) for consistency with grid-cols-8
-        setVisibleGames(prevVisible => prevVisible + 8);
+        // Add a full row based on screen size
+        if (typeof window !== 'undefined') {
+            if (window.innerWidth >= 1280) {
+                setVisibleGames(prevVisible => prevVisible + 8); // xl: 8 per row
+            } else if (window.innerWidth >= 1024) {
+                setVisibleGames(prevVisible => prevVisible + 6); // lg: 6 per row
+            } else {
+                setVisibleGames(prevVisible => prevVisible + 3); // mobile: 3 per row
+            }
+        } else {
+            setVisibleGames(prevVisible => prevVisible + 3); // default to mobile
+        }
     };
 
     const handleGameClick = (game: Game) => {
@@ -437,7 +459,7 @@ const AllGameMobile = () => {
     
     const handleViewAll = () => {
         setViewAllMode(true);
-        setVisibleGames(24); // Reset to initial 3 rows of 8
+        setVisibleGames(9); // Reset to initial 3 rows of 3 (mobile default)
     };
 
     const handleShowMoreProviders = () => {
