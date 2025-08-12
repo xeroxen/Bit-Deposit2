@@ -61,7 +61,7 @@ const GameGrid = ({
           {row.map(game => (
             <div 
               key={game.id} 
-              className={`aspect-[3/4] rounded-lg overflow-hidden relative cursor-pointer group transition-all duration-200 ${
+              className={`aspect-[3/3.8] rounded-lg overflow-hidden relative cursor-pointer group transition-all duration-200 ${
                 clickedGameId === game.id 
                   ? 'opacity-50 scale-95 pointer-events-none' 
                   : 'hover:scale-105'
@@ -147,7 +147,7 @@ const GameGridSkeleton = ({ rows = 3 }: { rows?: number }) => {
       {Array.from({ length: rows }).map((_, rowIndex) => (
         <div key={rowIndex} className="grid grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 gap-2 mb-3">
           {Array.from({ length: skeletonItemsPerRow }).map((_, index) => (
-            <div key={index} className="aspect-[3/4] rounded-lg overflow-hidden relative">
+            <div key={index} className="aspect-[3/3.8] rounded-lg overflow-hidden relative">
               <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex flex-col">
                 {/* Game image skeleton */}
                 <div className="flex-1 relative overflow-hidden">
