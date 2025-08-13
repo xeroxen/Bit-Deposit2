@@ -312,7 +312,7 @@ export default function DepositForm() {
               <div className="flex flex-col items-center gap-2">
                                  <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden shadow-sm">
                    <Image
-                     src={selectedMethod?.logo || ""}
+                     src={`https://new.fnd777.pro${selectedMethod?.logo || ""}`}
                      alt={selectedMethod?.name || ""}
                      width={48}
                      height={48}
