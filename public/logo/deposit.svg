@@ -1,0 +1,36 @@
+<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1.1" y="0.6" width="30.8" height="30.8" rx="5.8" fill="url(#paint0_radial_875_224910)"/>
+<g clip-path="url(#clip0_875_224910)">
+<rect x="0.5" width="32" height="32" rx="6.4" fill="white"/>
+<g filter="url(#filter0_f_875_224910)">
+<ellipse cx="9.89321" cy="14.0872" rx="9.89321" ry="14.0872" transform="matrix(0.985945 -0.16707 0.0998814 0.994999 -3.99854 7.9668)" fill="#2E43FF"/>
+</g>
+<g filter="url(#filter1_f_875_224910)">
+<ellipse cx="11.0327" cy="18.3836" rx="11.0327" ry="18.3836" transform="matrix(0.985945 -0.16707 0.0998814 0.994999 12.0391 -6.71289)" fill="#4094FF"/>
+</g>
+</g>
+<path d="M9.5 9.16667C9.5 8.52233 10.0223 8 10.6667 8H22.3333C22.9777 8 23.5 8.52233 23.5 9.16667V22.8333C23.5 23.4777 22.9777 24 22.3333 24H10.6667C10.0223 24 9.5 23.4777 9.5 22.8333V9.16667Z" stroke="white" stroke-width="1.5"/>
+<path d="M13.5 16.2857L15.3 18L19.5 14" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1.1" y="0.6" width="30.8" height="30.8" rx="5.8" stroke="#4094FF" stroke-width="1.2"/>
+<defs>
+<filter id="filter0_f_875_224910" x="-21.8938" y="-12.9852" width="58.1129" height="66.6305" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="9.6" result="effect1_foregroundBlur_875_224910"/>
+</filter>
+<filter id="filter1_f_875_224910" x="-5.48027" y="-27.8504" width="60.4664" height="75.1715" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="9.6" result="effect1_foregroundBlur_875_224910"/>
+</filter>
+<radialGradient id="paint0_radial_875_224910" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(20.6067) rotate(76.5271) scale(44.0112 38.8334)">
+<stop stopColor="#E8FBFF"/>
+<stop offset="0.40625" stopColor="#35A6F7"/>
+<stop offset="0.708333" stopColor="#360DC8"/>
+<stop offset="1"/>
+</radialGradient>
+<clipPath id="clip0_875_224910">
+<rect x="0.5" width="32" height="32" rx="6.4" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -194,7 +194,7 @@ export function SideNav() {
                     <QuickAction 
                       icon={
                         <Image 
-                          src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/profile/board/deposit.svg"  
+                          src="/logo/deposit.svg"  
                           width={100}
                           height={100}
                           alt="Deposit icon"
@@ -208,7 +208,7 @@ export function SideNav() {
                     <QuickAction 
                       icon={
                         <Image 
-                          src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/profile/board/withdraw.svg"  
+                          src="/logo/withdraw.svg"  
                           width={100}
                           height={100}
                           alt="Withdraw icon"
@@ -302,7 +302,7 @@ export function SideNav() {
                     <QuickAction 
                       icon={
                         <Image 
-                          src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/profile/board/deposit.svg"  
+                          src="/logo/deposit.svg"  
                           width={100}
                           height={100}
                           alt="Deposit icon"
@@ -316,7 +316,7 @@ export function SideNav() {
                     <QuickAction 
                       icon={
                         <Image 
-                          src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/profile/board/withdraw.svg"  
+                          src="/logo/withdraw.svg"  
                           width={100}
                           height={100}
                           alt="Withdraw icon"

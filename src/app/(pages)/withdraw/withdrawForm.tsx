@@ -242,11 +242,11 @@ export default function WithdrawForm() {
             </div>
             
             {/* Discount badge */}
-            {method.discount && (
+            {/* {method.discount && (
               <div className="absolute top-1 left-10 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded transform rotate-45">
                 {method.discount}
               </div>
-            )}
+            )} */}
           </div>
         </div>
       ))}

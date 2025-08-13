@@ -25,7 +25,7 @@ const Home = () => {
                         <div className="flex-1 flex flex-col items-center">
                             <div className="relative w-full aspect-square rounded-[16px] overflow-hidden mb-1">
                                <Link href="/deposit">
-                               <Image src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/landing-page/mobile-version/category-menu/game-1.png?format=optimal&w=256&q=85" alt="Up To 100%" fill style={{objectFit: 'cover'}} />
+                               <Image src="/logo/game-1.png" alt="Up To 100%" fill style={{objectFit: 'cover'}} />
                                </Link>
                             </div>
                             <div className="w-fit h-4 font-semibold text-xs leading-4 flex items-center text-center text-[#1D3D68]">Up To 100%</div>
@@ -34,7 +34,7 @@ const Home = () => {
                         {/* Game Card 2 - Lottery */}
                         <div className="flex-1 flex flex-col items-center cursor-pointer" onClick={() => handleGameRedirect(2002, "Lottery 7 up 7 down")}> 
                             <div className="relative w-full aspect-square rounded-[16px] overflow-hidden mb-1">
-                                <Image src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/landing-page/mobile-version/category-menu/game-2.png?format=optimal&w=256&q=85" alt="Up To 100%" fill style={{objectFit: 'cover'}} />
+                                <Image src="/logo/game-2.png" alt="Up To 100%" fill style={{objectFit: 'cover'}} />
                             </div>
                             <div className="w-fit h-4 font-semibold text-xs leading-4 flex items-center text-center text-[#1D3D68]">Lottery</div>
                         </div>
@@ -42,7 +42,7 @@ const Home = () => {
                         {/* Game Card 3 - Casino */}
                         <div className="flex-1 flex flex-col items-center cursor-pointer" onClick={() => handleGameRedirect(1992, "Casino Mega Wheel")}> 
                             <div className="relative w-full aspect-square rounded-[16px] overflow-hidden mb-1">
-                                <Image src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/landing-page/mobile-version/category-menu/game-3.png?format=optimal&w=256&q=85" alt="Up To 100%" fill style={{objectFit: 'cover'}} />
+                                <Image src="/logo/game-3.png" alt="Up To 100%" fill style={{objectFit: 'cover'}} />
                             </div>
                             <div className="w-fit h-4 font-semibold text-xs leading-4 flex items-center text-center text-[#1D3D68]">Casino</div>
                         </div>
@@ -51,7 +51,7 @@ const Home = () => {
                         <div className="flex-1 flex flex-col items-center">
                             <div className="relative w-full aspect-square rounded-[16px] overflow-hidden mb-1">
                                 <Link href="/sports">
-                                    <Image src="https://bitdeposit-production.s3.ap-southeast-1.amazonaws.com/frontend/user/public/assets/images/landing-page/mobile-version/category-menu/game-4.png?format=optimal&w=256&q=85" alt="Up To 100%" fill style={{objectFit: 'cover'}} />
+                                    <Image src="/logo/game-4.png" alt="Up To 100%" fill style={{objectFit: 'cover'}} />
                                 </Link>
                             </div>
                             <div className="w-fit h-4 font-semibold text-xs leading-4 flex items-center text-center text-[#1D3D68]">Cricket</div>
