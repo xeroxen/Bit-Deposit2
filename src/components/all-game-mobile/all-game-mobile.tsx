@@ -428,18 +428,22 @@ const AllGameMobile = () => {
     };
 
     const handleShowMore = () => {
-        // Add a full row based on screen size
-        if (typeof window !== 'undefined') {
-            if (window.innerWidth >= 1280) {
-                setVisibleGames(prevVisible => prevVisible + 8); // xl: 8 per row
-            } else if (window.innerWidth >= 1024) {
-                setVisibleGames(prevVisible => prevVisible + 6); // lg: 6 per row
-            } else {
-                setVisibleGames(prevVisible => prevVisible + 3); // mobile: 3 per row
-            }
+
+      /* // Add a full row based on screen size
+      if (typeof window !== 'undefined') {
+        if (window.innerWidth >= 1280) {
+            setVisibleGames(prevVisible => prevVisible + 8); // xl: 8 per row
+        } else if (window.innerWidth >= 1024) {
+            setVisibleGames(prevVisible => prevVisible + 6); // lg: 6 per row
         } else {
-            setVisibleGames(prevVisible => prevVisible + 3); // default to mobile
+            setVisibleGames(prevVisible => prevVisible + 3); // mobile: 3 per row
         }
+    } else {
+        setVisibleGames(prevVisible => prevVisible + 3); // default to mobile
+    } */
+        // Show all games at once
+        const displayGames = viewAllMode ? allGames : filteredGames;
+        setVisibleGames(displayGames.length);
     };
 
     const handleGameClick = (game: Game) => {

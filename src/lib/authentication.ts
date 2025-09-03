@@ -50,8 +50,8 @@ export const getAuthToken = (): string | undefined => {
  * Store user data after successful login
  */
 export const storeUserData = (loginResponse: LoginResponse): void => {
-    // Store access token in cookies with 2-hour expiry
-    Cookies.set('access_token', loginResponse.access_token, { expires: 1 / 12 });
+    // Store access token in cookies with 7-day expiry
+    Cookies.set('access_token', loginResponse.access_token, { expires: parseInt(process.env.COOKIE_EXPIRATION || '7') });
     
     // Store user data in localStorage (only in browser environment)
     if (typeof window !== 'undefined') {
@@ -70,7 +70,7 @@ export const storeUserData = (loginResponse: LoginResponse): void => {
     }
     
     // Store user ID in cookies as backup
-    Cookies.set('user_id', loginResponse.user.id.toString(), { expires: 1 / 12 });
+    Cookies.set('user_id', loginResponse.user.id.toString(), { expires: parseInt(process.env.COOKIE_EXPIRATION || '7') });
 };
 
 export const apiRequest = async <T>(
