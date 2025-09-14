@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/authContext';
-import { getUserData, getAuthToken } from '@/lib/authentication';
+import { getUserData, getAuthToken, apiRequest } from '@/lib/authentication';
 import { format, parseISO } from 'date-fns';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { PageMetadata } from '@/components/PageMetadata';
@@ -23,6 +23,12 @@ interface WithdrawHistoryItem {
   recever_number: string;
   created_at: string;
   updated_at: string;
+}
+
+interface WithdrawHistoryResponse {
+  withdrawals?: WithdrawHistoryItem[];
+  data?: WithdrawHistoryItem[];
+  [key: string]: any;
 }
 
 export default function WithdrawHistoryPage() {
@@ -46,26 +52,36 @@ export default function WithdrawHistoryPage() {
           setError(null);
 
           const userData = getUserData();
-          const userId = userData?.id || '';
-          const token = getAuthToken();
-
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/wdraw-story/${userId}`, {
-            headers: {
-              'Content-Type': 'application/json',
-              ...(token && { 'Authorization': `Bearer ${token}` }),
-            },
-          });
-
-          if (!response.ok) {
-            throw new Error('Failed to fetch withdraw history');
+          const userId = userData?.id;
+          
+          if (!userId) {
+            throw new Error('User ID not found');
           }
 
-          const data = await response.json();
-          // Updated to match your API response structure
-          setWithdrawHistory(data.withdrawals || []);
+          const data = await apiRequest<WithdrawHistoryResponse | WithdrawHistoryItem[]>(`/wdraw-story/${userId}`);
+          
+          // Handle different possible response structures
+          if (Array.isArray(data)) {
+            setWithdrawHistory(data);
+          } else if (data.withdrawals) {
+            setWithdrawHistory(data.withdrawals);
+          } else if (data.data && Array.isArray(data.data)) {
+            setWithdrawHistory(data.data);
+          } else {
+            console.warn('Unexpected API response structure:', data);
+            setWithdrawHistory([]);
+          }
         } catch (err) {
           console.error('Error fetching withdraw history:', err);
-          setError('Failed to load withdraw history. Please try again later.');
+          let errorMessage = 'Failed to load withdraw history. Please try again later.';
+          
+          if (err instanceof Error) {
+            errorMessage = err.message;
+          } else if (typeof err === 'object' && err !== null && 'message' in err) {
+            errorMessage = String(err.message);
+          }
+          
+          setError(errorMessage);
         } finally {
           setIsLoading(false);
         }

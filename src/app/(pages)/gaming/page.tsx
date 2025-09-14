@@ -28,10 +28,10 @@ const GamingContent = () => {
         };
     }, []);
 
-    // Handle browser/hardware back button: always go home
+    // Handle browser/hardware back button: go back to previous page
     useEffect(() => {
         const handlePopState = (e: PopStateEvent) => {
-            router.push('/');
+            router.back();
             console.log("Back button pressed",e);
         };
         window.history.pushState(null, '', window.location.href); // add extra state
@@ -48,7 +48,7 @@ const GamingContent = () => {
     };
 
     const handleBackClick = () => {
-        router.push('/');
+        router.back();
     };
 
     return (

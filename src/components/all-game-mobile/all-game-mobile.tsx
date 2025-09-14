@@ -467,7 +467,7 @@ const AllGameMobile = () => {
     };
 
     const handleShowMoreProviders = () => {
-        setVisibleProviders(prev => prev + 8);
+        setVisibleProviders(providers.length);
     };
 
     const handleProviderClick = (providerId: number) => {

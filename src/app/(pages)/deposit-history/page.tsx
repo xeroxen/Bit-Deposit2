@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/authContext';
-import { getUserData, getAuthToken } from '@/lib/authentication';
+import { getUserData, getAuthToken, apiRequest } from '@/lib/authentication';
 import { format, parseISO } from 'date-fns';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { PageMetadata } from '@/components/PageMetadata';
@@ -20,6 +20,12 @@ interface DepositHistoryItem {
   sender_number: string;
   created_at: string;
   updated_at: string;
+}
+
+interface DepositHistoryResponse {
+  deposits?: DepositHistoryItem[];
+  data?: DepositHistoryItem[];
+  [key: string]: any;
 }
 
 export default function DepositHistoryPage() {
@@ -43,26 +49,36 @@ export default function DepositHistoryPage() {
           setError(null);
 
           const userData = getUserData();
-          const userId = userData?.id || '';
-          const token = getAuthToken();
-
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/depo-story/${userId}`, {
-            headers: {
-              'Content-Type': 'application/json',
-              ...(token && { 'Authorization': `Bearer ${token}` }),
-            },
-          });
-
-          if (!response.ok) {
-            throw new Error('Failed to fetch deposit history');
+          const userId = userData?.id;
+          
+          if (!userId) {
+            throw new Error('User ID not found');
           }
 
-          const data = await response.json();
-          // If your API returns { deposits: [...] }
-          setDepositHistory(data.deposits || []);
+          const data = await apiRequest<DepositHistoryResponse | DepositHistoryItem[]>(`/depo-story/${userId}`);
+          
+          // Handle different possible response structures
+          if (Array.isArray(data)) {
+            setDepositHistory(data);
+          } else if (data.deposits) {
+            setDepositHistory(data.deposits);
+          } else if (data.data && Array.isArray(data.data)) {
+            setDepositHistory(data.data);
+          } else {
+            console.warn('Unexpected API response structure:', data);
+            setDepositHistory([]);
+          }
         } catch (err) {
           console.error('Error fetching deposit history:', err);
-          setError('Failed to load deposit history. Please try again later.');
+          let errorMessage = 'Failed to load deposit history. Please try again later.';
+          
+          if (err instanceof Error) {
+            errorMessage = err.message;
+          } else if (typeof err === 'object' && err !== null && 'message' in err) {
+            errorMessage = String(err.message);
+          }
+          
+          setError(errorMessage);
         } finally {
           setIsLoading(false);
         }
