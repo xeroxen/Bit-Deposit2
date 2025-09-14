@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/authContext';
-import { getUserData, getAuthToken, apiRequest } from '@/lib/authentication';
+import { getUserData, apiRequest } from '@/lib/authentication';
 import { format, parseISO } from 'date-fns';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { PageMetadata } from '@/components/PageMetadata';
