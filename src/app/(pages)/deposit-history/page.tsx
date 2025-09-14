@@ -25,7 +25,7 @@ interface DepositHistoryItem {
 interface DepositHistoryResponse {
   deposits?: DepositHistoryItem[];
   data?: DepositHistoryItem[];
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export default function DepositHistoryPage() {

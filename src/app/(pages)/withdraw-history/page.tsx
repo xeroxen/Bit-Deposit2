@@ -28,7 +28,7 @@ interface WithdrawHistoryItem {
 interface WithdrawHistoryResponse {
   withdrawals?: WithdrawHistoryItem[];
   data?: WithdrawHistoryItem[];
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export default function WithdrawHistoryPage() {
