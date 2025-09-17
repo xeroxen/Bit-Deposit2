@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/authContext';
-import { getUserData, apiRequest } from '@/lib/authentication';
+import { getUserData } from '@/lib/authentication';
 import { format, parseISO } from 'date-fns';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { PageMetadata } from '@/components/PageMetadata';
@@ -22,11 +22,11 @@ interface DepositHistoryItem {
   updated_at: string;
 }
 
-interface DepositHistoryResponse {
-  deposits?: DepositHistoryItem[];
-  data?: DepositHistoryItem[];
-  [key: string]: unknown;
-}
+// interface DepositHistoryResponse {
+//   deposits?: DepositHistoryItem[];
+//   data?: DepositHistoryItem[];
+//   [key: string]: unknown;
+// }
 
 export default function DepositHistoryPage() {
   const { isAuthenticated, loading, redirectToLogin } = useAuth();
@@ -55,15 +55,18 @@ export default function DepositHistoryPage() {
             throw new Error('User ID not found');
           }
 
-          const data = await apiRequest<DepositHistoryResponse | DepositHistoryItem[]>(`/depo-story/${userId}`);
+          const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/depo-story/${userId}`) ;
           
           // Handle different possible response structures
-          if (Array.isArray(data)) {
-            setDepositHistory(data);
-          } else if (data.deposits) {
-            setDepositHistory(data.deposits);
-          } else if (data.data && Array.isArray(data.data)) {
-            setDepositHistory(data.data);
+          // Always parse the response as JSON before handling its structure
+          const json = await data.json();
+
+          if (Array.isArray(json)) {
+            setDepositHistory(json);
+          } else if (Array.isArray(json.deposits)) {
+            setDepositHistory(json.deposits);
+          } else if (json.data && Array.isArray(json.data)) {
+            setDepositHistory(json.data);
           } else {
             console.warn('Unexpected API response structure:', data);
             setDepositHistory([]);

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/authContext';
-import { getUserData, apiRequest } from '@/lib/authentication';
+import { getUserData } from '@/lib/authentication';
 import { format, parseISO } from 'date-fns';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { PageMetadata } from '@/components/PageMetadata';
@@ -25,11 +25,11 @@ interface WithdrawHistoryItem {
   updated_at: string;
 }
 
-interface WithdrawHistoryResponse {
-  withdrawals?: WithdrawHistoryItem[];
-  data?: WithdrawHistoryItem[];
-  [key: string]: unknown;
-}
+// interface WithdrawHistoryResponse {
+//   withdrawals?: WithdrawHistoryItem[];
+//   data?: WithdrawHistoryItem[];
+//   [key: string]: unknown;
+// }
 
 export default function WithdrawHistoryPage() {
   const { isAuthenticated, loading, redirectToLogin } = useAuth();
@@ -58,17 +58,20 @@ export default function WithdrawHistoryPage() {
             throw new Error('User ID not found');
           }
 
-          const data = await apiRequest<WithdrawHistoryResponse | WithdrawHistoryItem[]>(`/wdraw-story/${userId}`);
+          const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/wdraw-story/${userId}`);
           
           // Handle different possible response structures
-          if (Array.isArray(data)) {
-            setWithdrawHistory(data);
-          } else if (data.withdrawals) {
-            setWithdrawHistory(data.withdrawals);
-          } else if (data.data && Array.isArray(data.data)) {
-            setWithdrawHistory(data.data);
+          // Always parse the response as JSON before handling its structure
+          const json = await data.json();
+
+          if (Array.isArray(json)) {
+            setWithdrawHistory(json);
+          } else if (Array.isArray(json.withdrawals)) {
+            setWithdrawHistory(json.withdrawals);
+          } else if (json.data && Array.isArray(json.data)) {
+            setWithdrawHistory(json.data);
           } else {
-            console.warn('Unexpected API response structure:', data);
+            console.warn('Unexpected API response structure:', json);
             setWithdrawHistory([]);
           }
         } catch (err) {
